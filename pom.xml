@@ -10,6 +10,8 @@
     <version>1.0-SNAPSHOT</version>
     <modules>
         <module>unic-util</module>
+        <module>unic-base</module>
+        <module>unic-logger</module>
     </modules>
 
     <name>unic</name>
