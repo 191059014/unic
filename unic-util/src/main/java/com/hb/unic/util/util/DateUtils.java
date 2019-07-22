@@ -27,6 +27,16 @@ public class DateUtils {
     public static final String FORMAT_MS = "yyMMddHHmmssSSS";
 
     /**
+     * 年月日时分秒格式
+     */
+    public static final String FORMAT_YMDHMS = "yyMMddHHmmss";
+
+    /**
+     * 年月日格式
+     */
+    public static final String FORMAT_YMD = "yyMMdd";
+
+    /**
      * 默认的时区
      */
     public static final String DEFAULT_TIMEZONE = "GMT+8";
