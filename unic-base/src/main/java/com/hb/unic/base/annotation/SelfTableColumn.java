@@ -1,4 +1,4 @@
-package com.hb.unic.util.annotation;
+package com.hb.unic.base.annotation;
 
 import java.lang.annotation.*;
 

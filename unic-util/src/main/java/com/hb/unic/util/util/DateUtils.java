@@ -22,6 +22,11 @@ public class DateUtils {
     public static final String DEFAULT_FORMAT = "yyyy-MM-dd HH:mm:ss";
 
     /**
+     * 默认的日期格式
+     */
+    public static final String YYYYMMDDHHMMSS = "yyyyMMddHHmmss";
+
+    /**
      * 毫秒格式
      */
     public static final String FORMAT_MS = "yyMMddHHmmssSSS";

@@ -1,7 +1,7 @@
-package com.hb.unic.util.tool;
+package com.hb.unic.base.tool;
 
-import com.hb.unic.util.annotation.SelfTableClass;
-import com.hb.unic.util.annotation.SelfTableColumn;
+import com.hb.unic.base.annotation.SelfTableClass;
+import com.hb.unic.base.annotation.SelfTableColumn;
 
 import java.lang.reflect.Field;
 import java.util.ArrayList;
@@ -11,7 +11,7 @@ import java.util.List;
  * ========== 数据库表工具类 ==========
  *
  * @author Mr.huang
- * @version com.hb.web.tool.DbTools.java, v1.0
+ * @version com.hb.web.helper.DbTools.java, v1.0
  * @date 2019年07月13日 08时14分
  */
 public class DbTools {

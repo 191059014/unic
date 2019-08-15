@@ -6,7 +6,7 @@ import com.alibaba.fastjson.JSON;
  * ========== 自定义日志 ==========
  *
  * @author Mr.huang
- * @version com.hb.web.tool.Logger.java, v1.0
+ * @version com.hb.web.helper.Logger.java, v1.0
  * @date 2019年07月16日 11时42分
  */
 public class Logger {

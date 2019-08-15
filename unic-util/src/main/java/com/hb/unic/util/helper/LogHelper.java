@@ -1,4 +1,4 @@
-package com.hb.unic.util.tool;
+package com.hb.unic.util.helper;
 
 import java.io.PrintWriter;
 import java.io.StringWriter;

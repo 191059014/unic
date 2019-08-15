@@ -1,6 +1,6 @@
 package com.hb.unic.util;
 
-import com.hb.unic.util.tool.IdWorker;
+import com.hb.unic.util.helper.IdHelper;
 
 /**
  * ========== Description ==========
@@ -16,7 +16,7 @@ public class IdWorkTest {
             new Thread(new Runnable() {
                 @Override
                 public void run() {
-                    System.out.println(IdWorker.getInstance().nextId());
+                    System.out.println(IdHelper.getInstance().nextId());
                 }
             }).start();
         }

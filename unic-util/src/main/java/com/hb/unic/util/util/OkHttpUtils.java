@@ -3,7 +3,7 @@ package com.hb.unic.util.util;
 import com.alibaba.fastjson.JSONObject;
 import com.hb.unic.logger.Logger;
 import com.hb.unic.logger.LoggerFactory;
-import com.hb.unic.util.tool.LogHelper;
+import com.hb.unic.util.helper.LogHelper;
 import okhttp3.*;
 
 import javax.net.ssl.*;

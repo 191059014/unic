@@ -2,7 +2,7 @@ package com.hb.unic.util.util;
 
 import com.hb.unic.logger.Logger;
 import com.hb.unic.logger.LoggerFactory;
-import com.hb.unic.util.tool.LogHelper;
+import com.hb.unic.util.helper.LogHelper;
 import org.springframework.beans.BeanUtils;
 
 /**

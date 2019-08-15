@@ -1,4 +1,4 @@
-package com.hb.unic.util.tool;
+package com.hb.unic.util.helper;
 
 import org.apache.commons.lang3.StringUtils;
 
@@ -9,7 +9,7 @@ import java.util.regex.Pattern;
  * ========== 基本校验辅助类 ==========
  *
  * @author Mr.huang
- * @version com.hb.unic.util.tool.VerifyHelper.java, v1.0
+ * @version com.hb.unic.util.helper.VerifyHelper.java, v1.0
  * @date 2019年07月22日 02时07分
  */
 public class VerifyHelper {

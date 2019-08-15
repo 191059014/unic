@@ -1,4 +1,4 @@
-package com.hb.unic.util.tool;
+package com.hb.unic.util.helper;
 
 import com.hb.unic.util.util.DateUtils;
 import com.hb.unic.util.util.StringUtils;
@@ -9,10 +9,10 @@ import java.util.UUID;
  * ========== id生成器 ==========
  *
  * @author Mr.huang
- * @version com.hb.unic.util.tool.IdWorker.java, v1.0
+ * @version com.hb.unic.util.helper.IdHelper.java, v1.0
  * @date 2019年07月22日 01时00分
  */
-public class IdWorker {
+public class IdHelper {
 
     private static long sequence = 0L;
 
@@ -27,7 +27,7 @@ public class IdWorker {
      *
      * @return IdWorker对象
      */
-    public static IdWorker getInstance() {
+    public static IdHelper getInstance() {
         return IdWorkerHolder.instance;
     }
 
@@ -35,7 +35,7 @@ public class IdWorker {
      * ########## 静态内部类 ##########
      */
     private static class IdWorkerHolder {
-        public static final IdWorker instance = new IdWorker();
+        public static final IdHelper instance = new IdHelper();
     }
 
     /**

@@ -1,4 +1,4 @@
-package com.hb.unic.util.tool;
+package com.hb.unic.util.helper;
 
 /**
  * ========== 分页工具类 ==========

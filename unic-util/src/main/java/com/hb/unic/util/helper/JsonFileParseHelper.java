@@ -1,4 +1,4 @@
-package com.hb.unic.util.tool;
+package com.hb.unic.util.helper;
 
 import com.hb.unic.logger.Logger;
 import com.hb.unic.logger.LoggerFactory;
@@ -12,15 +12,15 @@ import java.io.File;
  * ========== json文件解析工具 ==========
  *
  * @author Mr.huang
- * @version com.hb.web.app.tool.JsonFileParseTools.java, v1.0
+ * @version com.hb.web.app.helper.JsonFileParseHelper.java, v1.0
  * @date 2019年06月15日 13时45分
  */
-public class JsonFileParseTools {
+public class JsonFileParseHelper {
 
     /**
      * 日志
      */
-    private static final Logger LOGGER = LoggerFactory.getLogger(JsonFileParseTools.class);
+    private static final Logger LOGGER = LoggerFactory.getLogger(JsonFileParseHelper.class);
 
     public static void main(String[] args) {
         String jsonString = readJsonFile2String("static/app/test.json");
