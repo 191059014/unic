@@ -28,6 +28,12 @@
             <artifactId>groovy-all</artifactId>
         </dependency>
 
+        <!-- commons-httpclient -->
+        <dependency>
+            <groupId>commons-httpclient</groupId>
+            <artifactId>commons-httpclient</artifactId>
+        </dependency>
+
         <!-- okHttp3 -->
         <dependency>
             <groupId>com.squareup.okhttp3</groupId>
