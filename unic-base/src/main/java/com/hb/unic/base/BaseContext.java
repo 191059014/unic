@@ -2,6 +2,8 @@ package com.hb.unic.base;
 
 import org.springframework.beans.factory.InitializingBean;
 import org.springframework.beans.factory.config.YamlPropertiesFactoryBean;
+import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.Primary;
 import org.springframework.core.io.Resource;
 import org.springframework.core.io.support.PathMatchingResourcePatternResolver;
 import org.springframework.stereotype.Component;
@@ -16,7 +18,9 @@ import java.util.Properties;
  * @version com.hb.unic.base.ServiceBaseContext.java, v1.0
  * @date 2019年08月17日 00时10分
  */
+@Primary
 @Component
+@Configuration
 public class BaseContext implements InitializingBean {
 
     private static Properties props = null;
