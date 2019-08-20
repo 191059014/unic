@@ -14,55 +14,12 @@ import java.util.UUID;
  */
 public class IdHelper {
 
-    private static long sequence = 0L;
-
-    private long maxSequence = 999999L;
-
-    private int sequenceLength = 6;
-
-    private static String lastTimeStamp = "";
-
-    /**
-     * ########## 获取单例 ##########
-     *
-     * @return IdWorker对象
-     */
-    public static IdHelper getInstance() {
-        return IdWorkerHolder.instance;
-    }
-
-    /**
-     * ########## 静态内部类 ##########
-     */
-    private static class IdWorkerHolder {
-        public static final IdHelper instance = new IdHelper();
-    }
-
-    /**
-     * ########## 生成ID，支持每秒最多999999个 ##########
-     *
-     * @return ID
-     */
-    public synchronized String nextId() {
-        String currentTimeStamp = DateUtils.date2str(DateUtils.getCurrentDate(), DateUtils.FORMAT_YMDHMS);
-        sequence++;
-        if (sequence > maxSequence) {
-            sequence = 1;
-        }
-        if (!currentTimeStamp.equals(lastTimeStamp)) {
-            sequence = 1;
-        }
-        lastTimeStamp = currentTimeStamp;
-        String sequenceId = StringUtils.fillZero(sequence + "", sequenceLength);
-        return new StringBuilder(currentTimeStamp).append(sequenceId).toString();
-    }
-
     /**
      * ########## 获取uuid ##########
      *
      * @return uuid
      */
-    public String uuid() {
+    public static String uuid() {
         return UUID.randomUUID().toString();
     }
 
@@ -71,7 +28,7 @@ public class IdHelper {
      *
      * @return uuid
      */
-    public String uuidShort() {
+    public static String uuidShort() {
         return UUID.randomUUID().toString().replaceAll("-", "");
     }
 
