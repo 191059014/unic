@@ -3,6 +3,7 @@ package com.hb.unic.util.util;
 import java.lang.ref.SoftReference;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
@@ -87,6 +88,26 @@ public class DateUtils {
     public static String date2str(Date date, String dateFormat) {
         SimpleDateFormat dateParser = DateFormatHolder.formatFor(dateFormat);
         return dateParser.format(date);
+    }
+
+    /**
+     * 取得日期a和b间隔的天数。
+     *
+     * @param a the a
+     * @param b the b
+     * @return days between
+     */
+    public static int getDaysBetween(Date a, Date b) {
+        Calendar calendar1 = Calendar.getInstance();
+        Calendar calendar2 = Calendar.getInstance();
+        calendar1.setTime(a);
+        calendar2.setTime(b);
+        long mSeconds = calendar1.getTimeInMillis() - calendar2.getTimeInMillis();
+        int days = (int) (mSeconds / 86400000);
+        if (mSeconds % 86400000 > 0) {
+            days++;
+        }
+        return days;
     }
 
     /**
