@@ -5,8 +5,12 @@ import com.hb.unic.logger.LoggerFactory;
 import org.apache.commons.io.FileUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.core.io.ClassPathResource;
+import org.springframework.core.io.Resource;
 
+import java.io.DataInputStream;
 import java.io.File;
+import java.io.IOException;
+import java.io.InputStream;
 
 /**
  * ========== json文件解析工具 ==========
@@ -46,6 +50,41 @@ public class JsonFileParseHelper {
             }
         }
         return jsonString;
+    }
+
+    /**
+     * 以流的方式获取json文件内容
+     *
+     * @param path json文件路径
+     * @return json
+     */
+    public static String readJsonFile2StringByStream(String path) {
+        Resource resource = new ClassPathResource(path);
+        StringBuilder sb = new StringBuilder();
+        InputStream is = null;
+        DataInputStream dis = null;
+        try {
+            is = resource.getInputStream();
+            dis = new DataInputStream(is);
+            int data;
+            while ((data = dis.read()) != -1) {
+                sb.append((char) data);
+            }
+        } catch (IOException e) {
+            System.out.println(String.format("根据路径获取静态资源，异常：%s", e));
+        } finally {
+            try {
+                if (dis != null) {
+                    dis.close();
+                }
+                if (is != null) {
+                    is.close();
+                }
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+        return sb.toString();
     }
 
 }
