@@ -91,7 +91,7 @@ public class DateUtils {
     }
 
     /**
-     * 取得日期a和b间隔的天数。
+     * 取得日期a和b间隔的天数
      *
      * @param a the a
      * @param b the b
@@ -108,6 +108,22 @@ public class DateUtils {
             days++;
         }
         return days;
+    }
+
+    /**
+     * 判断是不是周末
+     *
+     * @param date 日期
+     * @return boolean
+     */
+    public static boolean isWeekend(Date date) {
+        Calendar calendar = Calendar.getInstance();
+        calendar.setTime(date);
+        int week = calendar.get(Calendar.DAY_OF_WEEK);
+        if (Calendar.SATURDAY == week || Calendar.SUNDAY == week) {
+            return true;
+        }
+        return false;
     }
 
     /**
