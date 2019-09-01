@@ -15,6 +15,10 @@ public class BigDecimalUtils {
      * 默认精度
      */
     public static final Integer DEFAULT_SCALE = new Integer(2);
+    /**
+     * 10位精度
+     */
+    public static final Integer TEN_SCALE = new Integer(10);
 
     /**
      * ########## 加法 ##########
@@ -32,6 +36,21 @@ public class BigDecimalUtils {
             resultScale = scale[0];
         }
         return a1.add(a2).setScale(resultScale, BigDecimal.ROUND_HALF_UP);
+    }
+
+    /**
+     * ########## 加法 ##########
+     *
+     * @param values 累加的数值数组
+     * @return BigDecimal
+     */
+    public static BigDecimal addAll(Integer scale, BigDecimal... values) {
+        BigDecimal total = BigDecimal.ZERO;
+        for (BigDecimal value : values) {
+            total = add(total, value, TEN_SCALE);
+        }
+        total = total.setScale(scale, BigDecimal.ROUND_HALF_UP);
+        return total;
     }
 
     /**
