@@ -127,6 +127,20 @@ public class DateUtils {
     }
 
     /**
+     * 给日期增加天数
+     *
+     * @param date   日期
+     * @param addNum 增加的天数
+     * @return 增加天数后的日期
+     */
+    public static Date addDays(Date date, int addNum) {
+        Calendar calendar = Calendar.getInstance();
+        calendar.setTime(date);
+        calendar.add(Calendar.DATE, addNum);
+        return calendar.getTime();
+    }
+
+    /**
      * ########## 日期格式辅助类 ##########
      */
     static final class DateFormatHolder {
@@ -163,6 +177,16 @@ public class DateUtils {
             }
             return format;
         }
+    }
+
+    public static void main(String[] args) {
+        Calendar c1 = Calendar.getInstance();
+        c1.setTime(new Date());
+        Calendar c2 = Calendar.getInstance();
+        c2.setTime(new Date());
+        c2.add(Calendar.DATE, 0);
+        int daysBetween = getDaysBetween(c2.getTime(), c1.getTime());
+        System.out.println(daysBetween);
     }
 
 }
