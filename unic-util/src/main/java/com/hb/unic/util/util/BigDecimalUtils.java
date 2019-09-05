@@ -41,13 +41,13 @@ public class BigDecimalUtils {
     /**
      * ########## 加法 ##########
      *
-     * @param values 累加的数值数组
+     * @param addValues 累加的数值数组
      * @return BigDecimal
      */
-    public static BigDecimal addAll(Integer scale, BigDecimal... values) {
+    public static BigDecimal addAll(Integer scale, BigDecimal... addValues) {
         BigDecimal total = BigDecimal.ZERO;
-        for (BigDecimal value : values) {
-            total = add(total, value, TEN_SCALE);
+        for (BigDecimal addUnit : addValues) {
+            total = add(total, addUnit, TEN_SCALE);
         }
         total = total.setScale(scale, BigDecimal.ROUND_HALF_UP);
         return total;
@@ -69,6 +69,22 @@ public class BigDecimalUtils {
             resultScale = scale[0];
         }
         return s1.subtract(s2).setScale(resultScale, BigDecimal.ROUND_HALF_UP);
+    }
+
+    /**
+     * 减法
+     *
+     * @param scale     结果的精度
+     * @param minuend   被减数
+     * @param subValues 减数集合
+     * @return 结果
+     */
+    public static BigDecimal subtractAll(Integer scale, BigDecimal minuend, BigDecimal... subValues) {
+        for (BigDecimal addUnit : subValues) {
+            minuend = subtract(minuend, addUnit, TEN_SCALE);
+        }
+        minuend = minuend.setScale(scale, BigDecimal.ROUND_HALF_UP);
+        return minuend;
     }
 
     /**
