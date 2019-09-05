@@ -31,9 +31,6 @@ public class LoggerEntity {
 
     @Override
     public String toString() {
-        return "LoggerEntity{" +
-                "traceId='" + traceId + '\'' +
-                ", content=" + String.valueOf(content) +
-                '}';
+        return "{traceId:\"" + traceId + "\",content:\"" + String.valueOf(content) + "\"}";
     }
 }

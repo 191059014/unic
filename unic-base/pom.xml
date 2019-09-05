@@ -17,6 +17,11 @@
 
     <dependencies>
 
+        <dependency>
+            <groupId>com.hb.unic</groupId>
+            <artifactId>unic-util</artifactId>
+        </dependency>
+
         <!-- spring-beans -->
         <dependency>
             <groupId>org.springframework</groupId>

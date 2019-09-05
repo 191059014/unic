@@ -1,7 +1,5 @@
 package com.hb.unic.logger;
 
-import com.alibaba.fastjson.JSON;
-
 /**
  * ========== 自定义日志 ==========
  *
@@ -117,7 +115,7 @@ public class Logger {
         LoggerEntity loggerEntity = new LoggerEntity();
         loggerEntity.setTraceId(traceId);
         loggerEntity.setContent(msg);
-        return JSON.toJSONString(loggerEntity);
+        return loggerEntity.toString();
     }
 
 }

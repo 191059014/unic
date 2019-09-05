@@ -1,5 +1,7 @@
 package com.hb.unic.base;
 
+import com.hb.unic.logger.Logger;
+import com.hb.unic.logger.LoggerFactory;
 import org.springframework.beans.factory.InitializingBean;
 import org.springframework.beans.factory.config.YamlPropertiesFactoryBean;
 import org.springframework.context.annotation.Configuration;
@@ -22,6 +24,11 @@ import java.util.Properties;
 @Component
 @Configuration
 public class BaseContext implements InitializingBean {
+
+    /**
+     * The Logger.
+     */
+    protected Logger logger = LoggerFactory.getLogger(this.getClass());
 
     private static Properties props = null;
 
@@ -53,7 +60,7 @@ public class BaseContext implements InitializingBean {
             applicationProperties.setResources(resources);
             props = applicationProperties.getObject();
         } catch (IOException e) {
-            e.printStackTrace();
+            logger.error("load yml config error!");
         }
     }
 
