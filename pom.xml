@@ -12,6 +12,7 @@
         <module>unic-util</module>
         <module>unic-base</module>
         <module>unic-logger</module>
+        <module>unic-cache</module>
     </modules>
 
     <name>unic</name>
@@ -29,6 +30,7 @@
         <groovy.version>2.4.7</groovy.version>
         <okhttp.version>3.12.0</okhttp.version>
         <fastjson.version>1.2.47</fastjson.version>
+        <spring-boot.version>2.1.2.RELEASE</spring-boot.version>
         <spring.version>5.1.4.RELEASE</spring.version>
         <commons-httpclient.version>3.1</commons-httpclient.version>
         <commons-lang3.version>3.9</commons-lang3.version>
@@ -74,6 +76,12 @@
                 <groupId>com.alibaba</groupId>
                 <artifactId>fastjson</artifactId>
                 <version>${fastjson.version}</version>
+            </dependency>
+            <!--redis缓存支持-->
+            <dependency>
+                <groupId>org.springframework.boot</groupId>
+                <artifactId>spring-boot-starter-data-redis</artifactId>
+                <version>${spring-boot.version}</version>
             </dependency>
             <!-- spring beans -->
             <dependency>
