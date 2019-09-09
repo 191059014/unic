@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.stereotype.Component;
 
+import java.util.Set;
 import java.util.concurrent.TimeUnit;
 
 /**
@@ -103,6 +104,40 @@ public class RedisCacheServiceImpl implements ICacheService {
     @Override
     public Long getNextValue(String key) {
         return stringRedisTemplate.opsForValue().increment(key);
+    }
+
+    /**
+     * 操作set集合，增加元素
+     *
+     * @param key 键
+     * @param vs  添加的元素数组
+     */
+    @Override
+    public void set_add(String key, String... vs) {
+        stringRedisTemplate.opsForSet().add(key, vs);
+    }
+
+    /**
+     * 操作set集合，获取所有元素
+     *
+     * @param key 键
+     * @return 所有元素集合
+     */
+    @Override
+    public Set<String> set_getAll(String key) {
+        return stringRedisTemplate.opsForSet().members(key);
+    }
+
+    /**
+     * 操作set集合，判断是否包含某个值
+     *
+     * @param key   键
+     * @param value 值
+     * @return 是否包含
+     */
+    @Override
+    public boolean set_contains(String key, String value) {
+        return stringRedisTemplate.opsForSet().isMember(key, value);
     }
 
 }
