@@ -20,7 +20,7 @@ public @interface SelfTableColumn {
     /**
      * 长度
      */
-    int length() default 255;
+    int length() default 0;
 
     /**
      * 默认值
