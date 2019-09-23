@@ -72,7 +72,7 @@ public class DbTools {
                 sb.append(isId ? " primary key not null " : "");
                 break;
             case "BigDecimal":
-                sb.append(" numeric(").append(length).append(",2)");
+                sb.append(" decimal(").append(length).append(",2)");
                 break;
             case "Date":
                 sb.append(" timestamp ");
