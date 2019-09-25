@@ -60,19 +60,19 @@ public class DbTools {
         String name = field.getType().getSimpleName();
         switch (name) {
             case "String":
-                sb.append(" varchar(").append(length).append(")");
+                sb.append(" varchar(").append(length == 0 ? 255 : length).append(")");
                 sb.append(isId ? " primary key not null " : "");
                 break;
             case "Integer":
-                sb.append(" int(").append(length).append(")");
-                sb.append(isId ? " primary key not null " : "");
+                sb.append(" int(").append(length == 0 ? 10 : length).append(")");
+                sb.append(isId ? " primary key not null AUTO_INCREMENT" : "");
                 break;
             case "Long":
-                sb.append(" numeric(").append(length).append(")");
+                sb.append(" numeric(").append(length == 0 ? 16 : length).append(")");
                 sb.append(isId ? " primary key not null " : "");
                 break;
             case "BigDecimal":
-                sb.append(" decimal(").append(length).append(",2)");
+                sb.append(" numeric(").append(length == 0 ? 12 : length).append(",2)");
                 break;
             case "Date":
                 sb.append(" timestamp ");
