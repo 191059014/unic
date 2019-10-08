@@ -7,8 +7,10 @@ import org.apache.commons.lang3.StringUtils;
 import org.springframework.core.io.ClassPathResource;
 import org.springframework.core.io.Resource;
 
+import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.IOException;
+import java.io.InputStream;
 
 /**
  * ========== json文件解析工具 ==========
@@ -58,14 +60,32 @@ public class JsonFileParseHelper {
      */
     public static String readJsonFile2StringByStream(String path) {
         Resource resource = new ClassPathResource(path);
+        StringBuilder sb = new StringBuilder();
+        InputStream is = null;
+        ByteArrayOutputStream bos = new ByteArrayOutputStream();
         try {
-            File filePath = resource.getFile();
-            String input = FileUtils.readFileToString(filePath, "UTF-8");
-            return input;
+            is = resource.getInputStream();
+            byte[] buffer = new byte[1024];
+            int len = 0;
+            while ((len = is.read(buffer)) != -1) {
+                bos.write(buffer, 0, len);
+            }
+            sb.append(bos.toString("utf-8"));
         } catch (IOException e) {
             System.out.println(String.format("根据路径获取静态资源，异常：%s", e));
+        } finally {
+            try {
+                if (bos != null) {
+                    bos.close();
+                }
+                if (is != null) {
+                    is.close();
+                }
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
         }
-        return null;
+        return sb.toString();
     }
 
 }
