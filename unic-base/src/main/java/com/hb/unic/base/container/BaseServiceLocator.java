@@ -17,8 +17,10 @@ import org.springframework.stereotype.Component;
 @Component
 public class BaseServiceLocator implements ApplicationContextAware {
 
+    //日志
     private static final Logger LOGGER = LoggerFactory.getLogger(BaseServiceLocator.class);
 
+    //spring上下文
     private static ApplicationContext applicationContext;
 
     @Override

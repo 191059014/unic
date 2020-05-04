@@ -16,6 +16,7 @@
     <packaging>jar</packaging>
 
     <dependencies>
+
         <!-- slf4j -->
         <dependency>
             <groupId>org.slf4j</groupId>

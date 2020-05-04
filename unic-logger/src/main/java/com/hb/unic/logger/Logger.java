@@ -1,5 +1,13 @@
 package com.hb.unic.logger;
 
+import com.alibaba.fastjson.JSON;
+import com.alibaba.fastjson.annotation.JSONField;
+import org.slf4j.LoggerFactory;
+import org.slf4j.helpers.MessageFormatter;
+
+import java.text.SimpleDateFormat;
+import java.util.Date;
+
 /**
  * ========== 自定义日志 ==========
  *
@@ -10,112 +18,156 @@ package com.hb.unic.logger;
 public class Logger {
 
     /**
-     * slf4j Logger
+     * org.slf4j.Logger
      */
     private org.slf4j.Logger delegateLogger;
 
     /**
-     * ########## 构造方法，根据参数类型判断具体要用的Logger对象 ##########
+     * 构造方法
+     *
+     * @param o 根据此参数来构建日志对象
      */
-    Logger(Object param) {
-        if (param instanceof Class) {
-            delegateLogger = org.slf4j.LoggerFactory.getLogger((Class) param);
-        } else if (param instanceof String) {
-            delegateLogger = org.slf4j.LoggerFactory.getLogger((String) param);
+    Logger(Object o) {
+        if (o == null) {
+            throw new IllegalArgumentException("构建日志的参数不能为空");
+        }
+        if (o instanceof String) {
+            delegateLogger = org.slf4j.LoggerFactory.getLogger((String) o);
+        } else if (o instanceof Class) {
+            delegateLogger = LoggerFactory.getLogger((Class) o);
+        } else {
+            throw new IllegalArgumentException("构建日志的参数类型有误");
         }
     }
 
     /**
-     * ########## 判断debug日志级别是否可用 ##########
+     * info级别的日志打印
      *
-     * @return true-可用，false-不可用
+     * @param format    格式化的日志信息
+     * @param arguments 参数
      */
-    public boolean isDebugEnabled() {
-        return this.delegateLogger.isDebugEnabled();
+    public void info(String format, Object... arguments) {
+        Object message = this.getLogMsg(format, arguments);
+        CommonLogEntity commonLogEntity = this.buildLogTemplate(message, Thread.currentThread().getStackTrace(), "INFO");
+        this.delegateLogger.info(getJsonContent(commonLogEntity));
     }
 
     /**
-     * ########## debug日志 ##########
+     * error级别的日志打印
      *
-     * @param msg    日志信息
-     * @param params 参数
+     * @param format    格式化的日志信息
+     * @param arguments 参数
      */
-    public void debug(String msg, Object... params) {
-        this.delegateLogger.debug(getLoggerEntity(msg), params);
+    public void error(String format, Object... arguments) {
+        Object message = this.getLogMsg(format, arguments);
+        CommonLogEntity commonLogEntity = this.buildLogTemplate(message, Thread.currentThread().getStackTrace(), "ERROR");
+        this.delegateLogger.info(getJsonContent(commonLogEntity));
     }
 
     /**
-     * ########## 判断info日志级别是否可用 ##########
+     * 转换成json
      *
-     * @return true-可用，false-不可用
+     * @param commonLogEntity 日志实体
+     * @return 标准json
      */
-    public boolean isInfoEnabled() {
-        return this.delegateLogger.isInfoEnabled();
+    private String getJsonContent(CommonLogEntity commonLogEntity) {
+        return JSON.toJSONString(commonLogEntity);
     }
 
     /**
-     * ########## info日志 ##########
+     * 构建日志信息模板
      *
-     * @param msg    日志信息
-     * @param params 参数
+     * @return 标准日志
      */
-    public void info(String msg, Object... params) {
-        this.delegateLogger.info(getLoggerEntity(msg), params);
+    private CommonLogEntity buildLogTemplate(Object message, StackTraceElement[] stacks, String logLevel) {
+        CommonLogEntity commonLogEntity = new CommonLogEntity();
+        commonLogEntity.setContent(message);
+        commonLogEntity.setTrace_id(TraceIdUtils.getTraceId());
+        commonLogEntity.setLog_date((new SimpleDateFormat("yyyy-MM-dd HH:mm:ss.SSS")).format(new Date(System.currentTimeMillis())));
+        commonLogEntity.setLog_level(logLevel);
+        commonLogEntity.setFile_name(stacks[2].getClassName());
+        commonLogEntity.setFile_line(stacks[2].getLineNumber());
+        return commonLogEntity;
     }
 
     /**
-     * ########## 判断warn日志级别是否可用 ##########
+     * 组装日志信息
      *
-     * @return true-可用，false-不可用
+     * @param format   格式化的字符串
+     * @param argArray 参数数组
+     * @return FormattingTuple对象
      */
-    public boolean isWarnEnabled() {
-        return this.delegateLogger.isWarnEnabled();
+    private Object getLogMsg(String format, Object[] argArray) {
+        return MessageFormatter.arrayFormat(format, argArray, null).getMessage();
     }
 
     /**
-     * ########## warn日志 ##########
+     * 标准日志实体类
      *
-     * @param msg    日志信息
-     * @param params 参数
+     * @param <T>
      */
-    public void warn(String msg, Object... params) {
-        this.delegateLogger.warn(getLoggerEntity(msg), params);
-    }
+    private class CommonLogEntity<T> {
 
-    /**
-     * ########## 判断error日志级别是否可用 ##########
-     *
-     * @return true-可用，false-不可用
-     */
-    public boolean isErrorEnabled() {
-        return this.delegateLogger.isErrorEnabled();
-    }
+        @JSONField(ordinal = 1)
+        private T content;
+        @JSONField(ordinal = 2)
+        private String trace_id;
+        @JSONField(ordinal = 3)
+        private String log_date;
+        @JSONField(ordinal = 4)
+        private String log_level;
+        @JSONField(ordinal = 5)
+        private String file_name;
+        @JSONField(ordinal = 6)
+        private Integer file_line;
 
-    /**
-     * ########## error日志 ##########
-     *
-     * @param msg    日志信息
-     * @param params 参数
-     */
-    public void error(String msg, Object... params) {
-        this.delegateLogger.error(getLoggerEntity(msg), params);
-    }
-
-    /**
-     * ########## 获取日志信息 ##########
-     *
-     * @param msg 日志信息
-     * @return 包装后的日志信息
-     */
-    private String getLoggerEntity(String msg) {
-        String traceId = TraceIdUtils.getTraceId();
-        if (traceId == null || traceId == "") {
-            return msg;
+        public T getContent() {
+            return content;
         }
-        LoggerEntity loggerEntity = new LoggerEntity();
-        loggerEntity.setTraceId(traceId);
-        loggerEntity.setContent(msg);
-        return loggerEntity.toString();
+
+        public void setContent(T content) {
+            this.content = content;
+        }
+
+        public String getTrace_id() {
+            return trace_id;
+        }
+
+        public void setTrace_id(String trace_id) {
+            this.trace_id = trace_id;
+        }
+
+        public String getLog_date() {
+            return log_date;
+        }
+
+        public void setLog_date(String log_date) {
+            this.log_date = log_date;
+        }
+
+        public String getLog_level() {
+            return log_level;
+        }
+
+        public void setLog_level(String log_level) {
+            this.log_level = log_level;
+        }
+
+        public String getFile_name() {
+            return file_name;
+        }
+
+        public void setFile_name(String file_name) {
+            this.file_name = file_name;
+        }
+
+        public Integer getFile_line() {
+            return file_line;
+        }
+
+        public void setFile_line(Integer file_line) {
+            this.file_line = file_line;
+        }
     }
 
 }

@@ -26,8 +26,14 @@ public class RedisCacheServiceImpl implements ICacheService {
      */
     private static final Logger LOGGER = LoggerFactory.getLogger(RedisCacheServiceImpl.class);
 
+    /**
+     * 时间单位
+     */
     private static final TimeUnit TIME_UNIT = TimeUnit.SECONDS;
 
+    /**
+     * 字符串redis操作工具
+     */
     @Autowired
     private StringRedisTemplate stringRedisTemplate;
 
