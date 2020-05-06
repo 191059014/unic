@@ -1,8 +1,7 @@
 package com.hb.unic.util.util;
 
-import com.hb.unic.logger.Logger;
-import com.hb.unic.logger.LoggerFactory;
-import com.hb.unic.util.helper.LogHelper;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
@@ -47,11 +46,11 @@ public class EncryptUtils {
             encode = byteArr2HexStr(md.digest(message.getBytes("UTF-8")));
         } catch (NoSuchAlgorithmException e) {
             if (LOGGER.isErrorEnabled()) {
-                LOGGER.error("MessageDigest Encode error", LogHelper.getStackTrace(e));
+                LOGGER.error("MessageDigest Encode error: {}", e);
             }
         } catch (Exception e) {
             if (LOGGER.isErrorEnabled()) {
-                LOGGER.error("byteArr2HexStr error", LogHelper.getStackTrace(e));
+                LOGGER.error("byteArr2HexStr error: {}", e);
             }
         }
         return encode;

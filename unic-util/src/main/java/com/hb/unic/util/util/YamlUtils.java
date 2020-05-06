@@ -19,6 +19,12 @@ public class YamlUtils {
         System.out.println(111);
     }
 
+    /**
+     * 读取yaml文件
+     *
+     * @param path yaml文件路径
+     * @return yaml文件所有属性
+     */
     public static Properties readYml(String path) {
         YamlPropertiesFactoryBean yaml = new YamlPropertiesFactoryBean();
         yaml.setResources(new ClassPathResource(path));

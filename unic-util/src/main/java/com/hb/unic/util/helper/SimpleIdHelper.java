@@ -1,18 +1,15 @@
 package com.hb.unic.util.helper;
 
-import com.hb.unic.util.util.DateUtils;
-import com.hb.unic.util.util.StringUtils;
-
 import java.util.UUID;
 
 /**
  * ========== id生成器 ==========
  *
  * @author Mr.huang
- * @version com.hb.unic.util.helper.IdHelper.java, v1.0
+ * @version com.hb.unic.util.helper.SimpleIdHelper.java, v1.0
  * @date 2019年07月22日 01时00分
  */
-public class IdHelper {
+public class SimpleIdHelper {
 
     /**
      * ########## 获取uuid ##########

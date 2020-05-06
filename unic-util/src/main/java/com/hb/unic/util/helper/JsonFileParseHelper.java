@@ -1,9 +1,9 @@
 package com.hb.unic.util.helper;
 
-import com.hb.unic.logger.Logger;
-import com.hb.unic.logger.LoggerFactory;
 import org.apache.commons.io.FileUtils;
 import org.apache.commons.lang3.StringUtils;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.core.io.ClassPathResource;
 import org.springframework.core.io.Resource;
 
@@ -46,7 +46,7 @@ public class JsonFileParseHelper {
             jsonString = FileUtils.readFileToString(jsonFile, "utf-8");
         } catch (Exception e) {
             if (LOGGER.isErrorEnabled()) {
-                LOGGER.error("read json file to string exception: {}", LogHelper.getStackTrace(e));
+                LOGGER.error("read json file to string exception: {}", e);
             }
         }
         return jsonString;

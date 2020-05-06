@@ -1,4 +1,4 @@
-package com.hb.unic.util.helper;
+package com.hb.unic.logger.util;
 
 import java.io.PrintWriter;
 import java.io.StringWriter;
@@ -7,10 +7,10 @@ import java.io.StringWriter;
  * ========== 日志工具类 ==========
  *
  * @author Mr.huang
- * @version com.hb.web.util.LogHelper.java, v1.0
+ * @version com.hb.web.util.LogUtils.java, v1.0
  * @date 2019年06月14日 11时07分
  */
-public class LogHelper {
+public class LogUtils {
 
     /**
      * ########## 获取异常堆栈信息 ##########

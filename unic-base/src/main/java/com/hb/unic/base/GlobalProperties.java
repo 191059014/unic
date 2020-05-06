@@ -1,7 +1,7 @@
 package com.hb.unic.base;
 
-import com.hb.unic.logger.Logger;
-import com.hb.unic.logger.LoggerFactory;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.InitializingBean;
 import org.springframework.beans.factory.config.YamlPropertiesFactoryBean;
 import org.springframework.context.annotation.Configuration;
@@ -14,7 +14,7 @@ import java.io.IOException;
 import java.util.Properties;
 
 /**
- * ========== base模块上下文 ==========
+ * ========== 全局的属性配置 ==========
  *
  * @author Mr.huang
  * @version com.hb.unic.base.ServiceBaseContext.java, v1.0
@@ -23,13 +23,16 @@ import java.util.Properties;
 @Primary
 @Component
 @Configuration
-public class BaseContext implements InitializingBean {
+public class GlobalProperties implements InitializingBean {
 
     /**
-     * The Logger.
+     * The LOGGER.
      */
-    protected Logger logger = LoggerFactory.getLogger(this.getClass());
+    private static final Logger LOGGER = LoggerFactory.getLogger(GlobalProperties.class);
 
+    /**
+     * 所有属性
+     */
     private static Properties props = null;
 
     /**
@@ -57,10 +60,15 @@ public class BaseContext implements InitializingBean {
         PathMatchingResourcePatternResolver resolver = new PathMatchingResourcePatternResolver();
         try {
             resources = resolver.getResources("classpath*:config/service-*-config.yml");
+            if (resources != null) {
+                for (Resource resource : resources) {
+                    LOGGER.info("load config success: {}", resource.getFilename());
+                }
+            }
             applicationProperties.setResources(resources);
             props = applicationProperties.getObject();
         } catch (IOException e) {
-            logger.error("load yml config error!");
+            LOGGER.error("load yml config error: {}", e);
         }
     }
 

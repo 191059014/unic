@@ -11,23 +11,23 @@ import org.springframework.stereotype.Component;
  * ========== Spring bean容器 ==========
  *
  * @author Mr.huang
- * @version com.hb.unic.base.container.BaseServiceLocator.java, v1.0
+ * @version com.hb.unic.base.container.SpringUtils.java, v1.0
  * @date 2019年06月02日 01时23分
  */
 @Component
-public class BaseServiceLocator implements ApplicationContextAware {
+public class SpringUtils implements ApplicationContextAware {
 
     //日志
-    private static final Logger LOGGER = LoggerFactory.getLogger(BaseServiceLocator.class);
+    private static final Logger LOGGER = LoggerFactory.getLogger(SpringUtils.class);
 
     //spring上下文
     private static ApplicationContext applicationContext;
 
     @Override
     public void setApplicationContext(ApplicationContext applicationContext) throws BeansException {
-        if (BaseServiceLocator.applicationContext == null) {
+        if (SpringUtils.applicationContext == null) {
             LOGGER.info("set applicationContext complete");
-            BaseServiceLocator.applicationContext = applicationContext;
+            SpringUtils.applicationContext = applicationContext;
         }
     }
 

@@ -1,10 +1,12 @@
 package com.hb.unic.cache.service.impl;
 
 import com.alibaba.fastjson.JSON;
-import com.hb.unic.cache.service.ICacheService;
-import com.hb.unic.logger.Logger;
-import com.hb.unic.logger.LoggerFactory;
+import com.hb.unic.cache.ICacheService;
+import com.hb.unic.cache.service.AbstractRedisCacheService;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Primary;
 import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.stereotype.Component;
 
@@ -18,8 +20,9 @@ import java.util.concurrent.TimeUnit;
  * @version com.hb.web.helper.RedisTools.java, v1.0
  * @date 2019年06月11日 00时19分
  */
+@Primary
 @Component("redisCacheService")
-public class RedisCacheServiceImpl implements ICacheService {
+public class RedisCacheServiceImpl extends AbstractRedisCacheService implements ICacheService {
 
     /**
      * 自定义 log
@@ -108,7 +111,7 @@ public class RedisCacheServiceImpl implements ICacheService {
      * @param key 键
      */
     @Override
-    public Long getNextValue(String key) {
+    public Long increment(String key) {
         return stringRedisTemplate.opsForValue().increment(key);
     }
 

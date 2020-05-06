@@ -1,12 +1,11 @@
 package com.hb.unic.util.util;
 
-import com.hb.unic.logger.Logger;
-import com.hb.unic.logger.LoggerFactory;
-import com.hb.unic.util.helper.LogHelper;
 import groovy.lang.Binding;
 import groovy.lang.GroovyObject;
 import groovy.lang.GroovyShell;
 import groovy.util.GroovyScriptEngine;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.io.IOException;
 import java.net.URI;
@@ -53,12 +52,11 @@ public class GroovyUtils {
         try {
             uri = Thread.currentThread().getContextClassLoader().getResource(groovyFilePath).toURI();
             value = groovyShell.evaluate(uri);
-        } catch (URISyntaxException e) {
-            LOGGER.error(LogHelper.getStackTrace(e));
-        } catch (IOException e) {
-            LOGGER.error(LogHelper.getStackTrace(e));
+        } catch (URISyntaxException | IOException e) {
+            if (LOGGER.isErrorEnabled()) {
+                LOGGER.error("groovy evaluateFile exception: {}", e.getMessage());
+            }
         }
-
         return value;
     }
 
@@ -84,7 +82,9 @@ public class GroovyUtils {
             GroovyObject scriptInstance = (GroovyObject) scriptClass.newInstance();
             result = scriptInstance.invokeMethod(methodName, params);
         } catch (Exception e) {
-            LOGGER.error("evaluate groovy method exception: " + LogHelper.getStackTrace(e));
+            if (LOGGER.isErrorEnabled()) {
+                LOGGER.error("groovy evaluateMethod exception: {}", e.getMessage());
+            }
         }
         return result;
     }

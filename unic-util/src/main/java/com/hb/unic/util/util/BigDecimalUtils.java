@@ -14,11 +14,11 @@ public class BigDecimalUtils {
     /**
      * 默认精度
      */
-    public static final Integer DEFAULT_SCALE = new Integer(2);
+    public static final Integer DEFAULT_SCALE = 2;
     /**
      * 10位精度
      */
-    public static final Integer TEN_SCALE = new Integer(10);
+    public static final Integer TEN_SCALE = 10;
 
     /**
      * ########## 加法 ##########

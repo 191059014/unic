@@ -1,12 +1,22 @@
 package com.hb.unic.util.util;
 
 import com.alibaba.fastjson.JSONObject;
-import com.hb.unic.logger.Logger;
-import com.hb.unic.logger.LoggerFactory;
-import com.hb.unic.util.helper.LogHelper;
-import okhttp3.*;
+import okhttp3.Call;
+import okhttp3.FormBody;
+import okhttp3.MediaType;
+import okhttp3.OkHttpClient;
+import okhttp3.Request;
+import okhttp3.RequestBody;
+import okhttp3.Response;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
-import javax.net.ssl.*;
+import javax.net.ssl.HostnameVerifier;
+import javax.net.ssl.SSLContext;
+import javax.net.ssl.SSLSession;
+import javax.net.ssl.SSLSocketFactory;
+import javax.net.ssl.TrustManager;
+import javax.net.ssl.X509TrustManager;
 import java.security.SecureRandom;
 import java.security.cert.CertificateException;
 import java.security.cert.X509Certificate;
@@ -120,7 +130,7 @@ public class OkHttpUtils {
             sc.init(null, new TrustManager[]{getTrustManager()}, new SecureRandom());
             ssfFactory = sc.getSocketFactory();
         } catch (Exception e) {
-            LOGGER.error("createSSLSocketFactory exception:{}", LogHelper.getStackTrace(e));
+            LOGGER.error("createSSLSocketFactory exception: {}", e);
         }
 
         return ssfFactory;

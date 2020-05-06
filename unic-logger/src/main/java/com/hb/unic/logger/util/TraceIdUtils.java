@@ -1,4 +1,4 @@
-package com.hb.unic.logger;
+package com.hb.unic.logger.util;
 
 import java.util.UUID;
 

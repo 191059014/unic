@@ -1,10 +1,10 @@
 package com.hb.unic.base.service;
 
-import com.hb.unic.base.container.BaseServiceLocator;
+import com.hb.unic.base.container.SpringUtils;
 import com.hb.unic.base.exception.StandardRuntimeException;
-import com.hb.unic.logger.Logger;
-import com.hb.unic.logger.LoggerFactory;
 import org.apache.commons.beanutils.MethodUtils;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.scheduling.annotation.Async;
 import org.springframework.scheduling.annotation.AsyncResult;
 import org.springframework.stereotype.Component;
@@ -28,7 +28,7 @@ public class ServiceExecutorServiceImpl implements IServiceExecutorService {
     @Override
     @Async
     public void execute(String serviceName, String methodName, Object[] methodParameter) {
-        Object service = BaseServiceLocator.getBean(serviceName);
+        Object service = SpringUtils.getBean(serviceName);
         if (service != null) {
             execute(service, methodName, methodParameter);
         } else {
@@ -54,7 +54,7 @@ public class ServiceExecutorServiceImpl implements IServiceExecutorService {
     @Override
     @Async
     public ListenableFuture<Object> executeFuture(String serviceName, String methodName, Object[] methodParameter) {
-        Object service = BaseServiceLocator.getBean(serviceName);
+        Object service = SpringUtils.getBean(serviceName);
         if (service != null) {
             try {
                 Object r = MethodUtils.invokeMethod(service, methodName, methodParameter);
@@ -90,7 +90,7 @@ public class ServiceExecutorServiceImpl implements IServiceExecutorService {
 
     @Override
     public Object invoke(String serviceName, String methodName, Object[] methodParameter) {
-        Object service = BaseServiceLocator.getBean(serviceName);
+        Object service = SpringUtils.getBean(serviceName);
         if (service != null) {
             try {
                 Object r = invoke(service, methodName, methodParameter);

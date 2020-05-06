@@ -1,8 +1,7 @@
 package com.hb.unic.util.util;
 
-import com.hb.unic.logger.Logger;
-import com.hb.unic.logger.LoggerFactory;
-import com.hb.unic.util.helper.LogHelper;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.BeanUtils;
 
 /**
@@ -36,10 +35,14 @@ public class CloneUtils {
             targetInstance = classType.newInstance();
         } catch (InstantiationException e) {
             if (LOGGER.isErrorEnabled()) {
-                LOGGER.error(LogHelper.getStackTrace(e));
+                LOGGER.error("clone InstantiationException: {}", e);
             }
+            return null;
         } catch (IllegalAccessException e) {
-            LOGGER.error(LogHelper.getStackTrace(e));
+            if (LOGGER.isErrorEnabled()) {
+                LOGGER.error("clone IllegalAccessException: {}", e);
+            }
+            return null;
         }
         BeanUtils.copyProperties(source, targetInstance);
         return targetInstance;
