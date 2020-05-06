@@ -62,7 +62,7 @@ public class GlobalProperties implements InitializingBean {
             resources = resolver.getResources("classpath*:config/service-*-config.yml");
             if (resources != null) {
                 for (Resource resource : resources) {
-                    LOGGER.info("load {} success", resource.getFilename());
+                    LOGGER.info("load {} complete", resource.getFilename());
                 }
             }
             applicationProperties.setResources(resources);
