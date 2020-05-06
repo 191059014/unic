@@ -28,7 +28,6 @@ public class TraceIdFilter implements Filter {
 
     @Override
     public void doFilter(ServletRequest servletRequest, ServletResponse servletResponse, FilterChain filterChain) throws IOException, ServletException {
-        LOGGER.info("requestURI:{}", ((HttpServletRequest) servletRequest).getRequestURI());
         try {
             // 初始化traceId
             String traceId = servletRequest.getParameter("traceId");
