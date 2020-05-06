@@ -4,8 +4,10 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.InitializingBean;
 import org.springframework.beans.factory.config.YamlPropertiesFactoryBean;
+import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Primary;
+import org.springframework.context.support.PropertySourcesPlaceholderConfigurer;
 import org.springframework.core.io.Resource;
 import org.springframework.core.io.support.PathMatchingResourcePatternResolver;
 import org.springframework.stereotype.Component;
@@ -17,7 +19,7 @@ import java.util.Properties;
  * ========== 全局的属性配置 ==========
  *
  * @author Mr.huang
- * @version com.hb.unic.base.ServiceBaseContext.java, v1.0
+ * @version com.hb.unic.base.GlobalProperties.java, v1.0
  * @date 2019年08月17日 00时10分
  */
 @Primary
@@ -49,6 +51,19 @@ public class GlobalProperties implements InitializingBean {
     public void afterPropertiesSet() throws Exception {
         // 加载配置
         loadProperties();
+    }
+
+    @Bean
+    public PropertySourcesPlaceholderConfigurer yaml() throws IOException {
+        PropertySourcesPlaceholderConfigurer configurer = new PropertySourcesPlaceholderConfigurer();
+        YamlPropertiesFactoryBean applicationProperties = new YamlPropertiesFactoryBean();
+        Resource[] resources = null;
+        PathMatchingResourcePatternResolver resolver = new PathMatchingResourcePatternResolver();
+        resources = resolver.getResources("classpath*:config/service-*-config.yml");
+        applicationProperties.setResources(resources);
+        configurer.setProperties(applicationProperties.getObject());
+        LOGGER.info("yaml() complete");
+        return configurer;
     }
 
     /**
