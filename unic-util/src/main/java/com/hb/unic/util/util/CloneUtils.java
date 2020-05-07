@@ -1,8 +1,13 @@
 package com.hb.unic.util.util;
 
+import org.apache.commons.beanutils.BeanUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.BeanUtils;
+
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 /**
  * ========== 复制工具类 ==========
@@ -19,33 +24,109 @@ public class CloneUtils {
     protected static Logger LOGGER = LoggerFactory.getLogger(OkHttpUtils.class);
 
     /**
-     * 拷贝对象
+     * 复制java bean
      *
-     * @param source    被拷贝的对象
-     * @param classType 拷贝的对象类型
-     * @return 拷贝对象
+     * @param bean 被复制的bean
+     * @param <T>  bean类型
+     * @return 复制后的bean
      */
-    public static <T, E> E clone(T source, Class<E> classType) {
-
-        if (source == null) {
-            return null;
-        }
-        E targetInstance = null;
+    public static <T> T cloneBean(T bean) {
         try {
-            targetInstance = classType.newInstance();
-        } catch (InstantiationException e) {
-            if (LOGGER.isErrorEnabled()) {
-                LOGGER.error("clone InstantiationException: {}", e);
-            }
-            return null;
-        } catch (IllegalAccessException e) {
-            if (LOGGER.isErrorEnabled()) {
-                LOGGER.error("clone IllegalAccessException: {}", e);
-            }
+            return bean == null ? null : (T) BeanUtils.cloneBean(bean);
+        } catch (Exception e) {
+            LOGGER.error("cloneBean Exception: {}", e);
             return null;
         }
-        BeanUtils.copyProperties(source, targetInstance);
-        return targetInstance;
+    }
+
+    /**
+     * 复制List
+     *
+     * @param tList 被复制的list
+     * @param <T>   bean类型
+     * @return 复制后的bean
+     */
+    public static <T> List<T> cloneList(List<T> tList) {
+        return new ArrayList<>(tList);
+    }
+
+    /**
+     * 复制Map
+     *
+     * @param map 被复制的map
+     * @return 复制后的Map
+     */
+    public static Map<String, Object> cloneMap(Map<String, Object> map) {
+        return new HashMap<>(map);
+    }
+
+    /**
+     * 将对象装换为map
+     *
+     * @param bean bean
+     * @return Map
+     */
+    public static <T> Map<String, String> bean2Map(T bean) {
+        if (bean == null) {
+            return null;
+        }
+        try {
+            return BeanUtils.describe(bean);
+        } catch (Exception e) {
+            LOGGER.info("beanToMap exception: {}", e);
+            return null;
+        }
+    }
+
+    /**
+     * 将List<T>转换为List<Map<String, String>>
+     *
+     * @param beanList list集合
+     * @return List
+     */
+    public static <T> List<Map<String, String>> beans2Maps(List<T> beanList) {
+        List<Map<String, String>> list = new ArrayList<>();
+        if (beanList != null && beanList.size() > 0) {
+            Map<String, Object> map = null;
+            beanList.forEach(bean -> list.add(bean2Map(bean)));
+        }
+        return list;
+    }
+
+    /**
+     * 将map装换为javabean对象
+     *
+     * @param map       map
+     * @param beanClass beanClass
+     * @return T
+     */
+    public static <T> T map2Bean(Map<String, Object> map, Class<T> beanClass) {
+        if (map == null) {
+            return null;
+        }
+        try {
+            T obj = beanClass.newInstance();
+            BeanUtils.populate(obj, map);
+            return obj;
+        } catch (Exception e) {
+            LOGGER.error("mapToBean Exception: {}", e);
+            return null;
+        }
+    }
+
+    /**
+     * 将List<Map<String,Object>>转换为List<T>
+     *
+     * @param mapList map集合list
+     * @param clazz   bean
+     * @return List<T>
+     */
+    public static <T> List<T> maps2Beans(List<Map<String, Object>> mapList, Class<T> clazz) {
+        List<T> list = new ArrayList<>();
+        if (mapList != null && mapList.size() > 0) {
+            mapList.forEach(map -> list.add(map2Bean(map, clazz)));
+        }
+        return list;
     }
 
 }
