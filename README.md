@@ -1,4 +1,5 @@
 # unic基础平台
+基础框架平台，整合了一些适用、好用的小工具，让搭建项目变得迅速。
 ## unic-util 工具类模块
 包含了一系列实用的工具类，例如CloneUtils，BigDecimalUtils，CompressUtils，DateUtils，
 EncryptUtils，EnumUtils，GroovyUtils，OkHttpUtils，RandomUtils，ReflectUtils，
