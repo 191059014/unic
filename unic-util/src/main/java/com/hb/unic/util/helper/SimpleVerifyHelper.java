@@ -9,10 +9,10 @@ import java.util.regex.Pattern;
  * ========== 基本校验辅助类 ==========
  *
  * @author Mr.huang
- * @version com.hb.unic.util.helper.VerifyHelper.java, v1.0
+ * @version com.hb.unic.util.helper.SimpleVerifyHelper.java, v1.0
  * @date 2019年07月22日 02时07分
  */
-public class VerifyHelper {
+public class SimpleVerifyHelper {
 
     /**
      * ########## 判断是不是手机号码 ##########
