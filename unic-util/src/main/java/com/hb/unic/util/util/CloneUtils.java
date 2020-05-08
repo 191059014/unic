@@ -71,7 +71,11 @@ public class CloneUtils {
             return null;
         }
         try {
-            return BeanUtils.describe(bean);
+            Map<String, String> map = BeanUtils.describe(bean);
+            if (map != null) {
+                map.remove("class");
+            }
+            return map;
         } catch (Exception e) {
             LOGGER.info("beanToMap exception: {}", e);
             return null;
