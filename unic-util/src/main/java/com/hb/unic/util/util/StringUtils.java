@@ -155,46 +155,51 @@ public class StringUtils {
     }
 
     /**
-     * 驼峰转下划线
+     * 将下划线风格替换为驼峰风格
      *
-     * @param obj 任意对象（字符串、map不行）
-     * @return 下划线字段的字符串
+     * @param underlineStr 要转换的列名
+     * @return 驼峰字段
      */
-    public static String snake2Underline(Object obj) {
-        ObjectMapper objectMapper = new ObjectMapper();
-        objectMapper.setPropertyNamingStrategy(PropertyNamingStrategy.SNAKE_CASE);
-        objectMapper.setSerializationInclusion(JsonInclude.Include.NON_NULL);
-        try {
-            return objectMapper.writeValueAsString(obj);
-        } catch (JsonProcessingException e) {
-            LOGGER.error("snake2Underline occur JsonProcessingException: {}", e);
-            return null;
+    public static String underline2Hump(String underlineStr) {
+        StringBuilder sb = new StringBuilder();
+        boolean nextUpperCase = false;
+        for (int i = 0; i < underlineStr.length(); i++) {
+            char c = underlineStr.charAt(i);
+            if (c == '_') {
+                nextUpperCase = true;
+            } else {
+                if (nextUpperCase) {
+                    sb.append(Character.toUpperCase(c));
+                    nextUpperCase = false;
+                } else {
+                    sb.append(c);
+                }
+            }
         }
+        return sb.toString();
     }
 
     /**
-     * 下划线转驼峰
+     * 将驼峰风格替换为下划线风格
      *
-     * @param json  json串
-     * @param clazz 目标对象类（map不行）
-     * @param <T>   类
-     * @return 目标对象
+     * @param humpStr 要转换的列名
+     * @return 下划线风格字段
      */
-    public static <T> T underline2Snake(String json, Class<T> clazz) {
-        ObjectMapper objectMapper = new ObjectMapper();
-        objectMapper.setPropertyNamingStrategy(PropertyNamingStrategy.SNAKE_CASE);
-        try {
-            return objectMapper.readValue(json, clazz);
-        } catch (IOException e) {
-            LOGGER.error("snake2Underline occur IOException: {}", e);
-            return null;
+    public static String hump2Underline(String humpStr) {
+        StringBuilder sb = new StringBuilder(humpStr);
+        int temp = 0;
+        for (int i = 0; i < humpStr.length(); i++) {
+            if (Character.isUpperCase(humpStr.charAt(i))) {
+                sb.insert(i + temp, "_");
+                temp += 1;
+            }
         }
+        return sb.toString().toLowerCase();
     }
 
     public static void main(String[] args) {
-        String json = "{\"user_name\":\"张三\",\"full_name\":1111111}";
-        Map map = JSON.parseObject(json, Map.class);
-        System.out.println(map);
+        System.out.println(underline2Hump("___u_s_er_name_"));
+        System.out.println(hump2Underline("UserNaMe"));
     }
 
 }
