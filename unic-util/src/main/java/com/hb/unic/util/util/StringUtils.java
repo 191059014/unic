@@ -1,5 +1,6 @@
 package com.hb.unic.util.util;
 
+import com.alibaba.fastjson.JSON;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -8,6 +9,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.io.IOException;
+import java.util.Map;
 
 /**
  * ========== 字符串工具类 ==========
@@ -187,6 +189,12 @@ public class StringUtils {
             LOGGER.error("snake2Underline occur IOException: {}", e);
             return null;
         }
+    }
+
+    public static void main(String[] args) {
+        String json = "{\"user_name\":\"张三\",\"full_name\":1111111}";
+        Map map = JSON.parseObject(json, Map.class);
+        System.out.println(map);
     }
 
 }
