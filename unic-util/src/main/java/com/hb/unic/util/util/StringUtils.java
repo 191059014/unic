@@ -1,5 +1,14 @@
 package com.hb.unic.util.util;
 
+import com.fasterxml.jackson.annotation.JsonInclude;
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.PropertyNamingStrategy;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
+import java.io.IOException;
+
 /**
  * ========== 字符串工具类 ==========
  *
@@ -8,6 +17,11 @@ package com.hb.unic.util.util;
  * @date 2019年07月15日 13时34分
  */
 public class StringUtils {
+
+    /**
+     * the constant logger
+     */
+    private static final Logger LOGGER = LoggerFactory.getLogger(StringUtils.class);
 
     /**
      * ########## 左边补0 ##########
@@ -86,9 +100,8 @@ public class StringUtils {
         if (pos == -1) {
             return src;
         }
-        String first = src.substring(0, pos);
 
-        return first;
+        return src.substring(0, pos);
     }
 
     /**
@@ -103,9 +116,8 @@ public class StringUtils {
         if (pos == -1) {
             return src;
         }
-        String last = src.substring(pos + 1);
 
-        return last;
+        return src.substring(pos + 1);
     }
 
     /**
@@ -120,9 +132,8 @@ public class StringUtils {
         if (pos == -1) {
             return src;
         }
-        String first = src.substring(0, pos);
 
-        return first;
+        return src.substring(0, pos);
     }
 
     /**
@@ -137,9 +148,45 @@ public class StringUtils {
         if (pos == -1) {
             return src;
         }
-        String last = src.substring(pos + 1);
 
-        return last;
+        return src.substring(pos + 1);
+    }
+
+    /**
+     * 驼峰转下划线
+     *
+     * @param obj 任意对象（字符串、map不行）
+     * @return 下划线字段的字符串
+     */
+    public static String snake2Underline(Object obj) {
+        ObjectMapper objectMapper = new ObjectMapper();
+        objectMapper.setPropertyNamingStrategy(PropertyNamingStrategy.SNAKE_CASE);
+        objectMapper.setSerializationInclusion(JsonInclude.Include.NON_NULL);
+        try {
+            return objectMapper.writeValueAsString(obj);
+        } catch (JsonProcessingException e) {
+            LOGGER.error("snake2Underline occur JsonProcessingException: {}", e);
+            return null;
+        }
+    }
+
+    /**
+     * 下划线转驼峰
+     *
+     * @param json  json串
+     * @param clazz 目标对象类（map不行）
+     * @param <T>   类
+     * @return 目标对象
+     */
+    public static <T> T underline2Snake(String json, Class<T> clazz) {
+        ObjectMapper objectMapper = new ObjectMapper();
+        objectMapper.setPropertyNamingStrategy(PropertyNamingStrategy.SNAKE_CASE);
+        try {
+            return objectMapper.readValue(json, clazz);
+        } catch (IOException e) {
+            LOGGER.error("snake2Underline occur IOException: {}", e);
+            return null;
+        }
     }
 
 }
