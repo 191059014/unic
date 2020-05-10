@@ -1,5 +1,16 @@
 package com.hb.unic.util.util;
 
+import com.alibaba.fastjson.JSON;
+import com.fasterxml.jackson.annotation.JsonInclude;
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.PropertyNamingStrategy;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
+import java.io.IOException;
+import java.util.Map;
+
 /**
  * ========== 字符串工具类 ==========
  *
@@ -8,6 +19,11 @@ package com.hb.unic.util.util;
  * @date 2019年07月15日 13时34分
  */
 public class StringUtils {
+
+    /**
+     * the constant logger
+     */
+    private static final Logger LOGGER = LoggerFactory.getLogger(StringUtils.class);
 
     /**
      * ########## 左边补0 ##########
@@ -86,9 +102,8 @@ public class StringUtils {
         if (pos == -1) {
             return src;
         }
-        String first = src.substring(0, pos);
 
-        return first;
+        return src.substring(0, pos);
     }
 
     /**
@@ -103,9 +118,8 @@ public class StringUtils {
         if (pos == -1) {
             return src;
         }
-        String last = src.substring(pos + 1);
 
-        return last;
+        return src.substring(pos + 1);
     }
 
     /**
@@ -120,9 +134,8 @@ public class StringUtils {
         if (pos == -1) {
             return src;
         }
-        String first = src.substring(0, pos);
 
-        return first;
+        return src.substring(0, pos);
     }
 
     /**
@@ -137,9 +150,56 @@ public class StringUtils {
         if (pos == -1) {
             return src;
         }
-        String last = src.substring(pos + 1);
 
-        return last;
+        return src.substring(pos + 1);
+    }
+
+    /**
+     * 将下划线风格替换为驼峰风格
+     *
+     * @param underlineStr 要转换的列名
+     * @return 驼峰字段
+     */
+    public static String underline2Hump(String underlineStr) {
+        StringBuilder sb = new StringBuilder();
+        boolean nextUpperCase = false;
+        for (int i = 0; i < underlineStr.length(); i++) {
+            char c = underlineStr.charAt(i);
+            if (c == '_') {
+                nextUpperCase = true;
+            } else {
+                if (nextUpperCase) {
+                    sb.append(Character.toUpperCase(c));
+                    nextUpperCase = false;
+                } else {
+                    sb.append(c);
+                }
+            }
+        }
+        return sb.toString();
+    }
+
+    /**
+     * 将驼峰风格替换为下划线风格
+     *
+     * @param humpStr 要转换的列名
+     * @return 下划线风格字段
+     */
+    public static String hump2Underline(String humpStr) {
+        StringBuilder sb = new StringBuilder(humpStr);
+        int temp = 0;
+        for (int i = 0; i < humpStr.length(); i++) {
+            if (Character.isUpperCase(humpStr.charAt(i))) {
+                sb.insert(i + temp, "_");
+                temp += 1;
+            }
+        }
+        return sb.toString().toLowerCase();
+    }
+
+    public static void main(String[] args) {
+        System.out.println(underline2Hump("___u_s_er_name_"));
+        System.out.println(hump2Underline("UserNaMe"));
     }
 
 }
