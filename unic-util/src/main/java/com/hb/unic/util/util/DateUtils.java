@@ -132,10 +132,7 @@ public class DateUtils {
         Calendar calendar = Calendar.getInstance();
         calendar.setTime(date);
         int week = calendar.get(Calendar.DAY_OF_WEEK);
-        if (Calendar.SATURDAY == week || Calendar.SUNDAY == week) {
-            return true;
-        }
-        return false;
+        return Calendar.SATURDAY == week || Calendar.SUNDAY == week;
     }
 
     /**
@@ -159,7 +156,6 @@ public class DateUtils {
         /**
          * 线程私有的
          */
-        @SuppressWarnings({"unchecked", "rawtypes"})
         private static final ThreadLocal<SoftReference<Map<String, SimpleDateFormat>>> THREADLOCAL_FORMATS = ThreadLocal.withInitial(() -> new SoftReference(new HashMap()));
 
         /**
@@ -168,16 +164,14 @@ public class DateUtils {
          * @param pattern 格式
          * @return SimpleDateFormat
          */
-        @SuppressWarnings({"unchecked", "rawtypes"})
         static SimpleDateFormat formatFor(String pattern) {
-            SoftReference ref = (SoftReference) THREADLOCAL_FORMATS.get();
-            Map formats = (Map) ref.get();
+            SoftReference<Map<String, SimpleDateFormat>> ref = THREADLOCAL_FORMATS.get();
+            Map<String, SimpleDateFormat> formats = ref.get();
             if (formats == null) {
                 formats = new HashMap();
                 THREADLOCAL_FORMATS.set(new SoftReference(formats));
             }
-
-            SimpleDateFormat format = (SimpleDateFormat) formats.get(pattern);
+            SimpleDateFormat format = formats.get(pattern);
             if (format == null) {
                 format = new SimpleDateFormat(pattern);
                 formats.put(pattern, format);
