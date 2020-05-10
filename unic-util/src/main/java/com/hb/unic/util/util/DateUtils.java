@@ -1,5 +1,8 @@
 package com.hb.unic.util.util;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import java.lang.ref.SoftReference;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -16,6 +19,11 @@ import java.util.Map;
  * @date 2019年06月05日 15时02分
  */
 public class DateUtils {
+
+    /**
+     * the constant logger
+     */
+    private static final Logger LOGGER = LoggerFactory.getLogger(DateUtils.class);
 
     /**
      * 默认的日期格式
@@ -53,8 +61,7 @@ public class DateUtils {
      * @return 当前时间
      */
     public static Date getCurrentDate() {
-        Date date = new Date(System.currentTimeMillis());
-        return date;
+        return new Date(System.currentTimeMillis());
     }
 
     /**
@@ -73,9 +80,14 @@ public class DateUtils {
      * @param dateFormat 日期格式
      * @return 日期
      */
-    public static Date str2date(String dateValue, String dateFormat) throws ParseException {
+    public static Date str2date(String dateValue, String dateFormat) {
         SimpleDateFormat dateParser = DateFormatHolder.formatFor(dateFormat);
-        return dateParser.parse(dateValue);
+        try {
+            return dateParser.parse(dateValue);
+        } catch (ParseException e) {
+            LOGGER.error("str2date occur error: {}", e);
+            return null;
+        }
     }
 
     /**
@@ -148,12 +160,7 @@ public class DateUtils {
          * 线程私有的
          */
         @SuppressWarnings({"unchecked", "rawtypes"})
-        private static final ThreadLocal<SoftReference<Map<String, SimpleDateFormat>>> THREADLOCAL_FORMATS = new ThreadLocal() {
-            @Override
-            protected SoftReference<Map<String, SimpleDateFormat>> initialValue() {
-                return new SoftReference(new HashMap());
-            }
-        };
+        private static final ThreadLocal<SoftReference<Map<String, SimpleDateFormat>>> THREADLOCAL_FORMATS = ThreadLocal.withInitial(() -> new SoftReference(new HashMap()));
 
         /**
          * ########## 获取SimpleDateFormat对象 ##########
@@ -162,7 +169,7 @@ public class DateUtils {
          * @return SimpleDateFormat
          */
         @SuppressWarnings({"unchecked", "rawtypes"})
-        public static SimpleDateFormat formatFor(String pattern) {
+        static SimpleDateFormat formatFor(String pattern) {
             SoftReference ref = (SoftReference) THREADLOCAL_FORMATS.get();
             Map formats = (Map) ref.get();
             if (formats == null) {
