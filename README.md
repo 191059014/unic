@@ -3,7 +3,7 @@
 ## unic-util 工具类模块
 包含了一系列实用的工具类，例如CloneUtils，BigDecimalUtils，CompressUtils，DateUtils，
 EncryptUtils，EnumUtils，GroovyUtils，OkHttpUtils，RandomUtils，ReflectUtils，
-StringUtils，YamlUtils，JsonFileParseHelper，PageHelper，SimpleIdHelper，SimpleVerifyHelper等。
+StringUtils，YamlUtils，JsonFileParseHelper，PageHelper，SimpleIdHelper，SimpleVerifyHelper，MapBuilder，Assert等。
 ## unic-base 基础模块
 - spring的工具类SpringUtils，可以获取所有bean实例
 - 标准全局异常StandardRuntimeException
