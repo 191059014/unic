@@ -5,6 +5,9 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.lang.reflect.Field;
+import java.lang.reflect.Modifier;
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  * ========== 反射工具类 ==========
@@ -31,7 +34,7 @@ public class ReflectUtils {
             return Class.forName(entityName);
         } catch (ClassNotFoundException e) {
             e.printStackTrace();
-            LOGGER.error("Method getType:", e);
+            LOGGER.error("Method getType: ", e);
         }
         return null;
     }
@@ -48,6 +51,34 @@ public class ReflectUtils {
             fs = (Field[]) ArrayUtils.addAll(fs, getAllFields(c.getSuperclass()));
         }
         return fs;
+    }
+
+    /**
+     * 获取所有属性名和属性值
+     *
+     * @param t   对象
+     * @param <T> 对象类型
+     * @return map
+     */
+    public static <T> Map<String, Object> getAllFields(T t) {
+        Map<String, Object> map = new HashMap<>();
+        Field[] allFields = getAllFields(t.getClass());
+        try {
+            for (Field field : allFields) {
+                int fieldModifiers = field.getModifiers();
+                if (Modifier.isStatic(fieldModifiers) && Modifier.isFinal(fieldModifiers)) {
+                    continue;
+                }
+                String name = field.getName();
+                field.setAccessible(true);
+                Object value = field.get(t);
+                map.put(name, value);
+            }
+        } catch (IllegalAccessException e) {
+            e.printStackTrace();
+            LOGGER.error("getAllFields error: ", e);
+        }
+        return map;
     }
 
 }
