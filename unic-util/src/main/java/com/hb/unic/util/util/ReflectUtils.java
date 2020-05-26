@@ -60,13 +60,13 @@ public class ReflectUtils {
      * @param <T> 对象类型
      * @return map
      */
-    public static <T> Map<String, Object> getAllFields(T t) {
+    public static <T> Map<String, Object> getAllFieldsExcludeStatic(T t) {
         Map<String, Object> map = new HashMap<>();
         Field[] allFields = getAllFields(t.getClass());
         try {
             for (Field field : allFields) {
                 int fieldModifiers = field.getModifiers();
-                if (Modifier.isStatic(fieldModifiers) && Modifier.isFinal(fieldModifiers)) {
+                if (Modifier.isStatic(fieldModifiers)) {
                     continue;
                 }
                 String name = field.getName();
