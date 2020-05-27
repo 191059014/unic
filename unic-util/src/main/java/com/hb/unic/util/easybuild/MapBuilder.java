@@ -1,4 +1,4 @@
-package com.hb.unic.util.build;
+package com.hb.unic.util.easybuild;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -16,6 +16,9 @@ public class MapBuilder {
      */
     private Map<String, Object> realMap;
 
+    /**
+     * 构造方法
+     */
     private MapBuilder() {
         this.realMap = new HashMap<>(8);
     }
@@ -77,7 +80,7 @@ public class MapBuilder {
     /**
      * 获取真实map
      *
-     * @return MapBuilder
+     * @return Map
      */
     public Map<String, Object> get() {
         return this.realMap;

@@ -60,8 +60,8 @@ public class DateUtils {
      *
      * @return 当前时间
      */
-    public static Date getCurrentDate() {
-        return new Date(System.currentTimeMillis());
+    public static Date getNowTime() {
+        return new Date();
     }
 
     /**
@@ -69,7 +69,7 @@ public class DateUtils {
      *
      * @return 当前时间字符串
      */
-    public static String getCurrentDateStr(String format) {
+    public static String getNowTime(String format) {
         return date2str(new Date(), format);
     }
 
@@ -81,9 +81,8 @@ public class DateUtils {
      * @return 日期
      */
     public static Date str2date(String dateValue, String dateFormat) {
-        SimpleDateFormat dateParser = DateFormatHolder.formatFor(dateFormat);
         try {
-            return dateParser.parse(dateValue);
+            return new SimpleDateFormat(dateFormat).parse(dateValue);
         } catch (ParseException e) {
             LOGGER.error("str2date occur error: {}", e);
             return null;
@@ -98,8 +97,7 @@ public class DateUtils {
      * @return 字符串
      */
     public static String date2str(Date date, String dateFormat) {
-        SimpleDateFormat dateParser = DateFormatHolder.formatFor(dateFormat);
-        return dateParser.format(date);
+        return new SimpleDateFormat(dateFormat).format(date);
     }
 
     /**
@@ -147,47 +145,6 @@ public class DateUtils {
         calendar.setTime(date);
         calendar.add(Calendar.DATE, addNum);
         return calendar.getTime();
-    }
-
-    /**
-     * ########## 日期格式辅助类 ##########
-     */
-    static final class DateFormatHolder {
-        /**
-         * 线程私有的
-         */
-        private static final ThreadLocal<SoftReference<Map<String, SimpleDateFormat>>> THREADLOCAL_FORMATS = ThreadLocal.withInitial(() -> new SoftReference(new HashMap()));
-
-        /**
-         * ########## 获取SimpleDateFormat对象 ##########
-         *
-         * @param pattern 格式
-         * @return SimpleDateFormat
-         */
-        static SimpleDateFormat formatFor(String pattern) {
-            SoftReference<Map<String, SimpleDateFormat>> ref = THREADLOCAL_FORMATS.get();
-            Map<String, SimpleDateFormat> formats = ref.get();
-            if (formats == null) {
-                formats = new HashMap();
-                THREADLOCAL_FORMATS.set(new SoftReference(formats));
-            }
-            SimpleDateFormat format = formats.get(pattern);
-            if (format == null) {
-                format = new SimpleDateFormat(pattern);
-                formats.put(pattern, format);
-            }
-            return format;
-        }
-    }
-
-    public static void main(String[] args) {
-        Calendar c1 = Calendar.getInstance();
-        c1.setTime(new Date());
-        Calendar c2 = Calendar.getInstance();
-        c2.setTime(new Date());
-        c2.add(Calendar.DATE, 0);
-        int daysBetween = getDaysBetween(c2.getTime(), c1.getTime());
-        System.out.println(daysBetween);
     }
 
 }
