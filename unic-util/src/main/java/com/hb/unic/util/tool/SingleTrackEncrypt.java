@@ -1,5 +1,7 @@
 package com.hb.unic.util.tool;
 
+import com.hb.unic.util.constant.UtilConstants;
+import com.hb.unic.util.util.HexByteArrUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -25,7 +27,18 @@ public enum SingleTrackEncrypt {
             return encrypt.equals(encode(message));
         }
     },
-    SHA("SHA", "SHA(Secure Hash Algorithm，安全散列算法）") {
+    SHA_1("SHA-1", "SHA(Secure Hash Algorithm，安全散列算法）") {
+        @Override
+        public String encode(String message) {
+            return encode(getAlgorithm(), message);
+        }
+
+        @Override
+        public boolean verify(String message, String encrypt) {
+            return encrypt.equals(encode(message));
+        }
+    },
+    SHA_256("SHA-256", "SHA(Secure Hash Algorithm，安全散列算法）") {
         @Override
         public String encode(String message) {
             return encode(getAlgorithm(), message);
@@ -94,7 +107,7 @@ public enum SingleTrackEncrypt {
         MessageDigest md;
         try {
             md = MessageDigest.getInstance(algorithm);
-            encode = byteArr2HexStr(md.digest(message.getBytes("UTF-8")));
+            encode = HexByteArrUtils.byteArr2HexStr(md.digest(message.getBytes(UtilConstants.CHARSET_UTF8)));
         } catch (NoSuchAlgorithmException e) {
             if (LOGGER.isErrorEnabled()) {
                 LOGGER.error("MessageDigest Encode error: {}", e);
@@ -105,32 +118,6 @@ public enum SingleTrackEncrypt {
             }
         }
         return encode;
-    }
-
-    /**
-     * 将byte数组转换为表示16进制值的字符串
-     *
-     * @param arrB 需要转换的byte数组
-     * @return 转换后的字符串
-     * @throws Exception 本方法不处理任何异常，所有异常全部抛出
-     */
-    protected static String byteArr2HexStr(byte[] arrB) throws Exception {
-        int iLen = arrB.length;
-        // 每个byte用两个字符才能表示，所以字符串的长度是数组长度的两倍
-        StringBuffer sb = new StringBuffer(iLen * 2);
-        for (int i = 0; i < iLen; i++) {
-            int intTmp = arrB[i];
-            // 把负数转换为正数
-            while (intTmp < 0) {
-                intTmp = intTmp + 256;
-            }
-            // 小于0F的数需要在前面补0
-            if (intTmp < 16) {
-                sb.append("0");
-            }
-            sb.append(Integer.toString(intTmp, 16));
-        }
-        return sb.toString();
     }
 
 }

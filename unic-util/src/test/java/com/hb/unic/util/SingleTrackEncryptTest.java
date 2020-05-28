@@ -19,7 +19,7 @@ public class SingleTrackEncryptTest {
 
     @Test
     public void testSHA() {
-        String encode = SingleTrackEncrypt.SHA.encode("123");
+        String encode = SingleTrackEncrypt.SHA_1.encode("123");
         System.out.println(encode);
     }
 
