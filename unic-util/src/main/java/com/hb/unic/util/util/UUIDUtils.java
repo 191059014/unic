@@ -1,4 +1,4 @@
-package com.hb.unic.util.helper;
+package com.hb.unic.util.util;
 
 import java.util.UUID;
 
@@ -6,10 +6,10 @@ import java.util.UUID;
  * ========== id生成器 ==========
  *
  * @author Mr.huang
- * @version com.hb.unic.util.helper.SimpleIdHelper.java, v1.0
+ * @version com.hb.unic.util.util.UUIDUtils.java, v1.0
  * @date 2019年07月22日 01时00分
  */
-public class SimpleIdHelper {
+public class UUIDUtils {
 
     /**
      * ########## 获取uuid ##########

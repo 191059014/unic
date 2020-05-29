@@ -1,9 +1,31 @@
 # unic基础平台
 基础框架平台，整合了一些适用、好用的小工具，让搭建项目变得迅速。
 ## unic-util 工具类模块
-包含了一系列实用的工具类，例如CloneUtils，BigDecimalUtils，CompressUtils，DateUtils，
-EncryptUtils，EnumUtils，GroovyUtils，OkHttpUtils，RandomUtils，ReflectUtils，
-StringUtils，YamlUtils，JsonFileParseHelper，PageHelper，SimpleIdHelper，SimpleVerifyHelper，MapBuilder，Assert等。
+包含了一系列实用的工具类，例如:
+##### com.hb.unic.util.easybuild
+- com.hb.unic.util.easybuild.ListBuilder
+- com.hb.unic.util.easybuild.MapBuilder
+##### com.hb.unic.util.tool
+- com.hb.unic.util.tool.Assert
+- com.hb.unic.util.tool.Base64Encrypt
+- com.hb.unic.util.tool.SingleTrackEncrypt
+- com.hb.unic.util.tool.SymmetricEncrypt
+- com.hb.unic.util.tool.UnSymmetricEncrypt
+##### com.hb.unic.util.util
+- com.hb.unic.util.util.BigDecimalUtils
+- com.hb.unic.util.util.CloneUtils
+- com.hb.unic.util.util.CompressUtils
+- com.hb.unic.util.util.DateUtils
+- com.hb.unic.util.util.EnumUtils
+- com.hb.unic.util.util.GroovyUtils
+- com.hb.unic.util.util.HexByteArrUtils
+- com.hb.unic.util.util.OkHttpUtils
+- com.hb.unic.util.util.PageUtils
+- com.hb.unic.util.util.RandomUtils
+- com.hb.unic.util.util.ReflectUtils
+- com.hb.unic.util.util.StringUtils
+- com.hb.unic.util.util.UUIDUtils
+- com.hb.unic.util.util.YamlUtils
 ## unic-base 基础模块
 - spring的工具类SpringUtils，可以获取所有bean实例
 - 标准全局异常StandardRuntimeException

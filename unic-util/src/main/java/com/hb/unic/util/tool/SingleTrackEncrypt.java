@@ -1,12 +1,10 @@
 package com.hb.unic.util.tool;
 
-import com.hb.unic.util.constant.UtilConstants;
 import com.hb.unic.util.util.HexByteArrUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.security.MessageDigest;
-import java.security.NoSuchAlgorithmException;
 
 /**
  * 单向加密，MD5，SHA
@@ -24,7 +22,7 @@ public enum SingleTrackEncrypt {
 
         @Override
         public boolean verify(String message, String encrypt) {
-            return encrypt.equals(encode(message));
+            return encrypt != null && encrypt.equals(encode(message));
         }
     },
     SHA_1("SHA-1", "SHA(Secure Hash Algorithm，安全散列算法）") {
@@ -46,30 +44,30 @@ public enum SingleTrackEncrypt {
 
         @Override
         public boolean verify(String message, String encrypt) {
-            return encrypt.equals(encode(message));
+            return encrypt != null && encrypt.equals(encode(message));
         }
     };
 
     /**
      * 加密的类型
      */
-    private String algorithm;
+    public String algorithm;
 
     /**
      * 描述
      */
-    private String desc;
+    public String desc;
 
     SingleTrackEncrypt(String algorithm, String desc) {
         this.algorithm = algorithm;
         this.desc = desc;
     }
 
-    protected String getAlgorithm() {
+    public String getAlgorithm() {
         return algorithm;
     }
 
-    protected String getDesc() {
+    public String getDesc() {
         return desc;
     }
 
@@ -103,21 +101,13 @@ public enum SingleTrackEncrypt {
      * @return 对应的编码字符串
      */
     protected static String encode(String algorithm, String message) {
-        String encode = null;
-        MessageDigest md;
         try {
-            md = MessageDigest.getInstance(algorithm);
-            encode = HexByteArrUtils.byteArr2HexStr(md.digest(message.getBytes(UtilConstants.CHARSET_UTF8)));
-        } catch (NoSuchAlgorithmException e) {
-            if (LOGGER.isErrorEnabled()) {
-                LOGGER.error("MessageDigest Encode error: {}", e);
-            }
+            MessageDigest md = MessageDigest.getInstance(algorithm);
+            return HexByteArrUtils.byteArr2HexStr(md.digest(message.getBytes()));
         } catch (Exception e) {
-            if (LOGGER.isErrorEnabled()) {
-                LOGGER.error("byteArr2HexStr error: {}", e);
-            }
+            LOGGER.error("MessageDigest Encode error: {}", e);
+            return null;
         }
-        return encode;
     }
 
 }

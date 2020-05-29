@@ -1,6 +1,5 @@
 package com.hb.unic.util.tool;
 
-import com.hb.unic.util.constant.UtilConstants;
 import com.hb.unic.util.util.HexByteArrUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -10,7 +9,7 @@ import javax.crypto.KeyGenerator;
 import javax.crypto.SecretKey;
 import javax.crypto.SecretKeyFactory;
 import javax.crypto.spec.DESKeySpec;
-import javax.crypto.spec.SecretKeySpec;
+import java.security.SecureRandom;
 
 /**
  * 对称加密，DES，AES
@@ -23,33 +22,53 @@ public enum SymmetricEncrypt {
     DES("DES", "DES/ECB/PKCS5Padding", "DES对称加密") {
         @Override
         public String encode(String message, String secretKey) {
-            return jdkDesAES(message, secretKey, getAlgorithm(), getFillStyle(), Cipher.ENCRYPT_MODE);
+            try {
+                return HexByteArrUtils.byteArr2HexStr(jdkDes(message.getBytes(), secretKey, getAlgorithm(), getFillStyle(), Cipher.ENCRYPT_MODE));
+            } catch (Exception e) {
+                LOGGER.error("{}加密异常：{}，message：{}，secretKey：{}", getAlgorithm(), e, message, secretKey);
+                return null;
+            }
         }
 
         @Override
         public String decode(String encrypt, String secretKey) {
-            return jdkDesAES(encrypt, secretKey, getAlgorithm(), getFillStyle(), Cipher.DECRYPT_MODE);
+            try {
+                return new String(jdkDes(HexByteArrUtils.hexStr2byteArr(encrypt), secretKey, getAlgorithm(), getFillStyle(), Cipher.DECRYPT_MODE));
+            } catch (Exception e) {
+                LOGGER.error("{}解密异常：{}，encrypt：{}，secretKey：{}", getAlgorithm(), e, encrypt, secretKey);
+                return null;
+            }
         }
 
         @Override
         public boolean verify(String message, String secretKey, String encrypt) {
-            return encrypt.equals(encode(message, secretKey));
+            return encrypt != null && encrypt.equals(encode(message, secretKey));
         }
     },
     AES("AES", "AES/ECB/PKCS5Padding", "AES对称加密") {
         @Override
         public String encode(String message, String secretKey) {
-            return jdkDesAES(message, secretKey, getAlgorithm(), getFillStyle(), Cipher.ENCRYPT_MODE);
+            try {
+                return HexByteArrUtils.byteArr2HexStr(jdkAes(message.getBytes(), secretKey, getAlgorithm(), getFillStyle(), Cipher.ENCRYPT_MODE));
+            } catch (Exception e) {
+                LOGGER.error("{}加密异常：{}，message：{}，secretKey：{}", getAlgorithm(), e, message, secretKey);
+                return null;
+            }
         }
 
         @Override
         public String decode(String encrypt, String secretKey) {
-            return jdkDesAES(encrypt, secretKey, getAlgorithm(), getFillStyle(), Cipher.DECRYPT_MODE);
+            try {
+                return new String(jdkAes(HexByteArrUtils.hexStr2byteArr(encrypt), secretKey, getAlgorithm(), getFillStyle(), Cipher.DECRYPT_MODE));
+            } catch (Exception e) {
+                LOGGER.error("{}解密异常：{}，encrypt：{}，secretKey：{}", getAlgorithm(), e, encrypt, secretKey);
+                return null;
+            }
         }
 
         @Override
         public boolean verify(String message, String secretKey, String encrypt) {
-            return encrypt.equals(encode(message, secretKey));
+            return encrypt != null && encrypt.equals(encode(message, secretKey));
         }
     };
 
@@ -120,37 +139,78 @@ public enum SymmetricEncrypt {
     public abstract boolean verify(String message, String secretKey, String encrypt);
 
     /**
-     * des/aes 加/解密
+     * jdk的AES加/解密
      *
-     * @param source    待加/解密的字符串
+     * @param bytes     待加密或带解密的byte数组
      * @param secretKey 密匙
      * @param algorithm 加密的类型
      * @param fillStyle 填充方式
      * @param mode      加/解密模式
      * @return 加/解密后的字符串
      */
-    protected String jdkDesAES(String source, String secretKey, String algorithm, String fillStyle, int mode) {
-        try {
-            /**
-             * 生成SecretKey
-             */
-            byte[] keyBytes = secretKey.getBytes();
+    protected byte[] jdkAes(byte[] bytes, String secretKey, String algorithm, String fillStyle, int mode) throws Exception {
+        SecretKey key = getSecretKey(algorithm, secretKey, 128);
+        return doFinal(bytes, key, fillStyle, mode);
+    }
 
-            KeyGenerator kgen = KeyGenerator.getInstance(algorithm);
-            kgen.init(128);
-            SecretKey key = kgen.generateKey();
-//            SecretKey key = new SecretKeySpec(keyBytes, algorithm);
-            /**
-             * 加密 or 解密
-             */
-            Cipher cipher = Cipher.getInstance(fillStyle);
-            cipher.init(mode, key);// 加/解密模式
-            byte[] doFinalBytes = cipher.doFinal(source.getBytes(UtilConstants.CHARSET_UTF8));
-            return new String(doFinalBytes, UtilConstants.CHARSET_UTF8);
-        } catch (Exception e) {
-            LOGGER.error("加/解密异常：{}，source：{}，secretKey：{}，algorithm：{}，fillStyle：{}，mode：{}", e, source, secretKey, algorithm, fillStyle, mode);
-            return null;
-        }
+    /**
+     * jdk的DES加/解密
+     *
+     * @param bytes     待加密或带解密的byte数组
+     * @param secretKey 密匙
+     * @param fillStyle 填充方式
+     * @param mode      模式，是加密还是解密
+     * @return byte[]
+     */
+    protected byte[] jdkDes(byte[] bytes, String secretKey, String algorithm, String fillStyle, int mode) throws Exception {
+        SecretKey desSecretKey = getDesSecretKey(algorithm, secretKey, 56);
+        return doFinal(bytes, desSecretKey, fillStyle, mode);
+    }
+
+    /**
+     * 执行加密或者解密
+     *
+     * @param bytes     待加密或带解密的byte数组
+     * @param secretKey 密匙
+     * @param fillStyle 填充方式
+     * @param mode      模式，是加密还是解密
+     * @return byte[]
+     */
+    public static byte[] doFinal(byte[] bytes, SecretKey secretKey, String fillStyle, int mode) throws Exception {
+        Cipher cipher = Cipher.getInstance(fillStyle);
+        cipher.init(mode, secretKey);
+        return cipher.doFinal(bytes);
+    }
+
+    /**
+     * 获取DES的SecretKey对象
+     *
+     * @param algorithm 加密的类型
+     * @param secretKey 密匙
+     * @param length    key长度
+     * @return SecretKey
+     */
+    public static SecretKey getDesSecretKey(String algorithm, String secretKey, int length) throws Exception {
+        SecretKey key = getSecretKey(algorithm, secretKey, length);
+        DESKeySpec desKeySpec = new DESKeySpec(key.getEncoded());
+        SecretKeyFactory factory = SecretKeyFactory.getInstance(algorithm);
+        return factory.generateSecret(desKeySpec);
+    }
+
+    /**
+     * 根据secretKey字符串获取SecretKey对象
+     *
+     * @param algorithm 加密的类型
+     * @param secretKey 密匙
+     * @param length    key长度
+     * @return SecretKey
+     */
+    public static SecretKey getSecretKey(String algorithm, String secretKey, int length) throws Exception {
+        KeyGenerator keyGenerator = KeyGenerator.getInstance(algorithm);
+        SecureRandom secureRandom = SecureRandom.getInstance("SHA1PRNG");
+        secureRandom.setSeed(secretKey.getBytes());
+        keyGenerator.init(length, secureRandom);
+        return keyGenerator.generateKey();
 
     }
 
@@ -159,15 +219,14 @@ public enum SymmetricEncrypt {
      *
      * @return 密匙字符串
      */
-    public static String generateKey(String algorithm) {
+    public static String generateKey(String algorithm, int keySize) {
         try {
             KeyGenerator keyGenerator = KeyGenerator.getInstance(algorithm);
-            // 初始化key的长度，只能是128
-            keyGenerator.init(128);
+            keyGenerator.init(keySize);
             SecretKey secretKey = keyGenerator.generateKey();
             return HexByteArrUtils.byteArr2HexStr(secretKey.getEncoded());
         } catch (Exception e) {
-            LOGGER.error("生成密匙异常：{}", e);
+            LOGGER.error("{}生成密匙异常：{}", algorithm, e);
             return null;
         }
     }

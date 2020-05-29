@@ -41,7 +41,7 @@ public class HexByteArrUtils {
      * @return byte数组
      */
     public static byte[] hexStr2byteArr(String hexStr) {
-        if (hexStr.length() < 1)
+        if (hexStr == null || hexStr.length() < 1)
             return null;
         byte[] result = new byte[hexStr.length() / 2];
         for (int i = 0; i < hexStr.length() / 2; i++) {
