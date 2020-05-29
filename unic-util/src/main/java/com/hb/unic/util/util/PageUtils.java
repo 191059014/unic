@@ -2,7 +2,6 @@ package com.hb.unic.util.util;
 
 import com.hb.unic.util.model.Page;
 
-import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -14,15 +13,6 @@ import java.util.stream.Collectors;
  * @date 2019年06月23日 00时38分
  */
 public class PageUtils {
-
-    public static void main(String[] args) {
-        List<String> list = Arrays.asList("zhangsan", "lisi", "wangwu", "zhaoliu", "laoshi", "it", "caifeng");
-        int pageSize = 2;
-        for (int i = 1; i < 10; i++) {
-            Page<String> pagination = pagination(list, i, pageSize);
-            System.out.println(pagination);
-        }
-    }
 
     /**
      * ########## 计算起始记录行数 ##########
