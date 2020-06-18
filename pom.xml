@@ -39,7 +39,7 @@
         <commons-io.version>2.5</commons-io.version>
         <slf4j-api.version>1.7.25</slf4j-api.version>
         <junit.version>4.11</junit.version>
-        <jackson.version>2.9.8</jackson.version>
+        <jackson.version>2.10.0.pr1</jackson.version>
         <guava.version>26.0-jre</guava.version>
     </properties>
 
