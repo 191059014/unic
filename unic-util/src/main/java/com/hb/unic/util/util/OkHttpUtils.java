@@ -37,6 +37,11 @@ public class OkHttpUtils {
     public static final String JSON_CHARSET_UTF_8 = "application/json;charset=utf-8";
 
     /**
+     * xml编码
+     */
+    public static final String XML_CHARSET_UTF_8 = "text/xml;charset=utf-8";
+
+    /**
      * The constant LOGGER.
      */
     protected static Logger LOGGER = LoggerFactory.getLogger(OkHttpUtils.class);
@@ -54,6 +59,8 @@ public class OkHttpUtils {
         RequestBody requestBody = null;
         if (object instanceof JSONObject) {
             requestBody = FormBody.create(MediaType.get(JSON_CHARSET_UTF_8), ((JSONObject) object).toJSONString());
+        } else if (object instanceof String) {
+            requestBody = FormBody.create(MediaType.get(XML_CHARSET_UTF_8), ((String) object));
         } else if (object instanceof FormBody.Builder) {
             requestBody = ((FormBody.Builder) object).build();
         } else {
