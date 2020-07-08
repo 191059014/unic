@@ -81,7 +81,7 @@ public class OkHttpUtils {
         Call call = okHttpClient.newCall(request);
         Response response = call.execute();
         String body = response.body() == null ? "" : response.body().string();
-        LOGGER.info("post响应：{}\n总共耗时：{}ms", body, stopwatch.elapsed(TimeUnit.MILLISECONDS));
+        LOGGER.info("post响应 => {}\n响应结果：{}\n总共耗时：{}ms", url, body, stopwatch.elapsed(TimeUnit.MILLISECONDS));
         return body;
     }
 
@@ -106,7 +106,7 @@ public class OkHttpUtils {
         Call call = okHttpClient.newCall(request);
         Response response = call.execute();
         String body = response.body() == null ? "" : response.body().string();
-        LOGGER.info("get响应：{}\n总共耗时：{}ms", body, stopwatch.elapsed(TimeUnit.MILLISECONDS));
+        LOGGER.info("get响应 => {}\n响应结果：{}\n总共耗时：{}ms", url, body, stopwatch.elapsed(TimeUnit.MILLISECONDS));
         return body;
 
     }
