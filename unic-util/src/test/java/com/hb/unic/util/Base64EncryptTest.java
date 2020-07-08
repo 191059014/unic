@@ -15,20 +15,20 @@ public class Base64EncryptTest {
 
     @Test
     public void testEncode() {
-        System.out.println(Base64Encrypt.JDK.encode(message));
-        System.out.println(Base64Encrypt.COMMONS_CODEC.encode(message));
+        System.out.println(Base64Encrypt.JDK.encode(message, ));
+        System.out.println(Base64Encrypt.COMMONS_CODEC.encode(message, ));
     }
 
     @Test
     public void testDecode() {
-        System.out.println(Base64Encrypt.JDK.decode("MTIzNDU25oKo5aW9PT0rK0Am"));
-        System.out.println(Base64Encrypt.COMMONS_CODEC.decode("MTIzNDU25oKo5aW9PT0rK0Am"));
+        System.out.println(Base64Encrypt.JDK.decode("MTIzNDU25oKo5aW9PT0rK0Am", ));
+        System.out.println(Base64Encrypt.COMMONS_CODEC.decode("MTIzNDU25oKo5aW9PT0rK0Am", ));
     }
 
     @Test
     public void testVerify() {
-        System.out.println(Base64Encrypt.JDK.verify(message, "MTIzNDU25oKo5aW9PT0rK0Am"));
-        System.out.println(Base64Encrypt.COMMONS_CODEC.verify(message, "MTIzNDU25oKo5aW9PT0rK0Am"));
+        System.out.println(Base64Encrypt.JDK.verify(message, "MTIzNDU25oKo5aW9PT0rK0Am", ));
+        System.out.println(Base64Encrypt.COMMONS_CODEC.verify(message, "MTIzNDU25oKo5aW9PT0rK0Am", ));
     }
 
 }
