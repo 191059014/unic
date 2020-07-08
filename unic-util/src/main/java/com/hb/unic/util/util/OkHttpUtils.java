@@ -1,6 +1,7 @@
 package com.hb.unic.util.util;
 
 import com.alibaba.fastjson.JSONObject;
+import com.google.common.base.Stopwatch;
 import okhttp3.Call;
 import okhttp3.FormBody;
 import okhttp3.MediaType;
@@ -21,6 +22,7 @@ import java.security.SecureRandom;
 import java.security.cert.CertificateException;
 import java.security.cert.X509Certificate;
 import java.util.Map;
+import java.util.concurrent.TimeUnit;
 
 /**
  * ========== OkHttp工具 ==========
@@ -49,13 +51,15 @@ public class OkHttpUtils {
     /**
      * ########## post请求 ##########
      *
-     * @param url     请求的url
-     * @param object  参数体
-     * @param headers 请求头
+     * @param url            请求的url
+     * @param object         参数体
+     * @param headers        请求头
+     * @param timeOutSeconds 连接/读取超时秒数，connectTimeout，readTimeout
      * @return response的body信息
      */
-    public static String post(String url, Object object, Map<String, String> headers) throws Exception {
-        OkHttpClient okHttpClient = getOkHttpClient();
+    public static String post(String url, Object object, Map<String, String> headers, Long... timeOutSeconds) throws Exception {
+        Stopwatch stopwatch = Stopwatch.createStarted();
+        OkHttpClient okHttpClient = getOkHttpClient(timeOutSeconds);
         RequestBody requestBody = null;
         if (object instanceof JSONObject) {
             requestBody = FormBody.create(MediaType.get(JSON_CHARSET_UTF_8), ((JSONObject) object).toJSONString());
@@ -73,10 +77,12 @@ public class OkHttpUtils {
             }
         }
         Request request = builder.post(requestBody).build();
-        LOGGER.info("do post, url={}, headers={}, body={}", url, headers, object);
+        LOGGER.info("post请求 => {}\n请求头：{}\n连接超时时间：{}ms\n读取超时时间：{}ms", url, headers, okHttpClient.connectTimeoutMillis(), okHttpClient.readTimeoutMillis());
         Call call = okHttpClient.newCall(request);
         Response response = call.execute();
-        return response.body() == null ? "" : response.body().string();
+        String body = response.body() == null ? "" : response.body().string();
+        LOGGER.info("post响应：{}\n总共耗时：{}ms", body, stopwatch.elapsed(TimeUnit.MILLISECONDS));
+        return body;
     }
 
     /**
@@ -86,8 +92,9 @@ public class OkHttpUtils {
      * @param headers 请求头
      * @return response的body信息
      */
-    public static String get(String url, Map<String, String> headers) throws Exception {
-        OkHttpClient okHttpClient = getOkHttpClient();
+    public static String get(String url, Map<String, String> headers, Long... timeOutSeconds) throws Exception {
+        Stopwatch stopwatch = Stopwatch.createStarted();
+        OkHttpClient okHttpClient = getOkHttpClient(timeOutSeconds);
         Request.Builder builder = getRequestBuilder(url);
         if (headers != null) {
             for (String key : headers.keySet()) {
@@ -95,10 +102,12 @@ public class OkHttpUtils {
             }
         }
         Request request = builder.get().build();
-        LOGGER.info("do get, url={}, headers={}", url, headers);
+        LOGGER.info("get请求 => {}\n请求头：{}\n连接超时时间：{}ms\n读取超时时间：{}ms", url, headers, okHttpClient.connectTimeoutMillis(), okHttpClient.readTimeoutMillis());
         Call call = okHttpClient.newCall(request);
         Response response = call.execute();
-        return response.body() == null ? "" : response.body().string();
+        String body = response.body() == null ? "" : response.body().string();
+        LOGGER.info("get响应：{}\n总共耗时：{}ms", body, stopwatch.elapsed(TimeUnit.MILLISECONDS));
+        return body;
 
     }
 
@@ -117,9 +126,17 @@ public class OkHttpUtils {
      *
      * @return OkHttpClient
      */
-    private static OkHttpClient getOkHttpClient() {
-        return new OkHttpClient()
-                .newBuilder().sslSocketFactory(createSSLSocketFactory(), getTrustManager())
+    private static OkHttpClient getOkHttpClient(Long... timeOutSeconds) {
+        OkHttpClient.Builder builder = new OkHttpClient()
+                .newBuilder();
+        if (timeOutSeconds != null && timeOutSeconds.length > 0) {
+            builder.connectTimeout(timeOutSeconds[0], TimeUnit.SECONDS);
+            if (timeOutSeconds.length > 1) {
+                builder.readTimeout(timeOutSeconds[1], TimeUnit.SECONDS);
+            }
+        }
+        return builder
+                .sslSocketFactory(createSSLSocketFactory(), getTrustManager())
                 .hostnameVerifier(getHostnameVerifier())
                 .build();
     }
