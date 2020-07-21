@@ -1,23 +1,11 @@
 package com.hb.unic.util.util;
 
-import com.alibaba.fastjson.JSONObject;
 import com.google.common.base.Stopwatch;
 import com.hb.unic.logger.Logger;
 import com.hb.unic.logger.LoggerFactory;
-import okhttp3.Call;
-import okhttp3.FormBody;
-import okhttp3.MediaType;
-import okhttp3.OkHttpClient;
-import okhttp3.Request;
-import okhttp3.RequestBody;
-import okhttp3.Response;
+import okhttp3.*;
 
-import javax.net.ssl.HostnameVerifier;
-import javax.net.ssl.SSLContext;
-import javax.net.ssl.SSLSession;
-import javax.net.ssl.SSLSocketFactory;
-import javax.net.ssl.TrustManager;
-import javax.net.ssl.X509TrustManager;
+import javax.net.ssl.*;
 import java.security.SecureRandom;
 import java.security.cert.CertificateException;
 import java.security.cert.X509Certificate;
@@ -61,8 +49,8 @@ public class OkHttpUtils {
         Stopwatch stopwatch = Stopwatch.createStarted();
         OkHttpClient okHttpClient = getOkHttpClient(timeOutSeconds);
         RequestBody requestBody = null;
-        if (object instanceof JSONObject) {
-            requestBody = FormBody.create(MediaType.get(JSON_CHARSET_UTF_8), ((JSONObject) object).toJSONString());
+        if (object instanceof Map) {
+            requestBody = FormBody.create(MediaType.get(JSON_CHARSET_UTF_8), JsonUtils.toJson(object));
         } else if (object instanceof String) {
             requestBody = FormBody.create(MediaType.get(XML_CHARSET_UTF_8), ((String) object));
         } else if (object instanceof FormBody.Builder) {

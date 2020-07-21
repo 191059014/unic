@@ -1,7 +1,6 @@
 package com.hb.unic.cache.service.impl;
 
-import com.hb.unic.cache.IRedisService;
-import com.hb.unic.cache.service.AbstractRedisService;
+import com.hb.unic.cache.service.IRedisService;
 import com.hb.unic.cache.util.JsonUtils;
 import com.hb.unic.logger.Logger;
 import com.hb.unic.logger.LoggerFactory;

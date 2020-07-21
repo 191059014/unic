@@ -40,12 +40,6 @@
             <artifactId>okhttp</artifactId>
         </dependency>
 
-        <!-- fastjson -->
-        <dependency>
-            <groupId>com.alibaba</groupId>
-            <artifactId>fastjson</artifactId>
-        </dependency>
-
         <!-- spring-beans -->
         <dependency>
             <groupId>org.springframework</groupId>

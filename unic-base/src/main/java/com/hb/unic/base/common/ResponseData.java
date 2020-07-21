@@ -1,7 +1,7 @@
 package com.hb.unic.base.common;
 
-import com.alibaba.fastjson.JSON;
 import com.fasterxml.jackson.annotation.JsonInclude;
+import com.hb.unic.util.util.JsonUtils;
 
 import java.io.Serializable;
 
@@ -67,6 +67,6 @@ public class ResponseData<T> implements Serializable {
 
     @Override
     public String toString() {
-        return JSON.toJSONString(this);
+        return JsonUtils.toJson(this);
     }
 }

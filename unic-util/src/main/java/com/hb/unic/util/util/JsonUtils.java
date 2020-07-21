@@ -1,12 +1,16 @@
-package com.hb.unic.cache.util;
+package com.hb.unic.util.util;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.databind.*;
+import com.fasterxml.jackson.databind.DeserializationFeature;
+import com.fasterxml.jackson.databind.MapperFeature;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.SerializationFeature;
 import com.hb.unic.logger.Logger;
 import com.hb.unic.logger.LoggerFactory;
 import com.hb.unic.logger.util.LogExceptionWapper;
 
+import java.io.IOException;
 import java.text.SimpleDateFormat;
 
 /**
@@ -45,7 +49,7 @@ public class JsonUtils {
     /**
      * 转换为json
      *
-     * @param o 任意对象
+     * @param o 任意对象，javabean，list，map，其他复杂对象
      * @return json字符串
      */
     public static String toJson(Object o) {
@@ -53,6 +57,38 @@ public class JsonUtils {
             return MAPPER.writeValueAsString(o);
         } catch (JsonProcessingException e) {
             LOGGER.info("转换json异常：{}", LogExceptionWapper.getStackTrace(e));
+            return null;
+        }
+    }
+
+    /**
+     * 转换为格式化后的json
+     *
+     * @param o 任意对象，javabean，list，map，其他复杂对象
+     * @return json字符串
+     */
+    public static String toJsonPretty(Object o) {
+        try {
+            return MAPPER.writerWithDefaultPrettyPrinter().writeValueAsString(o);
+        } catch (JsonProcessingException e) {
+            LOGGER.info("转换格式化json异常：{}", LogExceptionWapper.getStackTrace(e));
+            return null;
+        }
+    }
+
+    /**
+     * json字符串转换为bean
+     *
+     * @param json  json字符串
+     * @param clazz bean对应的类，javabean，map，list
+     * @param <T>   bean类型
+     * @return bean
+     */
+    public static <T> T toObject(String json, Class<T> clazz) {
+        try {
+            return MAPPER.readValue(json, clazz);
+        } catch (IOException e) {
+            LOGGER.info("转换Object异常：{}", LogExceptionWapper.getStackTrace(e));
             return null;
         }
     }
