@@ -17,6 +17,11 @@
 
         <dependency>
             <groupId>com.hb.unic</groupId>
+            <artifactId>unic-logger</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>com.hb.unic</groupId>
             <artifactId>unic-util</artifactId>
         </dependency>
 
