@@ -1,11 +1,13 @@
 package com.hb.unic.logger;
 
-import com.alibaba.fastjson.JSON;
+import com.hb.unic.logger.common.Consts;
 import com.hb.unic.logger.model.LoggerEntity;
 import com.hb.unic.logger.util.TraceIdUtils;
 import org.slf4j.LoggerFactory;
 import org.slf4j.helpers.MessageFormatter;
 
+import java.net.InetAddress;
+import java.net.UnknownHostException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Objects;
@@ -131,7 +133,7 @@ public class Logger {
      * @return 标准json
      */
     private String getJsonContent(LoggerEntity loggerEntity) {
-        return JSON.toJSONString(loggerEntity);
+        return loggerEntity.toString();
     }
 
     /**
@@ -147,6 +149,18 @@ public class Logger {
         loggerEntity.setLog_level(logLevel);
         loggerEntity.setFile_name(stacks[2].getClassName());
         loggerEntity.setFile_line(stacks[2].getLineNumber());
+        String ipAddress = "";
+        String hostName = "";
+        try {
+            ipAddress = InetAddress.getLocalHost().getHostAddress();
+            hostName = InetAddress.getLocalHost().getHostName();
+        } catch (UnknownHostException e) {
+            this.delegateLogger.info("获取ip地址和主机名失败：{}", e.getMessage());
+        }
+        loggerEntity.setHost_name(hostName);
+        loggerEntity.setThread_name(Thread.currentThread().getName());
+        loggerEntity.setIp(ipAddress);
+        loggerEntity.setApp_name(LoggerContext.getValue(Consts.APP_NAME));
         return loggerEntity;
     }
 

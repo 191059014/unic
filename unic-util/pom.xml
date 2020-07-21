@@ -17,6 +17,11 @@
 
     <dependencies>
 
+        <dependency>
+            <groupId>com.hb.unic</groupId>
+            <artifactId>unic-logger</artifactId>
+        </dependency>
+
         <!-- groovy支持-->
         <dependency>
             <groupId>org.codehaus.groovy</groupId>

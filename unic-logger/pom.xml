@@ -23,22 +23,10 @@
             <artifactId>slf4j-api</artifactId>
         </dependency>
 
-        <!-- fastjson -->
-        <dependency>
-            <groupId>com.alibaba</groupId>
-            <artifactId>fastjson</artifactId>
-        </dependency>
-
         <!-- web -->
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-web</artifactId>
-        </dependency>
-
-        <!-- unic-base -->
-        <dependency>
-            <groupId>com.hb.unic</groupId>
-            <artifactId>unic-base</artifactId>
         </dependency>
 
     </dependencies>

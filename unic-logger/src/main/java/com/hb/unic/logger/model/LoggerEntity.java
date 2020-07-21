@@ -1,7 +1,5 @@
 package com.hb.unic.logger.model;
 
-import com.alibaba.fastjson.annotation.JSONField;
-
 /**
  * ========== 日志实体 ==========
  *
@@ -11,23 +9,26 @@ import com.alibaba.fastjson.annotation.JSONField;
  */
 public class LoggerEntity {
 
-    @JSONField(ordinal = 1)
+    // 日志摘要信息
     private Object content;
-
-    @JSONField(ordinal = 2)
+    // 链路追踪trace_id
     private String trace_id;
-
-    @JSONField(ordinal = 3)
+    // 日期
     private String log_date;
-
-    @JSONField(ordinal = 4)
+    // 级别
     private String log_level;
-
-    @JSONField(ordinal = 5)
+    // 文件名称
     private String file_name;
-
-    @JSONField(ordinal = 6)
+    // 行数
     private Integer file_line;
+    // 主机名
+    private String host_name;
+    // 线程名称
+    private String thread_name;
+    // ip地址
+    private String ip;
+    // 应用名
+    private String app_name;
 
     public Object getContent() {
         return content;
@@ -77,4 +78,61 @@ public class LoggerEntity {
         this.file_line = file_line;
     }
 
+    public String getHost_name() {
+        return host_name;
+    }
+
+    public void setHost_name(String host_name) {
+        this.host_name = host_name;
+    }
+
+    public String getThread_name() {
+        return thread_name;
+    }
+
+    public void setThread_name(String thread_name) {
+        this.thread_name = thread_name;
+    }
+
+    public String getIp() {
+        return ip;
+    }
+
+    public void setIp(String ip) {
+        this.ip = ip;
+    }
+
+    public String getApp_name() {
+        return app_name;
+    }
+
+    public void setApp_name(String app_name) {
+        this.app_name = app_name;
+    }
+
+    @Override
+    public String toString() {
+        return "{"
+                + "\"content\":"
+                + content
+                + ",\"trace_id\":\""
+                + trace_id + '\"'
+                + ",\"log_date\":\""
+                + log_date + '\"'
+                + ",\"log_level\":\""
+                + log_level + '\"'
+                + ",\"file_name\":\""
+                + file_name + '\"'
+                + ",\"file_line\":"
+                + file_line
+                + ",\"host_name\":\""
+                + host_name + '\"'
+                + ",\"thread_name\":\""
+                + thread_name + '\"'
+                + ",\"ip\":\""
+                + ip + '\"'
+                + ",\"app_name\":\""
+                + app_name + '\"'
+                + "}";
+    }
 }

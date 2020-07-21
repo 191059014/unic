@@ -21,7 +21,12 @@ public class TraceIdUtils {
      * @return trace_id
      */
     public static String getTraceId() {
-        return (String) TRACE_ID.get();
+        String traceId = TRACE_ID.get();
+        if (traceId == null) {
+            traceId = generateTraceId();
+            setTraceId(traceId);
+        }
+        return traceId;
     }
 
     /**
