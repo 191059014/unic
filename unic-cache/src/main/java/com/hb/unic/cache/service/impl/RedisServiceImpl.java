@@ -2,6 +2,7 @@ package com.hb.unic.cache.service.impl;
 
 import com.hb.unic.cache.IRedisService;
 import com.hb.unic.cache.service.AbstractRedisService;
+import com.hb.unic.cache.util.JsonUtils;
 import com.hb.unic.logger.Logger;
 import com.hb.unic.logger.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -71,7 +72,8 @@ public class RedisServiceImpl extends AbstractRedisService implements IRedisServ
 
     @Override
     public void set(String key, Object value, long expireTime) {
-
+        String json = JsonUtils.toJson(value);
+        stringRedisTemplate.opsForValue().set(key, json, expireTime, TimeUnit.SECONDS);
     }
 
     @Override
