@@ -1,5 +1,9 @@
 package com.hb.unic.logger.util;
 
+import com.hb.unic.logger.filter.TraceIdHttpFilter;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import java.util.UUID;
 
 /**
@@ -10,6 +14,12 @@ import java.util.UUID;
  * @date 2019年07月16日 10时09分
  */
 public class TraceIdUtils {
+
+    /**
+     * 日志
+     */
+    private static final Logger LOGGER = LoggerFactory.getLogger(TraceIdHttpFilter.class);
+
     /**
      * 存放trace_id的容器
      */
@@ -25,6 +35,7 @@ public class TraceIdUtils {
         if (traceId == null) {
             traceId = generateTraceId();
             setTraceId(traceId);
+            LOGGER.info("获取traceId为空，设置traceId：{}", traceId);
         }
         return traceId;
     }
