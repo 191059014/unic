@@ -23,7 +23,7 @@ public class CloneUtils {
     /**
      * The constant LOGGER.
      */
-    protected static Logger LOGGER = LoggerFactory.getLogger(OkHttpUtils.class);
+    protected static Logger LOGGER = LoggerFactory.getLogger(CloneUtils.class);
 
     /**
      * 复制java bean
