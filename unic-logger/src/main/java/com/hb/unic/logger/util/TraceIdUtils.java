@@ -1,5 +1,6 @@
 package com.hb.unic.logger.util;
 
+import com.hb.unic.logger.common.Consts;
 import com.hb.unic.logger.filter.TraceIdHttpFilter;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -34,8 +35,8 @@ public class TraceIdUtils {
         String traceId = TRACE_ID.get();
         if (traceId == null) {
             traceId = generateTraceId();
-            setTraceId(traceId);
-            LOGGER.info("获取traceId为空，设置traceId：{}", traceId);
+            setTraceId(Consts.TRACEID_DEFAULT_PREFIX + traceId);
+            LOGGER.info("获取traceId为空，设置默认的traceId：{}", traceId);
         }
         return traceId;
     }

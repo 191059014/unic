@@ -111,7 +111,7 @@ public class Logger {
     public void warn(String format, Object... arguments) {
         Object message = this.getLogMsg(format, arguments);
         LoggerEntity loggerEntity = this.buildLogTemplate(message, Thread.currentThread().getStackTrace(), "WARN");
-        this.delegateLogger.info(getJsonContent(loggerEntity));
+        this.delegateLogger.warn(getJsonContent(loggerEntity));
     }
 
     /**
@@ -123,7 +123,7 @@ public class Logger {
     public void error(String format, Object... arguments) {
         Object message = this.getLogMsg(format, arguments);
         LoggerEntity loggerEntity = this.buildLogTemplate(message, Thread.currentThread().getStackTrace(), "ERROR");
-        this.delegateLogger.info(getJsonContent(loggerEntity));
+        this.delegateLogger.error(getJsonContent(loggerEntity));
     }
 
     /**

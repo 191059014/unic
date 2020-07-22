@@ -1,8 +1,9 @@
 package com.hb.unic.util.util;
 
+import com.hb.unic.logger.Logger;
+import com.hb.unic.logger.LoggerFactory;
+import com.hb.unic.logger.util.LogExceptionWapper;
 import org.apache.commons.beanutils.BeanUtils;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -21,7 +22,7 @@ public class CloneUtils {
     /**
      * The constant LOGGER.
      */
-    protected static Logger LOGGER = LoggerFactory.getLogger(OkHttpUtils.class);
+    protected static Logger LOGGER = LoggerFactory.getLogger(CloneUtils.class);
 
     /**
      * 复制java bean
@@ -34,7 +35,7 @@ public class CloneUtils {
         try {
             return bean == null ? null : (T) BeanUtils.cloneBean(bean);
         } catch (Exception e) {
-            LOGGER.error("cloneBean Exception: {}", e);
+            LOGGER.error("cloneBean Exception: {}", LogExceptionWapper.getStackTrace(e));
             return null;
         }
     }
@@ -61,7 +62,7 @@ public class CloneUtils {
     }
 
     /**
-     * 将对象装换为map
+     * 将对象转换为map
      *
      * @param bean bean
      * @return Map

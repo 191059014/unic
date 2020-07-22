@@ -22,6 +22,11 @@ public class Consts {
      */
     public static final String FILTER_URL_PATTERN = "filterUrlPattern";
 
+    /**
+     * traceId默认前缀
+     */
+    public static final String TRACEID_DEFAULT_PREFIX = "default_";
+
 }
 
     
