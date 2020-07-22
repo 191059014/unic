@@ -20,7 +20,7 @@ public class ResponseData<T> implements Serializable {
     /**
      * 返回码
      */
-    private int code;
+    private String code;
     /**
      * 返回信息
      */
@@ -42,14 +42,14 @@ public class ResponseData<T> implements Serializable {
      * @param count 总条数
      * @param data  业务数据
      */
-    public ResponseData(int code, String msg, Integer count, T data) {
+    public ResponseData(String code, String msg, Integer count, T data) {
         this.code = code;
         this.msg = msg;
         this.count = count;
         this.data = data;
     }
 
-    public int getCode() {
+    public String getCode() {
         return code;
     }
 

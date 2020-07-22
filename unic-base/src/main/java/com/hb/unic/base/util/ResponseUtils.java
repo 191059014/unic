@@ -31,7 +31,7 @@ public class ResponseUtils {
      * @param <T>  数据类型
      * @return 完整返回对象
      */
-    public static <T> ResponseData<T> generateResponseData(int code, String msg) {
+    public static <T> ResponseData<T> generateResponseData(String code, String msg) {
         return generateResponseData(code, msg, null, null);
     }
 
@@ -56,7 +56,7 @@ public class ResponseUtils {
      * @param <T>  数据类型
      * @return 完整返回对象
      */
-    public static <T> ResponseData<T> generateResponseData(int code, String msg, T data) {
+    public static <T> ResponseData<T> generateResponseData(String code, String msg, T data) {
         return generateResponseData(code, msg, null, data);
     }
 
@@ -83,7 +83,7 @@ public class ResponseUtils {
      * @param <T>   数据类型
      * @return 完整返回对象
      */
-    public static <T> ResponseData<T> generateResponseData(int code, String msg, Integer count, T data) {
+    public static <T> ResponseData<T> generateResponseData(String code, String msg, Integer count, T data) {
         return new ResponseData<>(code, msg, count, data);
     }
 
@@ -93,9 +93,9 @@ public class ResponseUtils {
      * @param enumObj 枚举对象
      * @return code值
      */
-    private static Integer getCode(Enum enumObj) {
+    public static String getCode(Enum enumObj) {
         Object codeObj = EnumUtils.get(enumObj, EnumUtils.KeysEnum.code.name());
-        return Integer.valueOf(Optional.ofNullable(codeObj).orElse("").toString());
+        return Optional.ofNullable(codeObj).orElse("").toString();
     }
 
     /**
@@ -104,7 +104,7 @@ public class ResponseUtils {
      * @param enumObj 枚举对象
      * @return msg值
      */
-    private static String getMsg(Enum enumObj) {
+    public static String getMsg(Enum enumObj) {
         Object msgObj = EnumUtils.get(enumObj, EnumUtils.KeysEnum.msg.name());
         return Optional.ofNullable(msgObj).orElse("").toString();
     }

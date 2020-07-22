@@ -1,5 +1,7 @@
 package com.hb.unic.base.exception;
 
+import com.hb.unic.base.util.ResponseUtils;
+
 /**
  * ========== 业务异常类 ==========
  *
@@ -15,12 +17,21 @@ public class BusinessException extends RuntimeException {
     /**
      * 错误描述
      */
-    private String message;
+    private String msg;
 
-    public BusinessException(String code, String message) {
-        super(message);
+    public BusinessException(String code, String msg) {
+        super(msg);
         this.code = code;
-        this.message = message;
+        this.msg = msg;
+    }
+
+    /**
+     * 枚举类，取code和msg字段
+     *
+     * @param enumObj 枚举
+     */
+    public BusinessException(Enum enumObj) {
+        this(ResponseUtils.getCode(enumObj), ResponseUtils.getMsg(enumObj));
     }
 
     public String getCode() {
@@ -28,15 +39,16 @@ public class BusinessException extends RuntimeException {
     }
 
     public String getMessage() {
-        return message;
+        return msg;
     }
 
     @Override
     public String toString() {
-        return "BusinessException{" +
-                "code='" + code + '\'' +
-                ", message='" + message + '\'' +
-                "} " + super.toString();
+        return "{"
+                + "\"code\":\""
+                + code + '\"'
+                + ",\"msg\":\""
+                + msg + '\"'
+                + "},\"super-BusinessException\":" + super.toString() + "}";
     }
-
 }
