@@ -53,6 +53,7 @@ public class LoggerContext implements InitializingBean {
     public void afterPropertiesSet() throws Exception {
         maps.put(Consts.APP_NAME, appName);
         maps.put(Consts.FILTER_URL_PATTERN, filterUrlPattern);
+        LOGGER.debug("LoggerContext load properties: {}", maps);
     }
 
     /**
