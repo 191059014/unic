@@ -1,7 +1,7 @@
 package com.hb.unic.base.service;
 
 import com.hb.unic.base.container.SpringUtils;
-import com.hb.unic.base.exception.StandardRuntimeException;
+import com.hb.unic.base.exception.BusinessException;
 import org.apache.commons.beanutils.MethodUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -44,7 +44,7 @@ public class ServiceExecutorServiceImpl implements IServiceExecutorService {
                 Object r = MethodUtils.invokeMethod(service, methodName, methodParameter);
             } catch (Exception e) {
                 logger.error("Service:{} execute Failure!", service);
-                throw new StandardRuntimeException("ServiceExecuteFailure", service + "." + methodName);
+                throw new BusinessException("ServiceExecuteFailure", service + "." + methodName);
             }
         } else {
             logger.error("Service Object is not exist error!");
@@ -61,7 +61,7 @@ public class ServiceExecutorServiceImpl implements IServiceExecutorService {
                 return new AsyncResult<Object>(r);
             } catch (Exception e) {
                 logger.error("serviceName:{},methodName:{} executeFuture error!", serviceName, methodName);
-                throw new StandardRuntimeException("ServiceExecuteFutureFailure", serviceName + "." + methodName);
+                throw new BusinessException("ServiceExecuteFutureFailure", serviceName + "." + methodName);
             }
         } else {
             logger.error("Service Name:{} is not exist error!", serviceName);
@@ -79,7 +79,7 @@ public class ServiceExecutorServiceImpl implements IServiceExecutorService {
                 return new AsyncResult<Object>(r);
             } catch (Exception e) {
                 logger.error("service:{},methodName:{} executeFuture error!", service, methodName);
-                throw new StandardRuntimeException("ServiceExecuteFutureFailure", service + "." + methodName);
+                throw new BusinessException("ServiceExecuteFutureFailure", service + "." + methodName);
             }
         } else {
             logger.error("Service Object is not exist error!");
@@ -97,7 +97,7 @@ public class ServiceExecutorServiceImpl implements IServiceExecutorService {
                 return r;
             } catch (Exception e) {
                 logger.error("serviceName:{},methodName:{} invoke Failure!", serviceName, methodName);
-                throw new StandardRuntimeException("ServiceInvokeFailure", serviceName + "." + methodName);
+                throw new BusinessException("ServiceInvokeFailure", serviceName + "." + methodName);
             }
         } else {
             logger.error("Service Name:" + serviceName + " is not exist error!");
@@ -114,7 +114,7 @@ public class ServiceExecutorServiceImpl implements IServiceExecutorService {
                 return r;
             } catch (Exception e) {
                 logger.error("service:{},methodName:{} invoke Failure!", service, methodName);
-                throw new StandardRuntimeException("ServiceInvokeFailure", service + "." + methodName);
+                throw new BusinessException("ServiceInvokeFailure", service + "." + methodName);
             }
         } else {
             logger.error("Service Object is not exist error!");
