@@ -31,14 +31,15 @@ public class FilterConfiguration {
         // 注入过滤器
         registration.setFilter(new TraceIdHttpFilter());
         // 过滤掉所有请求
-        registration.addUrlPatterns(LoggerContext.getValue(Consts.FILTER_URL_PATTERN));
+        String urlPatterns = "/controller/*";
+        registration.addUrlPatterns(urlPatterns);
         // 过滤器名称
         registration.setName("traceIdHttpFilter");
         // 是否自动注册 false 取消Filter的自动注册
         registration.setEnabled(true);
         // 过滤器顺序
         registration.setOrder(-99);
-        LOGGER.info("{} register complete", "traceIdHttpFilter");
+        LOGGER.info("{} register complete, urlPatterns: [{}]", "traceIdHttpFilter", urlPatterns);
         return registration;
     }
 
