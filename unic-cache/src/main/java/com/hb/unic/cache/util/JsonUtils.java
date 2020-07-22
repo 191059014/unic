@@ -26,8 +26,18 @@ public class JsonUtils {
      */
     private final static ObjectMapper MAPPER = new ObjectMapper();
 
+    /**
+     * 静态代码块，初始化ObjectMapper
+     */
     static {
-        MAPPER
+        initMapper(MAPPER);
+    }
+
+    /**
+     * 初始化ObjectMapper
+     */
+    private static void initMapper(ObjectMapper mapper) {
+        mapper
                 // 将对象的所有不为空字段全部列入
                 .setSerializationInclusion(JsonInclude.Include.NON_NULL)
                 // 取消默认日期格式timestamps
