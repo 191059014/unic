@@ -1,8 +1,10 @@
 package com.hb.unic.util.util;
 
+import com.hb.unic.logger.Logger;
+import com.hb.unic.logger.LoggerFactory;
+import com.hb.unic.logger.util.LogExceptionWapper;
 import org.apache.commons.beanutils.BeanUtils;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import org.springframework.cglib.beans.BeanMap;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -34,7 +36,7 @@ public class CloneUtils {
         try {
             return bean == null ? null : (T) BeanUtils.cloneBean(bean);
         } catch (Exception e) {
-            LOGGER.error("cloneBean Exception: {}", e);
+            LOGGER.error("cloneBean Exception: {}", LogExceptionWapper.getStackTrace(e));
             return null;
         }
     }
@@ -66,32 +68,26 @@ public class CloneUtils {
      * @param bean bean
      * @return Map
      */
-    public static <T> Map<String, String> bean2Map(T bean) {
-        if (bean == null) {
-            return null;
-        }
-        try {
-            Map<String, String> map = BeanUtils.describe(bean);
-            if (map != null) {
-                map.remove("class");
+    public static <T> Map<String, Object> bean2Map(T bean) {
+        Map<String, Object> map = new HashMap<>();
+        if (bean != null) {
+            BeanMap beanMap = BeanMap.create(bean);
+            for (Object key : beanMap.keySet()) {
+                map.put(key + "", beanMap.get(key));
             }
-            return map;
-        } catch (Exception e) {
-            LOGGER.info("beanToMap exception: {}", e);
-            return null;
         }
+        return map;
     }
 
     /**
-     * 将List<T>转换为List<Map<String, String>>
+     * 将List<T>转换为List<Map<String, Object>>
      *
      * @param beanList list集合
      * @return List
      */
-    public static <T> List<Map<String, String>> beans2Maps(List<T> beanList) {
-        List<Map<String, String>> list = new ArrayList<>();
+    public static <T> List<Map<String, Object>> beans2Maps(List<T> beanList) {
+        List<Map<String, Object>> list = new ArrayList<>();
         if (beanList != null && beanList.size() > 0) {
-            Map<String, Object> map = null;
             beanList.forEach(bean -> list.add(bean2Map(bean)));
         }
         return list;
@@ -105,15 +101,13 @@ public class CloneUtils {
      * @return T
      */
     public static <T> T map2Bean(Map<String, Object> map, Class<T> beanClass) {
-        if (map == null) {
-            return null;
-        }
         try {
-            T obj = beanClass.newInstance();
-            BeanUtils.populate(obj, map);
-            return obj;
+            T t = beanClass.newInstance();
+            BeanMap beanMap = BeanMap.create(t);
+            beanMap.putAll(map);
+            return t;
         } catch (Exception e) {
-            LOGGER.error("mapToBean Exception: {}", e);
+            LOGGER.error("map2Bean Exception: {}", LogExceptionWapper.getStackTrace(e));
             return null;
         }
     }

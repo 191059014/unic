@@ -1,8 +1,9 @@
 package com.hb.unic.util.util;
 
+import com.hb.unic.logger.Logger;
+import com.hb.unic.logger.LoggerFactory;
+import com.hb.unic.logger.util.LogExceptionWapper;
 import org.apache.commons.lang3.ArrayUtils;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 import java.lang.reflect.Field;
 import java.lang.reflect.Modifier;
@@ -33,8 +34,7 @@ public class ReflectUtils {
         try {
             return Class.forName(entityName);
         } catch (ClassNotFoundException e) {
-            e.printStackTrace();
-            LOGGER.error("Method getType: ", e);
+            LOGGER.error("Method getType error: {}", LogExceptionWapper.getStackTrace(e));
         }
         return null;
     }
@@ -60,13 +60,13 @@ public class ReflectUtils {
      * @param <T> 对象类型
      * @return map
      */
-    public static <T> Map<String, Object> getAllFieldsExcludeStatic(T t) {
+    public static <T> Map<String, Object> getAllFieldsExcludeStaticAndFinal(T t) {
         Map<String, Object> map = new HashMap<>();
         Field[] allFields = getAllFields(t.getClass());
         try {
             for (Field field : allFields) {
                 int fieldModifiers = field.getModifiers();
-                if (Modifier.isStatic(fieldModifiers)) {
+                if (Modifier.isStatic(fieldModifiers) || Modifier.isFinal(fieldModifiers)) {
                     continue;
                 }
                 String name = field.getName();
@@ -75,8 +75,7 @@ public class ReflectUtils {
                 map.put(name, value);
             }
         } catch (IllegalAccessException e) {
-            e.printStackTrace();
-            LOGGER.error("getAllFields error: ", e);
+            LOGGER.error("getAllFieldsExcludeStaticAndFinal error: {}", LogExceptionWapper.getStackTrace(e));
         }
         return map;
     }
