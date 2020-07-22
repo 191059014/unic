@@ -36,7 +36,7 @@ public class FilterUtils {
         registration.setName(filterName);
         registration.setEnabled(enable);
         registration.setOrder(order);
-        LOGGER.info("{} register complete", filterName);
+        LOGGER.info("{} register complete, urlPatterns: [{}]", filterName, urlPatterns);
         return registration;
     }
 
