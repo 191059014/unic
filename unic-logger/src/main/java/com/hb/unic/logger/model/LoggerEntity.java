@@ -113,10 +113,10 @@ public class LoggerEntity {
     @Override
     public String toString() {
         return "{"
-                + "\"trace_id\":"
-                + trace_id
-                + ",\"content\":\""
-                + content + '\"'
+                + "\"trace_id\":\""
+                + trace_id + '\"'
+                + ",\"content\":"
+                + content
                 + ",\"log_date\":\""
                 + log_date + '\"'
                 + ",\"log_level\":\""
