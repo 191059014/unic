@@ -22,6 +22,11 @@
             <artifactId>unic-util</artifactId>
         </dependency>
 
+        <dependency>
+            <groupId>com.hb.unic</groupId>
+            <artifactId>unic-logger</artifactId>
+        </dependency>
+
         <!-- spring-beans -->
         <dependency>
             <groupId>org.springframework</groupId>

@@ -5,16 +5,11 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.InitializingBean;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.beans.factory.config.YamlPropertiesFactoryBean;
 import org.springframework.context.annotation.Primary;
-import org.springframework.core.io.Resource;
-import org.springframework.core.io.support.PathMatchingResourcePatternResolver;
 import org.springframework.stereotype.Component;
 
-import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.Properties;
 
 /**
  * ========== 全局的属性配置 ==========
@@ -39,12 +34,6 @@ public class LoggerContext implements InitializingBean {
     private String appName;
 
     /**
-     * traceId过滤器拦截路径
-     */
-    @Value("${logger.traceId.filterUrlPattern:/*}")
-    private String filterUrlPattern;
-
-    /**
      * 配置集合
      */
     private static Map<String, String> maps = new HashMap<>(8);
@@ -52,8 +41,7 @@ public class LoggerContext implements InitializingBean {
     @Override
     public void afterPropertiesSet() throws Exception {
         maps.put(Consts.APP_NAME, appName);
-        maps.put(Consts.FILTER_URL_PATTERN, filterUrlPattern);
-        LOGGER.debug("LoggerContext load properties: {}", maps);
+        LOGGER.info("LoggerContext accept properties: {}", maps);
     }
 
     /**

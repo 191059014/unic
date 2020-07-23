@@ -1,8 +1,8 @@
 package com.hb.unic.util.util;
 
-
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import com.hb.unic.logger.Logger;
+import com.hb.unic.logger.LoggerFactory;
+import com.hb.unic.logger.util.LogExceptionWapper;
 
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
@@ -64,11 +64,11 @@ public class EnumUtils {
             method = t.getClass().getMethod(GET_METHOD_PREFIX + StringUtils.upperFirst(propertyName));
             return method.invoke(t);
         } catch (NoSuchMethodException e) {
-            LOGGER.info("get property from enum NoSuchMethodException: {}", e);
+            LOGGER.info("get property from enum NoSuchMethodException: {}", LogExceptionWapper.getStackTrace(e));
         } catch (IllegalAccessException e) {
-            LOGGER.info("get property from enum IllegalAccessException: {}", e);
+            LOGGER.info("get property from enum IllegalAccessException: {}", LogExceptionWapper.getStackTrace(e));
         } catch (InvocationTargetException e) {
-            LOGGER.info("get property from enum InvocationTargetException: {}", e);
+            LOGGER.info("get property from enum InvocationTargetException: {}", LogExceptionWapper.getStackTrace(e));
         }
         return null;
     }

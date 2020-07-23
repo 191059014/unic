@@ -1,15 +1,13 @@
 package com.hb.unic.util.util;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import com.hb.unic.logger.Logger;
+import com.hb.unic.logger.LoggerFactory;
+import com.hb.unic.logger.util.LogExceptionWapper;
 
-import java.lang.ref.SoftReference;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
-import java.util.HashMap;
-import java.util.Map;
 
 /**
  * ========== 日期工具类 ==========
@@ -84,7 +82,7 @@ public class DateUtils {
         try {
             return new SimpleDateFormat(dateFormat).parse(dateValue);
         } catch (ParseException e) {
-            LOGGER.error("str2date occur error: {}", e);
+            LOGGER.error("str2date occur error: {}", LogExceptionWapper.getStackTrace(e));
             return null;
         }
     }
