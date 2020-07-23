@@ -1,8 +1,10 @@
 package com.hb.unic.base;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import com.hb.unic.logger.Logger;
+import com.hb.unic.logger.LoggerFactory;
 import org.springframework.beans.factory.InitializingBean;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.beans.factory.config.YamlPropertiesFactoryBean;
 import org.springframework.context.annotation.Primary;
 import org.springframework.core.io.Resource;
@@ -29,6 +31,13 @@ public class GlobalProperties implements InitializingBean {
     private static final Logger LOGGER = LoggerFactory.getLogger(GlobalProperties.class);
 
     /**
+     * yml配置
+     */
+    @Autowired
+    @Qualifier("yamlProperties")
+    private YamlPropertiesFactoryBean yamlProperties;
+
+    /**
      * 所有属性
      */
     private static Properties props = null;
@@ -46,7 +55,7 @@ public class GlobalProperties implements InitializingBean {
     @Override
     public void afterPropertiesSet() throws Exception {
         // 加载配置
-        loadProperties();
+        props = yamlProperties.getObject();
     }
 
     /**
