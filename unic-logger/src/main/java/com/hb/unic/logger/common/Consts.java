@@ -18,14 +18,19 @@ public class Consts {
     public static final String APP_NAME = "appName";
 
     /**
-     * filterUrlPattern
+     * http过滤器拦截路径
      */
-    public static final String HTTP_FILTER_URL_PATTERN = "httpFilterUrlPattern";
+    public static final String HTTP_FILTER_URL_PATTERNS = "httpFilterUrlPatterns";
 
     /**
      * traceId默认前缀
      */
     public static final String TRACEID_DEFAULT_PREFIX = "default_";
+
+    /**
+     * 拦截路径分隔符
+     */
+    public static final String FILTER_URL_PATTERNS_SEPARATOR = ",";
 
 }
 

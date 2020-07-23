@@ -36,8 +36,8 @@ public class LoggerContext implements InitializingBean {
     /**
      * http过滤器拦截路径
      */
-    @Value("${unicLogger.httpFilter.urlPattern:/*}")
-    private String httpFilterUrlPattern;
+    @Value("${unicLogger.httpFilter.urlPatterns:/*}")
+    private String httpFilterUrlPatterns;
 
     /**
      * 配置集合
@@ -47,7 +47,7 @@ public class LoggerContext implements InitializingBean {
     @Override
     public void afterPropertiesSet() throws Exception {
         maps.put(Consts.APP_NAME, appName);
-        maps.put(Consts.HTTP_FILTER_URL_PATTERN, httpFilterUrlPattern);
+        maps.put(Consts.HTTP_FILTER_URL_PATTERNS, httpFilterUrlPatterns);
         LOGGER.info("LoggerContext accept properties: {}", maps);
     }
 

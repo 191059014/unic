@@ -33,8 +33,8 @@ public class TraceIdFilterConfiguration {
         // 注入过滤器
         registration.setFilter(new TraceIdHttpFilter());
         // 过滤掉所有请求
-        String urlPatterns = LoggerContext.getValue(Consts.HTTP_FILTER_URL_PATTERN);
-        registration.addUrlPatterns(urlPatterns);
+        String urlPatterns = LoggerContext.getValue(Consts.HTTP_FILTER_URL_PATTERNS);
+        registration.addUrlPatterns(urlPatterns.split(Consts.FILTER_URL_PATTERNS_SEPARATOR));
         // 过滤器名称
         registration.setName("traceIdHttpFilter");
         // 是否自动注册 false 取消Filter的自动注册
