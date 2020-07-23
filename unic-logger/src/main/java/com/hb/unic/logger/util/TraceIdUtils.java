@@ -33,7 +33,7 @@ public class TraceIdUtils {
     public static String getTraceId() {
         String traceId = TRACE_ID.get();
         if (traceId == null) {
-            traceId = Consts.TRACEID_DEFAULT_PREFIX + generateTraceId();
+            traceId = generateTraceId() + Consts.TRACEID_DEFAULT_SUFFIX;
             setTraceId(traceId);
             LOGGER.info("traceId is null，set default：{}", traceId);
         }

@@ -25,7 +25,7 @@ public class Consts {
     /**
      * traceId默认前缀
      */
-    public static final String TRACEID_DEFAULT_PREFIX = "default_";
+    public static final String TRACEID_DEFAULT_SUFFIX = "_default";
 
     /**
      * 拦截路径分隔符
