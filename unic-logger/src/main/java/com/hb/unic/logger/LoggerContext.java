@@ -41,7 +41,7 @@ public class LoggerContext implements InitializingBean {
     @Override
     public void afterPropertiesSet() throws Exception {
         maps.put(Consts.APP_NAME, appName);
-        LOGGER.debug("LoggerContext load properties: {}", maps);
+        LOGGER.info("LoggerContext load properties: {}", maps);
     }
 
     /**
