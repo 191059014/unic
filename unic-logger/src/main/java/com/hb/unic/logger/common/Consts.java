@@ -20,7 +20,7 @@ public class Consts {
     /**
      * filterUrlPattern
      */
-    public static final String FILTER_URL_PATTERN = "filterUrlPattern";
+    public static final String HTTP_FILTER_URL_PATTERN = "httpFilterUrlPattern";
 
     /**
      * traceId默认前缀

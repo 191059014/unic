@@ -3,6 +3,8 @@ package com.hb.unic.cache.config;
 import com.fasterxml.jackson.annotation.JsonAutoDetect;
 import com.fasterxml.jackson.annotation.PropertyAccessor;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnBean;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnClass;
 import org.springframework.context.annotation.Bean;
@@ -26,12 +28,17 @@ import java.util.Map;
 public class RedisConfig {
 
     /**
+     * 日志
+     */
+    private static final Logger LOGGER = LoggerFactory.getLogger(RedisConfig.class);
+
+    /**
      * 创建Object类型的RedisTemplate操作类
      */
     @Bean("objectRedisTemplate")
     RedisTemplate<String, Object> objectRedisTemplate(RedisConnectionFactory redisConnectionFactory) {
         RedisTemplate<String, Object> redisTemplate = new RedisTemplate<>();
-        return initRedisTemplate(redisTemplate, redisConnectionFactory);
+        return initRedisTemplate(redisTemplate, redisConnectionFactory, "objectRedisTemplate");
     }
 
     /**
@@ -40,7 +47,7 @@ public class RedisConfig {
     @Bean("integerRedisTemplate")
     RedisTemplate<String, Integer> integerRedisTemplate(RedisConnectionFactory redisConnectionFactory) {
         RedisTemplate<String, Integer> redisTemplate = new RedisTemplate<>();
-        return initRedisTemplate(redisTemplate, redisConnectionFactory);
+        return initRedisTemplate(redisTemplate, redisConnectionFactory, "integerRedisTemplate");
     }
 
     /**
@@ -49,7 +56,7 @@ public class RedisConfig {
     @Bean("longRedisTemplate")
     RedisTemplate<String, Long> longRedisTemplate(RedisConnectionFactory redisConnectionFactory) {
         RedisTemplate<String, Long> redisTemplate = new RedisTemplate<>();
-        return initRedisTemplate(redisTemplate, redisConnectionFactory);
+        return initRedisTemplate(redisTemplate, redisConnectionFactory, "longRedisTemplate");
     }
 
     /**
@@ -58,7 +65,7 @@ public class RedisConfig {
     @Bean("mapRedisTemplate")
     RedisTemplate<String, Map<String, Object>> mapRedisTemplate(RedisConnectionFactory redisConnectionFactory) {
         RedisTemplate<String, Map<String, Object>> redisTemplate = new RedisTemplate<>();
-        return initRedisTemplate(redisTemplate, redisConnectionFactory);
+        return initRedisTemplate(redisTemplate, redisConnectionFactory, "mapRedisTemplate");
     }
 
     /**
@@ -67,7 +74,7 @@ public class RedisConfig {
     @Bean("listRedisTemplate")
     RedisTemplate<String, List<Object>> listRedisTemplate(RedisConnectionFactory redisConnectionFactory) {
         RedisTemplate<String, List<Object>> redisTemplate = new RedisTemplate<>();
-        return initRedisTemplate(redisTemplate, redisConnectionFactory);
+        return initRedisTemplate(redisTemplate, redisConnectionFactory, "listRedisTemplate");
     }
 
     /**
@@ -77,7 +84,7 @@ public class RedisConfig {
      * @param redisConnectionFactory redis连接工厂
      * @return RedisTemplate
      */
-    private RedisTemplate initRedisTemplate(RedisTemplate redisTemplate, RedisConnectionFactory redisConnectionFactory) {
+    private RedisTemplate initRedisTemplate(RedisTemplate redisTemplate, RedisConnectionFactory redisConnectionFactory, String beanName) {
         redisTemplate.setConnectionFactory(redisConnectionFactory);
         //使用Jackson2JsonRedisSerializer来序列化和反序列化redis的value值
         Jackson2JsonRedisSerializer serializer = new Jackson2JsonRedisSerializer(Object.class);
@@ -91,6 +98,7 @@ public class RedisConfig {
         redisTemplate.setHashKeySerializer(new StringRedisSerializer());
         redisTemplate.setHashValueSerializer(serializer);
         redisTemplate.afterPropertiesSet();
+        LOGGER.info("create {} complete", beanName);
         return redisTemplate;
     }
 
