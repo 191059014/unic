@@ -110,29 +110,4 @@ public class LoggerEntity {
         this.app_name = app_name;
     }
 
-    @Override
-    public String toString() {
-        return "{"
-                + "\"trace_id\":\""
-                + trace_id + '\"'
-                + ",\"content\":"
-                + content
-                + ",\"log_date\":\""
-                + log_date + '\"'
-                + ",\"log_level\":\""
-                + log_level + '\"'
-                + ",\"file_name\":\""
-                + file_name + '\"'
-                + ",\"file_line\":"
-                + file_line
-                + ",\"host_name\":\""
-                + host_name + '\"'
-                + ",\"thread_name\":\""
-                + thread_name + '\"'
-                + ",\"ip\":\""
-                + ip + '\"'
-                + ",\"app_name\":\""
-                + app_name + '\"'
-                + "}";
-    }
 }

@@ -2,6 +2,7 @@ package com.hb.unic.logger;
 
 import com.hb.unic.logger.common.Consts;
 import com.hb.unic.logger.model.LoggerEntity;
+import com.hb.unic.logger.util.JsonUtils;
 import com.hb.unic.logger.util.TraceIdUtils;
 import org.slf4j.LoggerFactory;
 import org.slf4j.helpers.MessageFormatter;
@@ -133,7 +134,7 @@ public class Logger {
      * @return 标准json
      */
     private String getJsonContent(LoggerEntity loggerEntity) {
-        return loggerEntity.toString();
+        return JsonUtils.toJson(loggerEntity);
     }
 
     /**

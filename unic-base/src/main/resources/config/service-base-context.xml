@@ -12,7 +12,13 @@
 
     <!-- 读取yml配置文件 -->
     <bean id="yamlProperties" class="org.springframework.beans.factory.config.YamlPropertiesFactoryBean">
-        <property name="resources" value="classpath*:config/service-*-config.yml"/>
+        <property name="resources">
+            <list>
+                <value>classpath*:application.yml</value>
+                <value>classpath*:application-${spring.profiles.active}.yml</value>
+                <value>classpath*:config/service-*-config.yml</value>
+            </list>
+        </property>
     </bean>
 
     <!-- 转换yml属性为properties -->

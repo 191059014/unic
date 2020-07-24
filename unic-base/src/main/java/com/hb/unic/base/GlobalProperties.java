@@ -12,6 +12,7 @@ import org.springframework.core.io.support.PathMatchingResourcePatternResolver;
 import org.springframework.stereotype.Component;
 
 import java.io.IOException;
+import java.util.Enumeration;
 import java.util.Properties;
 
 /**
@@ -56,6 +57,13 @@ public class GlobalProperties implements InitializingBean {
     public void afterPropertiesSet() throws Exception {
         // 加载配置
         props = yamlProperties.getObject();
+        System.out.println("#################################################################global properties#################################################################");
+        Enumeration<?> enumeration = props.propertyNames();
+        while (enumeration.hasMoreElements()) {
+            Object propertyName = enumeration.nextElement();
+            System.out.println(propertyName + " => " + props.get(propertyName));
+        }
+        System.out.println("#################################################################global properties#################################################################");
     }
 
     /**
