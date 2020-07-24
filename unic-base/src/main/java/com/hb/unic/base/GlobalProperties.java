@@ -1,7 +1,7 @@
 package com.hb.unic.base;
 
-import com.hb.unic.logger.Logger;
-import com.hb.unic.logger.LoggerFactory;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.InitializingBean;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
