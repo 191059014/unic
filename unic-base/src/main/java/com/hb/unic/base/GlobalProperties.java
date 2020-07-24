@@ -57,13 +57,16 @@ public class GlobalProperties implements InitializingBean {
     public void afterPropertiesSet() throws Exception {
         // 加载配置
         props = yamlProperties.getObject();
-        System.out.println("#################################################################global properties#################################################################");
-        Enumeration<?> enumeration = props.propertyNames();
-        while (enumeration.hasMoreElements()) {
-            Object propertyName = enumeration.nextElement();
-            System.out.println(propertyName + " => " + props.get(propertyName));
+        if (LOGGER.isDebugEnabled()) {
+            LOGGER.debug("################################################################# GlobalProperties #################################################################");
+            Enumeration<?> enumeration = props.propertyNames();
+            while (enumeration.hasMoreElements()) {
+                Object propertyName = enumeration.nextElement();
+                LOGGER.debug(propertyName + " => " + props.get(propertyName));
+            }
+            LOGGER.debug("################################################################# GlobalProperties #################################################################");
+
         }
-        System.out.println("#################################################################global properties#################################################################");
     }
 
     /**
