@@ -20,7 +20,7 @@ public class ResponseUtils {
      * @return 完整返回对象
      */
     public static ResponseData generateResponseData(Enum enumObj) {
-        return generateResponseData(getCode(enumObj), getMsg(enumObj), null, null);
+        return generateResponseData(getCode(enumObj), getMsg(enumObj), null);
     }
 
     /**
@@ -32,7 +32,7 @@ public class ResponseUtils {
      * @return 完整返回对象
      */
     public static <T> ResponseData<T> generateResponseData(String code, String msg) {
-        return generateResponseData(code, msg, null, null);
+        return generateResponseData(code, msg, null);
     }
 
     /**
@@ -44,7 +44,7 @@ public class ResponseUtils {
      * @return 完整返回对象
      */
     public static <T> ResponseData<T> generateResponseData(Enum enumObj, T data) {
-        return generateResponseData(getCode(enumObj), getMsg(enumObj), null, data);
+        return generateResponseData(getCode(enumObj), getMsg(enumObj), data);
     }
 
     /**
@@ -57,34 +57,7 @@ public class ResponseUtils {
      * @return 完整返回对象
      */
     public static <T> ResponseData<T> generateResponseData(String code, String msg, T data) {
-        return generateResponseData(code, msg, null, data);
-    }
-
-    /**
-     * 生成ResponseData
-     *
-     * @param enumObj 返回码枚举对象
-     * @param count   总条数
-     * @param data    业务数据
-     * @param <T>     数据类型
-     * @return 完整返回对象
-     */
-    public static <T> ResponseData<T> generateResponseData(Enum enumObj, int count, T data) {
-        return generateResponseData(getCode(enumObj), getMsg(enumObj), count, data);
-    }
-
-    /**
-     * 生成ResponseData
-     *
-     * @param code  返回码
-     * @param msg   返回信息
-     * @param count 总条数
-     * @param data  业务数据
-     * @param <T>   数据类型
-     * @return 完整返回对象
-     */
-    public static <T> ResponseData<T> generateResponseData(String code, String msg, Integer count, T data) {
-        return new ResponseData<>(code, msg, count, data);
+        return generateResponseData(code, msg, data);
     }
 
     /**

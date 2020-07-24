@@ -26,10 +26,6 @@ public class ResponseData<T> implements Serializable {
      */
     private String msg;
     /**
-     * 总条数
-     */
-    private Integer count;
-    /**
      * 业务数据
      */
     private T data;
@@ -37,15 +33,13 @@ public class ResponseData<T> implements Serializable {
     /**
      * 构造方法
      *
-     * @param code  响应码
-     * @param msg   相应信息
-     * @param count 总条数
-     * @param data  业务数据
+     * @param code 响应码
+     * @param msg  相应信息
+     * @param data 业务数据
      */
-    public ResponseData(String code, String msg, Integer count, T data) {
+    public ResponseData(String code, String msg, T data) {
         this.code = code;
         this.msg = msg;
-        this.count = count;
         this.data = data;
     }
 
@@ -55,10 +49,6 @@ public class ResponseData<T> implements Serializable {
 
     public String getMsg() {
         return msg;
-    }
-
-    public Integer getCount() {
-        return count;
     }
 
     public T getData() {
