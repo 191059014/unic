@@ -57,7 +57,7 @@ public class ResponseUtils {
      * @return 完整返回对象
      */
     public static <T> ResponseData<T> generateResponseData(String code, String msg, T data) {
-        return generateResponseData(code, msg, data);
+        return new ResponseData<>(code, msg, data);
     }
 
     /**
