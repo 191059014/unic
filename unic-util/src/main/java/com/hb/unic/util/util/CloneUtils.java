@@ -75,6 +75,7 @@ public class CloneUtils {
             for (Object key : beanMap.keySet()) {
                 map.put(key + "", beanMap.get(key));
             }
+            LOGGER.info("map:{}", map);
         }
         return map;
     }
@@ -103,8 +104,7 @@ public class CloneUtils {
     public static <T> T map2Bean(Map<String, Object> map, Class<T> beanClass) {
         try {
             T t = beanClass.newInstance();
-            BeanMap beanMap = BeanMap.create(t);
-            beanMap.putAll(map);
+            BeanUtils.populate(t, map);
             return t;
         } catch (Exception e) {
             LOGGER.error("map2Bean Exception: {}", LogExceptionWapper.getStackTrace(e));

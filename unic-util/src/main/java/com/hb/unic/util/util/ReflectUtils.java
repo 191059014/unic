@@ -9,6 +9,8 @@ import java.lang.reflect.Field;
 import java.lang.reflect.Modifier;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Optional;
+import java.util.stream.Stream;
 
 /**
  * ========== 反射工具类 ==========
@@ -48,7 +50,7 @@ public class ReflectUtils {
     public static Field[] getAllFields(Class<?> c) {
         Field[] fs = c.getDeclaredFields();
         if (c.getSuperclass() != Object.class) {
-            fs = (Field[]) ArrayUtils.addAll(fs, getAllFields(c.getSuperclass()));
+            fs = ArrayUtils.addAll(fs, getAllFields(c.getSuperclass()));
         }
         return fs;
     }
@@ -78,6 +80,42 @@ public class ReflectUtils {
             LOGGER.error("getAllFieldsExcludeStaticAndFinal error: {}", LogExceptionWapper.getStackTrace(e));
         }
         return map;
+    }
+
+    /**
+     * 根据属性名设置属性值
+     *
+     * @param fieldName 属性名
+     * @param t         实例对象
+     */
+    public static <T> void setPropertyValue(String fieldName, Object value, T t) {
+        try {
+            // 获取obj类的字节文件对象
+            Class tClass = t.getClass();
+            // 获取该类的成员变量
+            Optional<Field> optionalField = getFieldByName(tClass, fieldName);
+            if (optionalField.isPresent()) {
+                Field field = optionalField.get();
+                // 取消语言访问检查
+                field.setAccessible(true);
+                // 给变量赋值
+                field.set(t, value);
+            }
+        } catch (Exception e) {
+            LOGGER.error("setPropertyValue error: {}", LogExceptionWapper.getStackTrace(e));
+        }
+    }
+
+    /**
+     * 通过属性名获取类属性
+     *
+     * @param c         类
+     * @param fieldName 属性名
+     * @return Optional<Field>
+     */
+    public static Optional<Field> getFieldByName(Class<?> c, String fieldName) {
+        Field[] allFields = getAllFields(c);
+        return Stream.of(allFields).filter(field -> fieldName.equals(field.getName())).findFirst();
     }
 
 }

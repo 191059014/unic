@@ -12,43 +12,43 @@ import java.util.Map;
 public class Assert {
 
     /**
-     * 不为空-Object
+     * 不为空-Object，否则抛出IllegalArgumentException异常
      *
      * @param obj     对象
      * @param message 错误信息
      */
-    public static void assertNotNull(Object obj, String message) {
-        assertTrueThrows(obj == null, message);
+    public static void notNull(Object obj, String message) {
+        ifTrueThrows(obj == null, message);
     }
 
     /**
-     * 不为空-字符串
+     * 不为空-字符串，否则抛出IllegalArgumentException异常
      *
      * @param str     字符串
      * @param message 错误信息
      */
-    public static void assertNotEmpty(String str, String message) {
-        assertTrueThrows(str == null || "".equals(str), message);
+    public static void notBlank(String str, String message) {
+        ifTrueThrows(str == null || "".equals(str), message);
     }
 
     /**
-     * 不为空-Map
+     * 不为空-Map，否则抛出IllegalArgumentException异常
      *
      * @param map     map集合
      * @param message 错误信息
      */
-    public static <T extends Map> void assertNotEmpty(T map, String message) {
-        assertTrueThrows(map == null || map.isEmpty(), message);
+    public static <T extends Map> void notEmpty(T map, String message) {
+        ifTrueThrows(map == null || map.isEmpty(), message);
     }
 
     /**
-     * 不为空-Collection
+     * 不为空-Collection，否则抛出IllegalArgumentException异常
      *
      * @param collection collection集合
      * @param message    错误信息
      */
-    public static <T extends Collection> void assertNotEmpty(T collection, String message) {
-        assertTrueThrows(collection == null || collection.isEmpty(), message);
+    public static <T extends Collection> void notEmpty(T collection, String message) {
+        ifTrueThrows(collection == null || collection.isEmpty(), message);
     }
 
     /**
@@ -57,7 +57,7 @@ public class Assert {
      * @param assertTrue 表达式
      * @param message    错误信息
      */
-    public static void assertTrueThrows(boolean assertTrue, String message) {
+    public static void ifTrueThrows(boolean assertTrue, String message) {
         if (assertTrue) {
             throw new IllegalArgumentException(message);
         }
