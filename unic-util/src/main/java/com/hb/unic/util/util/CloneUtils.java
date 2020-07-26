@@ -75,23 +75,8 @@ public class CloneUtils {
             for (Object key : beanMap.keySet()) {
                 map.put(key + "", beanMap.get(key));
             }
-            LOGGER.info("map:{}", map);
         }
         return map;
-    }
-
-    /**
-     * 将List<T>转换为List<Map<String, Object>>
-     *
-     * @param beanList list集合
-     * @return List
-     */
-    public static <T> List<Map<String, Object>> beans2Maps(List<T> beanList) {
-        List<Map<String, Object>> list = new ArrayList<>();
-        if (beanList != null && beanList.size() > 0) {
-            beanList.forEach(bean -> list.add(bean2Map(bean)));
-        }
-        return list;
     }
 
     /**
@@ -110,6 +95,20 @@ public class CloneUtils {
             LOGGER.error("map2Bean Exception: {}", LogExceptionWapper.getStackTrace(e));
             return null;
         }
+    }
+
+    /**
+     * 将List<T>转换为List<Map<String, Object>>
+     *
+     * @param beanList list集合
+     * @return List
+     */
+    public static <T> List<Map<String, Object>> beans2Maps(List<T> beanList) {
+        List<Map<String, Object>> list = new ArrayList<>();
+        if (beanList != null && beanList.size() > 0) {
+            beanList.forEach(bean -> list.add(bean2Map(bean)));
+        }
+        return list;
     }
 
     /**
