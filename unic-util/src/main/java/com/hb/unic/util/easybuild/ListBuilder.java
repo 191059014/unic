@@ -47,10 +47,11 @@ public class ListBuilder {
     /**
      * 获取真实list
      *
+     * @param elementClass 元素类型
      * @return List<T>
      */
-    public List get() {
-        return this.realList;
+    public <T> List<T> get(Class<T> elementClass) {
+        return (List<T>) this.realList;
     }
 
 }
