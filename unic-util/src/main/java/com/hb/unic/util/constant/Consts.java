@@ -4,9 +4,9 @@ package com.hb.unic.util.constant;
  * 常量类
  *
  * @author Mr.Huang
- * @version v0.1, UtilConsts.java, 2020/5/28 10:01, create by huangbiao.
+ * @version v0.1, Consts.java, 2020/5/28 10:01, create by huangbiao.
  */
-public class UtilConsts {
+public class Consts {
 
     /**
      * UTF-8编码方式

@@ -3,7 +3,11 @@ package com.hb.unic.util.util;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.core.type.TypeReference;
-import com.fasterxml.jackson.databind.*;
+import com.fasterxml.jackson.databind.DeserializationFeature;
+import com.fasterxml.jackson.databind.JavaType;
+import com.fasterxml.jackson.databind.MapperFeature;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.SerializationFeature;
 import com.hb.unic.logger.Logger;
 import com.hb.unic.logger.LoggerFactory;
 import com.hb.unic.logger.util.LogExceptionWapper;
@@ -11,7 +15,6 @@ import com.hb.unic.logger.util.LogExceptionWapper;
 import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -34,31 +37,12 @@ public class JsonUtils {
     private final static ObjectMapper MAPPER = new ObjectMapper();
 
     /**
-     * ObjectMapper对象，针对list
-     */
-    private final static ObjectMapper LIST_MAPPER = new ObjectMapper();
-
-    /**
-     * ObjectMapper对象，针对map
-     */
-    private final static ObjectMapper MAP_MAPPER = new ObjectMapper();
-
-    /**
      * 静态代码块，初始化ObjectMapper
      */
     static {
-        initMapper(MAPPER);
-        initMapper(LIST_MAPPER);
-        initMapper(MAP_MAPPER);
-    }
-
-    /**
-     * 初始化ObjectMapper
-     */
-    private static void initMapper(ObjectMapper mapper) {
-        mapper
+        MAPPER
                 // 将对象的所有不为空字段全部列入
-                .setSerializationInclusion(JsonInclude.Include.NON_NULL)
+                .setSerializationInclusion(JsonInclude.Include.NON_EMPTY)
                 // 取消默认日期格式timestamps
                 .disable(SerializationFeature.WRITE_DATE_KEYS_AS_TIMESTAMPS)
                 // 忽略空Bean转json的错误
@@ -68,7 +52,14 @@ public class JsonUtils {
                 // 忽略在json字符串中存在，但是在对象中不存在对应属性而抛出异常的情况
                 .disable(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES)
                 // 开启/禁止自动检测
-                .enable(MapperFeature.USE_ANNOTATIONS);
+                .enable(MapperFeature.USE_ANNOTATIONS)
+                // 是否缩放排列输出
+                .enable(SerializationFeature.INDENT_OUTPUT)
+                // 将浮点小数转为BigDecimal，防止精度丢失
+                .enable(DeserializationFeature.USE_BIG_DECIMAL_FOR_FLOATS)
+                // 将整数转换为long
+                .enable(DeserializationFeature.USE_LONG_FOR_INTS)
+        ;
     }
 
     /**
@@ -127,7 +118,7 @@ public class JsonUtils {
      * @return List<E>
      */
     public static <E> List<E> toList(String json, Class<E> elementClasses) {
-        JavaType javaType = LIST_MAPPER.getTypeFactory().constructParametricType(ArrayList.class, elementClasses);
+        JavaType javaType = MAPPER.getTypeFactory().constructParametricType(ArrayList.class, elementClasses);
         try {
             return MAPPER.readValue(json, javaType);
         } catch (IOException e) {
@@ -145,9 +136,9 @@ public class JsonUtils {
      * @return Map
      */
     public static <V> Map<String, V> toMap(String json, Class<V> valueClasses) {
-        JavaType javaType = MAP_MAPPER.getTypeFactory().constructParametricType(HashMap.class, String.class, valueClasses);
+        JavaType javaType = MAPPER.getTypeFactory().constructParametricType(HashMap.class, String.class, valueClasses);
         try {
-            return MAP_MAPPER.readValue(json, javaType);
+            return MAPPER.readValue(json, javaType);
         } catch (IOException e) {
             LOGGER.info("转换Map异常：{}", LogExceptionWapper.getStackTrace(e));
             return null;

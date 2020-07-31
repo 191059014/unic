@@ -1,6 +1,6 @@
 package com.hb.unic.util;
 
-import com.hb.unic.util.constant.UtilConsts;
+import com.hb.unic.util.constant.Consts;
 import com.hb.unic.util.tool.Base64Encrypt;
 import org.junit.Test;
 
@@ -16,20 +16,20 @@ public class Base64EncryptTest {
 
     @Test
     public void testEncode() {
-        System.out.println(Base64Encrypt.JDK.encode(message, UtilConsts.UTF_8));
-        System.out.println(Base64Encrypt.COMMONS_CODEC.encode(message, UtilConsts.UTF_8));
+        System.out.println(Base64Encrypt.JDK.encode(message, Consts.UTF_8));
+        System.out.println(Base64Encrypt.COMMONS_CODEC.encode(message, Consts.UTF_8));
     }
 
     @Test
     public void testDecode() {
-        System.out.println(Base64Encrypt.JDK.decode("MTIzNDU25oKo5aW9PT0rK0Am", UtilConsts.UTF_8));
-        System.out.println(Base64Encrypt.COMMONS_CODEC.decode("MTIzNDU25oKo5aW9PT0rK0Am", UtilConsts.UTF_8));
+        System.out.println(Base64Encrypt.JDK.decode("MTIzNDU25oKo5aW9PT0rK0Am", Consts.UTF_8));
+        System.out.println(Base64Encrypt.COMMONS_CODEC.decode("MTIzNDU25oKo5aW9PT0rK0Am", Consts.UTF_8));
     }
 
     @Test
     public void testVerify() {
-        System.out.println(Base64Encrypt.JDK.verify(message, "MTIzNDU25oKo5aW9PT0rK0Am", UtilConsts.UTF_8));
-        System.out.println(Base64Encrypt.COMMONS_CODEC.verify(message, "MTIzNDU25oKo5aW9PT0rK0Am", UtilConsts.UTF_8));
+        System.out.println(Base64Encrypt.JDK.verify(message, "MTIzNDU25oKo5aW9PT0rK0Am", Consts.UTF_8));
+        System.out.println(Base64Encrypt.COMMONS_CODEC.verify(message, "MTIzNDU25oKo5aW9PT0rK0Am", Consts.UTF_8));
     }
 
 }

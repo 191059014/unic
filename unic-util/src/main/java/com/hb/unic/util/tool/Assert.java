@@ -27,7 +27,7 @@ public class Assert {
      * @param str     字符串
      * @param message 错误信息
      */
-    public static void notBlank(String str, String message) {
+    public static void hasText(String str, String message) {
         ifTrueThrows(str == null || "".equals(str), message);
     }
 

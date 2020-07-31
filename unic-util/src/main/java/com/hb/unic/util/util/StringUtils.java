@@ -1,7 +1,10 @@
 package com.hb.unic.util.util;
 
+import com.hb.unic.logger.util.LogExceptionWapper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+
+import java.io.UnsupportedEncodingException;
 
 /**
  * ========== 字符串工具类 ==========
@@ -13,7 +16,7 @@ import org.slf4j.LoggerFactory;
 public class StringUtils {
 
     /**
-     * the constant logger
+     * the constant LOGGER
      */
     private static final Logger LOGGER = LoggerFactory.getLogger(StringUtils.class);
 
@@ -189,9 +192,56 @@ public class StringUtils {
         return sb.toString().toLowerCase();
     }
 
+    /**
+     * 将byte数组转换为字符串
+     *
+     * @param filedByte 数组
+     * @param charset   编码
+     * @return 字符串
+     */
+    public static String toString(byte[] filedByte, String charset) {
+        String filed = null;
+        try {
+            filed = new String(filedByte, charset);
+        } catch (UnsupportedEncodingException e) {
+            LOGGER.error("byte arr to string error:{}", LogExceptionWapper.getStackTrace(e));
+        }
+        return filed;
+    }
+
+    /**
+     * 将数值转换为金额的中文显示方式
+     *
+     * @param n 金额数值
+     * @return 金额的中文显示方式
+     */
+    public static String digitUppercase(double n) {
+        String[] fraction = {"角", "分"};
+        String[] digit = {"零", "壹", "贰", "叁", "肆", "伍", "陆", "柒", "捌", "玖"};
+        String[][] unit = {{"元", "万", "亿"}, {"", "拾", "佰", "仟"}};
+        String head = n < 0.0D ? "负" : "";
+        n = Math.abs(n);
+        String s = "";
+        for (int i = 0; i < fraction.length; i++) {
+            s = s + new StringBuilder().append(digit[((int) (Math.floor(n * 10.0D * Math.pow(10.0D, i)) % 10.0D))]).append(fraction[i]).toString().replaceAll("(零.)+", "");
+        }
+        if (s.length() < 1) {
+            s = "整";
+        }
+        int integerPart = (int) Math.floor(n);
+        for (int i = 0; (i < unit[0].length) && (integerPart > 0); i++) {
+            String p = "";
+            for (int j = 0; (j < unit[1].length) && (n > 0.0D); j++) {
+                p = digit[(integerPart % 10)] + unit[1][j] + p;
+                integerPart /= 10;
+            }
+            s = p.replaceAll("(零.)*零$", "").replaceAll("^$", "零") + unit[0][i] + s;
+        }
+        return head + s.replaceAll("(零.)*零元", "元").replaceFirst("(零.)+", "").replaceAll("(零.)+", "零").replaceAll("^整$", "零元整");
+    }
+
     public static void main(String[] args) {
-        System.out.println(underline2Hump("___u_s_er_name_"));
-        System.out.println(hump2Underline("UserNaMe"));
+        System.out.println(digitUppercase(141241414.5));
     }
 
 }

@@ -36,7 +36,7 @@ public class ReflectUtils {
         try {
             return Class.forName(entityName);
         } catch (ClassNotFoundException e) {
-            LOGGER.error("Method getType error: {}", LogExceptionWapper.getStackTrace(e));
+            LOGGER.error("getType error: {}", LogExceptionWapper.getStackTrace(e));
         }
         return null;
     }
