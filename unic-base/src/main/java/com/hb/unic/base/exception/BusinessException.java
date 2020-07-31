@@ -2,6 +2,8 @@ package com.hb.unic.base.exception;
 
 import com.hb.unic.base.util.ResponseUtils;
 
+import java.util.Arrays;
+
 /**
  * ========== 业务异常类 ==========
  *
@@ -13,16 +15,21 @@ public class BusinessException extends RuntimeException {
     /**
      * 错误标识
      */
-    private String code;
+    private String key;
     /**
-     * 错误描述
+     * 附带参数
      */
-    private String msg;
+    private Object[] paras;
 
-    public BusinessException(String code, String msg) {
-        super(msg);
-        this.code = code;
-        this.msg = msg;
+    public BusinessException(String key, Object... paras) {
+        this.key = key;
+        this.paras = paras;
+    }
+
+    public BusinessException(String key, String message, Object... paras) {
+        super(message);
+        this.key = key;
+        this.paras = paras;
     }
 
     /**
@@ -34,21 +41,29 @@ public class BusinessException extends RuntimeException {
         this(ResponseUtils.getCode(enumObj), ResponseUtils.getMsg(enumObj));
     }
 
-    public String getCode() {
-        return code;
+    public String getKey() {
+        return key;
     }
 
-    public String getMessage() {
-        return msg;
+    public void setKey(String key) {
+        this.key = key;
+    }
+
+    public Object[] getParas() {
+        return paras;
+    }
+
+    public void setParas(Object[] paras) {
+        this.paras = paras;
     }
 
     @Override
     public String toString() {
         return "{"
-                + "\"code\":\""
-                + code + '\"'
-                + ",\"msg\":\""
-                + msg + '\"'
+                + "\"key\":\""
+                + key + '\"'
+                + ",\"paras\":"
+                + Arrays.toString(paras)
                 + "},\"super-BusinessException\":" + super.toString() + "}";
     }
 }
