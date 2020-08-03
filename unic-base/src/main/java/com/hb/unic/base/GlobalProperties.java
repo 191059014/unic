@@ -12,6 +12,7 @@ import org.springframework.core.io.support.PathMatchingResourcePatternResolver;
 import org.springframework.stereotype.Component;
 
 import java.io.IOException;
+import java.math.BigDecimal;
 import java.util.Enumeration;
 import java.util.Properties;
 
@@ -44,13 +45,57 @@ public class GlobalProperties implements InitializingBean {
     private static Properties props = null;
 
     /**
-     * ########## 获取环境属性值 ##########
+     * 获取String
      *
      * @param key 键
      * @return 值
      */
-    public static String getValue(String key) {
+    public static String getString(String key) {
         return props.getProperty(key);
+    }
+
+    /**
+     * 获取Long
+     *
+     * @param key 键
+     * @return 值
+     */
+    public static Long getLong(String key) {
+        String value = props.getProperty(key);
+        return value == null ? null : Long.parseLong(value);
+    }
+
+    /**
+     * 获取Integer
+     *
+     * @param key 键
+     * @return 值
+     */
+    public static Integer getInteger(String key) {
+        String value = props.getProperty(key);
+        return value == null ? null : Integer.parseInt(value);
+    }
+
+    /**
+     * 获取Double
+     *
+     * @param key 键
+     * @return 值
+     */
+    public static Double getDouble(String key) {
+        String value = props.getProperty(key);
+        return value == null ? null : Double.parseDouble(value);
+    }
+
+    /**
+     * 获取BigDecimal
+     *
+     * @param key 键
+     * @return 值
+     */
+    public static BigDecimal getBigDecimal(String key) {
+        String value = props.getProperty(key);
+        return value == null ? BigDecimal.ZERO : new BigDecimal(value);
     }
 
     @Override
