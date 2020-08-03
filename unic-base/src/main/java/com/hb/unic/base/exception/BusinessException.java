@@ -2,8 +2,6 @@ package com.hb.unic.base.exception;
 
 import com.hb.unic.base.util.ResponseUtils;
 
-import java.util.Arrays;
-
 /**
  * ========== 业务异常类 ==========
  *
@@ -11,25 +9,23 @@ import java.util.Arrays;
  * @version com.hb.unic.base.exception.BusinessException.java, v1.0
  * @date 2019年09月05日 14时40分
  */
-public class BusinessException extends RuntimeException {
+public class BusinessException extends StandardRuntimeException {
+
     /**
-     * 错误标识
+     * 序列化
      */
-    private String key;
-    /**
-     * 附带参数
-     */
-    private Object[] paras;
+    private static final long serialVersionUID = -7609091570577553080L;
+
+    public BusinessException(String key, String message) {
+        super(key, message);
+    }
 
     public BusinessException(String key, Object... paras) {
-        this.key = key;
-        this.paras = paras;
+        super(key, paras);
     }
 
     public BusinessException(String key, String message, Object... paras) {
-        super(message);
-        this.key = key;
-        this.paras = paras;
+        super(key, message, paras);
     }
 
     /**
@@ -41,29 +37,15 @@ public class BusinessException extends RuntimeException {
         this(ResponseUtils.getCode(enumObj), ResponseUtils.getMsg(enumObj));
     }
 
-    public String getKey() {
-        return key;
+    /**
+     * 枚举类，取code和msg字段
+     *
+     * @param enumObj 枚举
+     * @param paras   需要携带的参数
+     */
+    public BusinessException(Enum enumObj, Object... paras) {
+        this(ResponseUtils.getCode(enumObj), ResponseUtils.getMsg(enumObj), paras);
     }
 
-    public void setKey(String key) {
-        this.key = key;
-    }
 
-    public Object[] getParas() {
-        return paras;
-    }
-
-    public void setParas(Object[] paras) {
-        this.paras = paras;
-    }
-
-    @Override
-    public String toString() {
-        return "{"
-                + "\"key\":\""
-                + key + '\"'
-                + ",\"paras\":"
-                + Arrays.toString(paras)
-                + "},\"super-BusinessException\":" + super.toString() + "}";
-    }
 }

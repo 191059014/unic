@@ -1,7 +1,6 @@
 package com.hb.unic.base.service;
 
 import com.hb.unic.base.container.SpringUtils;
-import com.hb.unic.base.exception.BusinessException;
 import org.apache.commons.beanutils.MethodUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
