@@ -60,9 +60,9 @@ public class GlobalProperties implements InitializingBean {
      * @param key 键
      * @return 值
      */
-    public static Long getLong(String key) {
+    public static long getLong(String key) {
         String value = props.getProperty(key);
-        return value == null ? null : Long.parseLong(value);
+        return value == null ? 0L : Long.parseLong(value);
     }
 
     /**
@@ -71,9 +71,9 @@ public class GlobalProperties implements InitializingBean {
      * @param key 键
      * @return 值
      */
-    public static Integer getInteger(String key) {
+    public static int getInteger(String key) {
         String value = props.getProperty(key);
-        return value == null ? null : Integer.parseInt(value);
+        return value == null ? 0 : Integer.parseInt(value);
     }
 
     /**
@@ -82,9 +82,9 @@ public class GlobalProperties implements InitializingBean {
      * @param key 键
      * @return 值
      */
-    public static Double getDouble(String key) {
+    public static double getDouble(String key) {
         String value = props.getProperty(key);
-        return value == null ? null : Double.parseDouble(value);
+        return value == null ? 0.00 : Double.parseDouble(value);
     }
 
     /**
