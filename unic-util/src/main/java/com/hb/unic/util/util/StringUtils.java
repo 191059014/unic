@@ -240,6 +240,19 @@ public class StringUtils {
         return head + s.replaceAll("(零.)*零元", "元").replaceFirst("(零.)+", "").replaceAll("(零.)+", "零").replaceAll("^整$", "零元整");
     }
 
+    /**
+     * StringBuilder连接字符串
+     *
+     * @return 字符串
+     */
+    public static String joint(String... strArr) {
+        StringBuilder sb = new StringBuilder();
+        for (int i = 0; i < strArr.length; i++) {
+            sb.append(strArr[i]);
+        }
+        return sb.toString();
+    }
+
     public static void main(String[] args) {
         System.out.println(digitUppercase(141241414.5));
     }
