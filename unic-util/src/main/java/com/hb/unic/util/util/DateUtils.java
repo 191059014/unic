@@ -26,36 +26,52 @@ public class DateUtils {
     private static final Logger LOGGER = LoggerFactory.getLogger(DateUtils.class);
 
     /**
-     * 默认的日期格式
+     * 格式化
      */
-    public static final String DEFAULT_FORMAT = "yyyy-MM-dd HH:mm:ss";
+    public static final String FORMAT_1 = "yyyy-MM-dd HH:mm:ss";
 
     /**
-     * 默认的日期格式
+     * 格式化
      */
-    public static final String YYYYMMDDHHMMSS = "yyyyMMddHHmmss";
+    public static final String FORMAT_2 = "yyyy-MM-dd";
+
+    /**
+     * 格式化
+     */
+    public static final String FORMAT_3 = "yyyy-MM";
+
+    /**
+     * 格式化
+     */
+    public static final String FORMAT_4 = "yyyyMMddHHmmss";
+
+    /**
+     * 格式化
+     */
+    public static final String FORMAT_5 = "yyyyMMdd";
+
+    /**
+     * 格式化
+     */
+    public static final String FORMAT_6 = "yyyyMM";
+
+    /**
+     * 格式化
+     */
+    public static final String FORMAT_7 = "yyyy-MM-dd HH:mm:ss.SSS";
 
     /**
      * 毫秒格式
      */
-    public static final String FORMAT_MS = "yyMMddHHmmssSSS";
+    public static final String FORMAT_8 = "yyyyMMddHHmmssSSS";
 
     /**
-     * 年月日时分秒格式
+     * 最大日期
      */
-    public static final String FORMAT_YMDHMS = "yyMMddHHmmss";
-
-    /**
-     * 年月日格式
-     */
-    public static final String FORMAT_YMD = "yyMMdd";
-
-    /**
-     * 默认的时区
-     */
-    public static final String DEFAULT_TIMEZONE = "GMT+8";
-
     private static Date maxDate;
+    /**
+     * 最大时间戳
+     */
     private static Timestamp maxTimestamp;
 
     static {
@@ -350,6 +366,30 @@ public class DateUtils {
     public static int getSecond(Date date) {
         Calendar calendar = getCalendar(date);
         return calendar.get(Calendar.SECOND);
+    }
+
+    /**
+     * 获取指定日期的指定时间
+     *
+     * @param date 日期
+     * @param time 时间字符串（HH:mm:ss）
+     * @return （日期）yyyy-MM-dd HH:mm:ss
+     */
+    public static Date getAssignTime(Date date, String time) {
+        String ymd = date2str(date, FORMAT_2);
+        return str2date(ymd + " " + time, FORMAT_1);
+    }
+
+    /**
+     * 获取指定日期加减n天后的指定时间
+     *
+     * @param date   日期
+     * @param addDay 加减的天数
+     * @param time   时间字符串（HH:mm:ss）
+     * @return （日期）yyyy-MM-dd HH:mm:ss
+     */
+    public static Date getAssignDateTime(Date date, int addDay, String time) {
+        return getAssignTime(addDay(date, addDay), time);
     }
 
 }
