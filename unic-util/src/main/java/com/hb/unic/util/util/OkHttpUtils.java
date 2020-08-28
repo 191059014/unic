@@ -3,9 +3,20 @@ package com.hb.unic.util.util;
 import com.google.common.base.Stopwatch;
 import com.hb.unic.logger.Logger;
 import com.hb.unic.logger.LoggerFactory;
-import okhttp3.*;
+import okhttp3.Call;
+import okhttp3.FormBody;
+import okhttp3.MediaType;
+import okhttp3.OkHttpClient;
+import okhttp3.Request;
+import okhttp3.RequestBody;
+import okhttp3.Response;
 
-import javax.net.ssl.*;
+import javax.net.ssl.HostnameVerifier;
+import javax.net.ssl.SSLContext;
+import javax.net.ssl.SSLSession;
+import javax.net.ssl.SSLSocketFactory;
+import javax.net.ssl.TrustManager;
+import javax.net.ssl.X509TrustManager;
 import java.security.SecureRandom;
 import java.security.cert.CertificateException;
 import java.security.cert.X509Certificate;
@@ -39,30 +50,95 @@ public class OkHttpUtils {
     /**
      * ########## post请求 ##########
      *
-     * @param url            请求的url
-     * @param object         参数体
-     * @param headers        请求头
-     * @param timeOutSeconds 连接/读取超时秒数，connectTimeout，readTimeout
+     * @param url     请求的url
+     * @param reqBody 请求参数体
      * @return response的body信息
      */
-    public static String post(String url, Object object, Map<String, String> headers, Long... timeOutSeconds) throws Exception {
+    public static String postJson(String url, Object reqBody) throws Exception {
+        return doPost(url, JsonUtils.toJson(reqBody), MediaType.get(JSON_CHARSET_UTF_8), null, null, null);
+    }
+
+    /**
+     * ########## post请求 ##########
+     *
+     * @param url     请求的url
+     * @param reqBody 请求参数体
+     * @param headers 请求头
+     * @return response的body信息
+     */
+    public static String postJson(String url, Object reqBody, Map<String, String> headers) throws Exception {
+        return doPost(url, JsonUtils.toJson(reqBody), MediaType.get(JSON_CHARSET_UTF_8), headers, null, null);
+    }
+
+    /**
+     * ########## post请求 ##########
+     *
+     * @param url            请求的url
+     * @param reqBody        请求参数体
+     * @param headers        请求头
+     * @param connectTimeout 连接超时时间
+     * @param readTimeout    读取超时时间
+     * @return response的body信息
+     */
+    public static String postJson(String url, Object reqBody, Map<String, String> headers, Long connectTimeout, Long readTimeout) throws Exception {
+        return doPost(url, JsonUtils.toJson(reqBody), MediaType.get(JSON_CHARSET_UTF_8), headers, connectTimeout, readTimeout);
+    }
+
+    /**
+     * ########## post请求 ##########
+     *
+     * @param url 请求的url
+     * @param xml 请求参数xml
+     * @return response的body信息
+     */
+    public static String postXml(String url, String xml) throws Exception {
+        return doPost(url, xml, MediaType.get(XML_CHARSET_UTF_8), null, null, null);
+    }
+
+    /**
+     * ########## post请求 ##########
+     *
+     * @param url     请求的url
+     * @param xml     请求参数xml
+     * @param headers 请求头
+     * @return response的body信息
+     */
+    public static String postXml(String url, String xml, Map<String, String> headers) throws Exception {
+        return doPost(url, xml, MediaType.get(XML_CHARSET_UTF_8), headers, null, null);
+    }
+
+    /**
+     * ########## post请求 ##########
+     *
+     * @param url            请求的url
+     * @param xml            请求参数xml
+     * @param headers        请求头
+     * @param connectTimeout 连接超时时间
+     * @param readTimeout    读取超时时间
+     * @return response的body信息
+     */
+    public static String postXml(String url, String xml, Map<String, String> headers, Long connectTimeout, Long readTimeout) throws Exception {
+        return doPost(url, xml, MediaType.get(XML_CHARSET_UTF_8), headers, connectTimeout, readTimeout);
+    }
+
+    /**
+     * ########## post请求 ##########
+     *
+     * @param url            请求的url
+     * @param reqBody        请求参数体
+     * @param mediaType      请求参数媒体类型
+     * @param headers        请求头
+     * @param connectTimeout 连接超时时间
+     * @param readTimeout    读取超时时间
+     * @return response的body信息
+     */
+    public static String doPost(String url, String reqBody, MediaType mediaType, Map<String, String> headers, Long connectTimeout, Long readTimeout) throws Exception {
         Stopwatch stopwatch = Stopwatch.createStarted();
-        OkHttpClient okHttpClient = getOkHttpClient(timeOutSeconds);
-        RequestBody requestBody = null;
-        if (object instanceof Map) {
-            requestBody = FormBody.create(MediaType.get(JSON_CHARSET_UTF_8), JsonUtils.toJson(object));
-        } else if (object instanceof String) {
-            requestBody = FormBody.create(MediaType.get(XML_CHARSET_UTF_8), ((String) object));
-        } else if (object instanceof FormBody.Builder) {
-            requestBody = ((FormBody.Builder) object).build();
-        } else {
-            throw new RuntimeException("cannot analysis the requestBody parameter");
-        }
+        OkHttpClient okHttpClient = getOkHttpClient(connectTimeout, readTimeout);
+        RequestBody requestBody = FormBody.create(mediaType, reqBody);
         Request.Builder builder = getRequestBuilder(url);
         if (headers != null) {
-            for (String key : headers.keySet()) {
-                builder.addHeader(key, headers.get(key));
-            }
+            headers.forEach(builder::addHeader);
         }
         Request request = builder.post(requestBody).build();
         LOGGER.info("post请求 => {}\n请求头：{}\n连接超时时间：{}ms\n读取超时时间：{}ms", url, headers, okHttpClient.connectTimeoutMillis(), okHttpClient.readTimeoutMillis());
@@ -76,18 +152,39 @@ public class OkHttpUtils {
     /**
      * ########## get请求 ##########
      *
+     * @param url 请求ur
+     * @return response的body信息
+     */
+    public static String doGet(String url) throws Exception {
+        return doGet(url, null, null, null);
+    }
+
+    /**
+     * ########## get请求 ##########
+     *
      * @param url     请求ur
      * @param headers 请求头
      * @return response的body信息
      */
-    public static String get(String url, Map<String, String> headers, Long... timeOutSeconds) throws Exception {
+    public static String doGet(String url, Map<String, String> headers) throws Exception {
+        return doGet(url, headers, null, null);
+    }
+
+    /**
+     * ########## get请求 ##########
+     *
+     * @param url            请求ur
+     * @param headers        请求头
+     * @param connectTimeout 连接超时时间
+     * @param readTimeout    读取超时时间
+     * @return response的body信息
+     */
+    public static String doGet(String url, Map<String, String> headers, Long connectTimeout, Long readTimeout) throws Exception {
         Stopwatch stopwatch = Stopwatch.createStarted();
-        OkHttpClient okHttpClient = getOkHttpClient(timeOutSeconds);
+        OkHttpClient okHttpClient = getOkHttpClient(connectTimeout, readTimeout);
         Request.Builder builder = getRequestBuilder(url);
         if (headers != null) {
-            for (String key : headers.keySet()) {
-                builder.addHeader(key, headers.get(key));
-            }
+            headers.forEach(builder::addHeader);
         }
         Request request = builder.get().build();
         LOGGER.info("get请求 => {}\n请求头：{}\n连接超时时间：{}ms\n读取超时时间：{}ms", url, headers, okHttpClient.connectTimeoutMillis(), okHttpClient.readTimeoutMillis());
@@ -114,14 +211,14 @@ public class OkHttpUtils {
      *
      * @return OkHttpClient
      */
-    private static OkHttpClient getOkHttpClient(Long... timeOutSeconds) {
+    private static OkHttpClient getOkHttpClient(Long connectTimeout, Long readTimeout) {
         OkHttpClient.Builder builder = new OkHttpClient()
                 .newBuilder();
-        if (timeOutSeconds != null && timeOutSeconds.length > 0) {
-            builder.connectTimeout(timeOutSeconds[0], TimeUnit.SECONDS);
-            if (timeOutSeconds.length > 1) {
-                builder.readTimeout(timeOutSeconds[1], TimeUnit.SECONDS);
-            }
+        if (connectTimeout != null) {
+            builder.connectTimeout(connectTimeout, TimeUnit.SECONDS);
+        }
+        if (readTimeout != null) {
+            builder.readTimeout(readTimeout, TimeUnit.SECONDS);
         }
         return builder
                 .sslSocketFactory(createSSLSocketFactory(), getTrustManager())
