@@ -29,9 +29,15 @@
         </dependency>
 
         <!-- commons-httpclient -->
+        <!--<dependency>-->
+            <!--<groupId>commons-httpclient</groupId>-->
+            <!--<artifactId>commons-httpclient</artifactId>-->
+        <!--</dependency>-->
+
         <dependency>
-            <groupId>commons-httpclient</groupId>
-            <artifactId>commons-httpclient</artifactId>
+            <groupId>org.apache.httpcomponents</groupId>
+            <artifactId>httpclient</artifactId>
+            <version>4.5.3</version>
         </dependency>
 
         <!-- okHttp3 -->

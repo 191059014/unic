@@ -35,10 +35,18 @@ public class ObjectUtils {
      * @param value 待转换的值
      * @return Integer
      */
+    public static String asString(Object value) {
+        return value == null ? null : value.toString();
+    }
+
+    /**
+     * 将Object转换为Integer
+     *
+     * @param value 待转换的值
+     * @return Integer
+     */
     public static Integer asInteger(Object value) {
-        if ((value == null) || (value.toString().equals("")) || (value.toString().length() == 0))
-            return null;
-        return Integer.valueOf(value.toString());
+        return value == null ? null : Integer.valueOf(value.toString());
     }
 
     /**
@@ -48,9 +56,7 @@ public class ObjectUtils {
      * @return Long
      */
     public static Long asLong(Object value) {
-        if ((value == null) || (value.toString().equals("")) || (value.toString().length() == 0))
-            return null;
-        return Long.valueOf(value.toString());
+        return value == null ? null : Long.valueOf(value.toString());
     }
 
     /**
@@ -60,9 +66,7 @@ public class ObjectUtils {
      * @return Long
      */
     public static BigDecimal asBigDecimal(Object value) {
-        if ((value == null) || (value.toString().equals("")) || (value.toString().length() == 0))
-            return BigDecimal.ZERO;
-        return new BigDecimal(value.toString());
+        return value == null ? BigDecimal.ZERO : new BigDecimal(value.toString());
     }
 
     /**

@@ -1,6 +1,6 @@
 package com.hb.unic.base.exception;
 
-import com.hb.unic.base.util.ResponseUtils;
+import com.hb.unic.base.common.Result;
 
 /**
  * ========== 业务异常类 ==========
@@ -34,7 +34,7 @@ public class BusinessException extends StandardRuntimeException {
      * @param enumObj 枚举
      */
     public BusinessException(Enum enumObj) {
-        this(ResponseUtils.getCode(enumObj), ResponseUtils.getMsg(enumObj));
+        this(Result.getCode(enumObj), Result.getMsg(enumObj));
     }
 
     /**
@@ -44,7 +44,7 @@ public class BusinessException extends StandardRuntimeException {
      * @param paras   需要携带的参数
      */
     public BusinessException(Enum enumObj, Object... paras) {
-        this(ResponseUtils.getCode(enumObj), ResponseUtils.getMsg(enumObj), paras);
+        this(Result.getCode(enumObj), Result.getMsg(enumObj), paras);
     }
 
 

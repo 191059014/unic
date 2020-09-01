@@ -18,6 +18,16 @@ public class Consts {
      */
     public static final String ISO_8859_1 = "ISO-8859-1";
 
+    /**
+     * json编码
+     */
+    public static final String JSON_CHARSET_UTF_8 = "application/json;charset=utf-8";
+
+    /**
+     * xml编码
+     */
+    public static final String XML_CHARSET_UTF_8 = "text/xml;charset=utf-8";
+
 }
 
     

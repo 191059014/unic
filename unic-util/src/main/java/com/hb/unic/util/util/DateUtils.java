@@ -392,4 +392,16 @@ public class DateUtils {
         return getAssignTime(addDay(date, addDay), time);
     }
 
+    /**
+     * 获取当前时间附近时间
+     *
+     * @return 时间
+     */
+    public static Date getTimeNearBy(int field, int addNum) {
+        Calendar calendar = Calendar.getInstance();
+        calendar.setTime(new Date());
+        calendar.add(field, addNum);
+        return calendar.getTime();
+    }
+
 }

@@ -3,6 +3,7 @@ package com.hb.unic.util.util;
 import com.google.common.base.Stopwatch;
 import com.hb.unic.logger.Logger;
 import com.hb.unic.logger.LoggerFactory;
+import com.hb.unic.util.constant.Consts;
 import okhttp3.Call;
 import okhttp3.FormBody;
 import okhttp3.MediaType;
@@ -33,16 +34,6 @@ import java.util.concurrent.TimeUnit;
 public class OkHttpUtils {
 
     /**
-     * json编码
-     */
-    public static final String JSON_CHARSET_UTF_8 = "application/json;charset=utf-8";
-
-    /**
-     * xml编码
-     */
-    public static final String XML_CHARSET_UTF_8 = "text/xml;charset=utf-8";
-
-    /**
      * The constant LOGGER.
      */
     protected static Logger LOGGER = LoggerFactory.getLogger(OkHttpUtils.class);
@@ -55,7 +46,7 @@ public class OkHttpUtils {
      * @return response的body信息
      */
     public static String postJson(String url, Object reqBody) throws Exception {
-        return doPost(url, JsonUtils.toJson(reqBody), MediaType.get(JSON_CHARSET_UTF_8), null, null, null);
+        return doPost(url, JsonUtils.toJson(reqBody), MediaType.get(Consts.JSON_CHARSET_UTF_8), null, null, null);
     }
 
     /**
@@ -67,7 +58,7 @@ public class OkHttpUtils {
      * @return response的body信息
      */
     public static String postJson(String url, Object reqBody, Map<String, String> headers) throws Exception {
-        return doPost(url, JsonUtils.toJson(reqBody), MediaType.get(JSON_CHARSET_UTF_8), headers, null, null);
+        return doPost(url, JsonUtils.toJson(reqBody), MediaType.get(Consts.JSON_CHARSET_UTF_8), headers, null, null);
     }
 
     /**
@@ -81,7 +72,7 @@ public class OkHttpUtils {
      * @return response的body信息
      */
     public static String postJson(String url, Object reqBody, Map<String, String> headers, Long connectTimeout, Long readTimeout) throws Exception {
-        return doPost(url, JsonUtils.toJson(reqBody), MediaType.get(JSON_CHARSET_UTF_8), headers, connectTimeout, readTimeout);
+        return doPost(url, JsonUtils.toJson(reqBody), MediaType.get(Consts.JSON_CHARSET_UTF_8), headers, connectTimeout, readTimeout);
     }
 
     /**
@@ -92,7 +83,7 @@ public class OkHttpUtils {
      * @return response的body信息
      */
     public static String postXml(String url, String xml) throws Exception {
-        return doPost(url, xml, MediaType.get(XML_CHARSET_UTF_8), null, null, null);
+        return doPost(url, xml, MediaType.get(Consts.XML_CHARSET_UTF_8), null, null, null);
     }
 
     /**
@@ -104,7 +95,7 @@ public class OkHttpUtils {
      * @return response的body信息
      */
     public static String postXml(String url, String xml, Map<String, String> headers) throws Exception {
-        return doPost(url, xml, MediaType.get(XML_CHARSET_UTF_8), headers, null, null);
+        return doPost(url, xml, MediaType.get(Consts.XML_CHARSET_UTF_8), headers, null, null);
     }
 
     /**
@@ -118,7 +109,7 @@ public class OkHttpUtils {
      * @return response的body信息
      */
     public static String postXml(String url, String xml, Map<String, String> headers, Long connectTimeout, Long readTimeout) throws Exception {
-        return doPost(url, xml, MediaType.get(XML_CHARSET_UTF_8), headers, connectTimeout, readTimeout);
+        return doPost(url, xml, MediaType.get(Consts.XML_CHARSET_UTF_8), headers, connectTimeout, readTimeout);
     }
 
     /**
@@ -203,7 +194,7 @@ public class OkHttpUtils {
      * @return Request.Builder对象
      */
     private static Request.Builder getRequestBuilder(String url) {
-        return new Request.Builder().url(url).addHeader("Content-Type", JSON_CHARSET_UTF_8);
+        return new Request.Builder().url(url).addHeader("Content-Type", Consts.JSON_CHARSET_UTF_8);
     }
 
     /**
