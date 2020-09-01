@@ -24,7 +24,7 @@
 - com.hb.unic.util.util.RandomUtils
 - com.hb.unic.util.util.ReflectUtils
 - com.hb.unic.util.util.StringUtils
-- com.hb.unic.util.util.UUIDUtils
+- com.hb.unic.util.util.UuidUtils
 - com.hb.unic.util.util.YamlUtils
 ## unic-base 基础模块
 - spring的工具类SpringUtils，可以获取所有bean实例

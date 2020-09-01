@@ -28,7 +28,7 @@ public class DateUtils {
     /**
      * 格式化
      */
-    public static final String FORMAT_1 = "yyyy-MM-dd HH:mm:ss";
+    public static final String FORMAT_1 = "yyyy-MM";
 
     /**
      * 格式化
@@ -38,32 +38,52 @@ public class DateUtils {
     /**
      * 格式化
      */
-    public static final String FORMAT_3 = "yyyy-MM";
+    public static final String FORMAT_3 = "yyyy-MM-dd HH:mm:ss";
 
     /**
      * 格式化
      */
-    public static final String FORMAT_4 = "yyyyMMddHHmmss";
+    public static final String FORMAT_4 = "yyyy-MM-dd HH:mm:ss.SSS";
 
     /**
      * 格式化
      */
-    public static final String FORMAT_5 = "yyyyMMdd";
+    public static final String FORMAT_5 = "yyyyMM";
 
     /**
      * 格式化
      */
-    public static final String FORMAT_6 = "yyyyMM";
+    public static final String FORMAT_6 = "yyyyMMdd";
 
     /**
      * 格式化
      */
-    public static final String FORMAT_7 = "yyyy-MM-dd HH:mm:ss.SSS";
+    public static final String FORMAT_7 = "yyyyMMddHHmmss";
 
     /**
      * 毫秒格式
      */
     public static final String FORMAT_8 = "yyyyMMddHHmmssSSS";
+
+    /**
+     * 格式化
+     */
+    public static final String FORMAT_9 = "yyMM";
+
+    /**
+     * 格式化
+     */
+    public static final String FORMAT_10 = "yyMMdd";
+
+    /**
+     * 格式化
+     */
+    public static final String FORMAT_11 = "yyMMddHHmmss";
+
+    /**
+     * 毫秒格式
+     */
+    public static final String FORMAT_12 = "yyMMddHHmmssSSS";
 
     /**
      * 最大日期
@@ -79,7 +99,9 @@ public class DateUtils {
             maxDate = new StdDateFormat().parse("9999-12-31T23:59:59.999+0800");
             maxTimestamp = new Timestamp(maxDate.getTime());
         } catch (ParseException e) {
-            e.printStackTrace();
+            if (LOGGER.isErrorEnabled()) {
+                LOGGER.error("init maxDate or maxTimestamp failed: {}", LogExceptionWapper.getStackTrace(e));
+            }
         }
     }
 
