@@ -8,6 +8,9 @@ import com.hb.unic.logger.util.LogExceptionWapper;
 import java.sql.Timestamp;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.time.LocalDateTime;
+import java.time.ZoneId;
+import java.time.temporal.ChronoUnit;
 import java.util.Calendar;
 import java.util.Date;
 
@@ -146,8 +149,20 @@ public class DateUtils {
      *
      * @return 当前时间字符串
      */
-    public static String getNowTime(String format) {
+    public static String getNowTimeStr(String format) {
         return date2str(new Date(), format);
+    }
+
+    /**
+     * 获取当前时间的日历
+     *
+     * @return 当前时间的日历
+     */
+    public static Calendar getNowCalendar() {
+        Date date = new Date();
+        Calendar calendar = Calendar.getInstance();
+        calendar.setTime(date);
+        return calendar;
     }
 
     /**
@@ -159,18 +174,6 @@ public class DateUtils {
     public static Calendar getCalendar(Date date) {
         if (date == null)
             return null;
-        Calendar calendar = Calendar.getInstance();
-        calendar.setTime(date);
-        return calendar;
-    }
-
-    /**
-     * 获取当前时间的日历
-     *
-     * @return 当前时间的日历
-     */
-    public static Calendar getCurrentCalendar() {
-        Date date = new Date();
         Calendar calendar = Calendar.getInstance();
         calendar.setTime(date);
         return calendar;
@@ -267,6 +270,38 @@ public class DateUtils {
             days++;
         }
         return days;
+    }
+
+    /**
+     * 判断两个日期是不是同一天
+     *
+     * @param date        日期
+     * @param anotherDate 日期
+     * @return true为是
+     */
+    public static boolean isSameDay(Date date, Date anotherDate) {
+        if (date == null || anotherDate == null) {
+            return false;
+        }
+        String str1 = date2str(date, FORMAT_2);
+        String str2 = date2str(anotherDate, FORMAT_2);
+        return str1.equals(str2);
+    }
+
+    /**
+     * 判断两个日期是不是同一天
+     *
+     * @param date        日期
+     * @param anotherDate 日期
+     * @return true为是
+     */
+    public static boolean isSameMonth(Date date, Date anotherDate) {
+        if (date == null || anotherDate == null) {
+            return false;
+        }
+        String str1 = date2str(date, FORMAT_1);
+        String str2 = date2str(anotherDate, FORMAT_1);
+        return str1.equals(str2);
     }
 
     /**
@@ -391,7 +426,7 @@ public class DateUtils {
     }
 
     /**
-     * 获取指定日期的指定时间
+     * 获取指定日期的指定时分秒
      *
      * @param date 日期
      * @param time 时间字符串（HH:mm:ss）
@@ -403,27 +438,51 @@ public class DateUtils {
     }
 
     /**
-     * 获取指定日期加减n天后的指定时间
-     *
-     * @param date   日期
-     * @param addDay 加减的天数
-     * @param time   时间字符串（HH:mm:ss）
-     * @return （日期）yyyy-MM-dd HH:mm:ss
-     */
-    public static Date getAssignDateTime(Date date, int addDay, String time) {
-        return getAssignTime(addDay(date, addDay), time);
-    }
-
-    /**
-     * 获取当前时间附近时间
+     * 获取指定时间附近时间
      *
      * @return 时间
      */
-    public static Date getTimeNearBy(int field, int addNum) {
+    public static Date getTimeNearBy(Date date, int field, int addNum) {
         Calendar calendar = Calendar.getInstance();
-        calendar.setTime(new Date());
+        calendar.setTime(date);
         calendar.add(field, addNum);
         return calendar.getTime();
+    }
+
+    /**
+     * 用中文标识两个时间间隔
+     *
+     * @param start 开始时间
+     * @param end   结束时间
+     * @return 时间间隔描述
+     */
+    public static String getIntervalTimeUseChinese(Date start, Date end) {
+        StringBuilder stringBuilder = new StringBuilder();
+        if (null == start || null == end) {
+            return null;
+        }
+        LocalDateTime startTime = LocalDateTime.ofInstant(start.toInstant(), ZoneId.systemDefault());
+        LocalDateTime endTime = LocalDateTime.ofInstant(end.toInstant(), ZoneId.systemDefault());
+        long day = ChronoUnit.DAYS.between(startTime, endTime);
+        long hour = ChronoUnit.HOURS.between(startTime, endTime);
+        long minutes = ChronoUnit.MINUTES.between(startTime, endTime);
+        long seconds = ChronoUnit.SECONDS.between(startTime, endTime);
+        if (day > 0) {
+            stringBuilder.append(day).append("天");
+        }
+        if (hour > 0) {
+            long hourNumber = hour % 24;
+            stringBuilder.append(hourNumber).append("时");
+        }
+        if (minutes > 0) {
+            long minutesNumber = minutes % 60;
+            stringBuilder.append(minutesNumber).append("分");
+        }
+        if (seconds > 0) {
+            long secondsNumber = seconds % 60;
+            stringBuilder.append(secondsNumber).append("秒");
+        }
+        return stringBuilder.toString();
     }
 
 }
