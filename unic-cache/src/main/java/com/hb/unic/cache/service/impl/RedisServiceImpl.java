@@ -4,6 +4,7 @@ import com.hb.unic.cache.service.IRedisService;
 import com.hb.unic.cache.util.JsonUtils;
 import com.hb.unic.logger.Logger;
 import com.hb.unic.logger.LoggerFactory;
+import com.hb.unic.util.util.ObjectUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnClass;
 import org.springframework.context.annotation.Primary;
@@ -12,6 +13,7 @@ import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.stereotype.Component;
 
 import javax.annotation.Resource;
+import java.math.BigDecimal;
 import java.util.List;
 import java.util.Map;
 import java.util.concurrent.TimeUnit;
@@ -70,9 +72,25 @@ public class RedisServiceImpl extends AbstractRedisService implements IRedisServ
     private RedisTemplate<String, List<Object>> listRedisTemplate;
 
     @Override
-    public void set(String key, Object value, long expireTime) {
-        String json = JsonUtils.toJson(value);
-        stringRedisTemplate.opsForValue().set(key, json, expireTime, TimeUnit.SECONDS);
+    public void set(String key, Object value, long expireSecond) {
+        if (value != null) {
+            String json = "";
+            if (value instanceof String
+                    || value instanceof Integer
+                    || value instanceof Long
+                    || value instanceof BigDecimal
+                    || value instanceof Double) {
+                json = ObjectUtils.asString(value);
+            } else {
+                json = JsonUtils.toJson(value);
+            }
+            stringRedisTemplate.opsForValue().set(key, json, expireSecond, TimeUnit.SECONDS);
+        }
+    }
+
+    @Override
+    public Object get(String key) {
+        return objectRedisTemplate.opsForValue().get(key);
     }
 
     @Override

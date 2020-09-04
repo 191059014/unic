@@ -8,11 +8,19 @@ public interface IRedisService {
     /**
      * 添加缓存并设置过期时间
      *
-     * @param key        缓存key
-     * @param value      缓存值
-     * @param expireTime 过期时间
+     * @param key          缓存key
+     * @param value        缓存值
+     * @param expireSecond 过期时间
      */
-    void set(String key, Object value, long expireTime);
+    void set(String key, Object value, long expireSecond);
+
+    /**
+     * 获取Object类型缓存
+     *
+     * @param key 缓存key
+     * @return 缓存值
+     */
+    Object get(String key);
 
     /**
      * 获取String类型缓存

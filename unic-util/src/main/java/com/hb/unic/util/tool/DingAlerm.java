@@ -12,7 +12,6 @@ import org.apache.http.entity.StringEntity;
 import org.apache.http.impl.client.HttpClients;
 import org.apache.http.util.EntityUtils;
 
-import javax.websocket.SendResult;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -22,12 +21,12 @@ import java.util.Map;
  *
  * @version v0.1, 2020/8/28 17:15, create by huangbiao.
  */
-public class DingAlermTool {
+public class DingAlerm {
 
     /**
      * 日志
      */
-    private static final Logger LOGGER = LoggerFactory.getLogger(DingAlermTool.class);
+    private static final Logger LOGGER = LoggerFactory.getLogger(DingAlerm.class);
 
     /**
      * httpclient
@@ -44,19 +43,15 @@ public class DingAlermTool {
      * @return true为发送成功，false为发送失败
      */
     public static boolean sendTextMessage(String webhook, String text, boolean isAtAll, List<String> atMobiles) {
-        String baseLog = "[钉钉告警-DingAlermTool-sendTextMessage]";
+        String baseLog = "[钉钉告警-DingAlerm-sendTextMessage]";
         try {
             HttpPost httppost = new HttpPost(webhook);
             httppost.addHeader("Content-Type", "application/json; charset=utf-8");
             StringEntity se = new StringEntity(buildTextMessage(text, isAtAll, atMobiles), "utf-8");
             httppost.setEntity(se);
-            SendResult sendResult = new SendResult();
             HttpResponse response = httpclient.execute(httppost);
             String result = EntityUtils.toString(response.getEntity());
-            LOGGER.error("{}发送普通消息结果：{}", baseLog, result);
-            Map<String, String> map = JsonUtils.toMap(result, String.class);
-            String errcode = map.get("errcode");
-            String errmsg = map.get("errmsg");
+            LOGGER.info("{}发送普通消息结果：{}", baseLog, result);
             return true;
         } catch (Exception e) {
             if (LOGGER.isErrorEnabled()) {

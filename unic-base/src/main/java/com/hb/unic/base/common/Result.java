@@ -1,6 +1,7 @@
 package com.hb.unic.base.common;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
+import com.hb.unic.util.helper.ToStringHelper;
 import com.hb.unic.util.util.EnumUtils;
 
 import java.io.Serializable;
@@ -12,7 +13,7 @@ import java.util.Optional;
  * @author Mr.huang
  * @since 2020/4/20 16:04
  */
-@JsonInclude(JsonInclude.Include.NON_EMPTY)
+@JsonInclude(JsonInclude.Include.NON_NULL)
 public class Result<T> implements Serializable {
     /**
      * serialVersionUID
@@ -73,12 +74,7 @@ public class Result<T> implements Serializable {
      */
     @Override
     public String toString() {
-        final StringBuilder sb = new StringBuilder("Result{");
-        sb.append("code='").append(code).append('\'');
-        sb.append(", msg='").append(msg).append('\'');
-        sb.append(", data=").append(data);
-        sb.append('}');
-        return sb.toString();
+        return ToStringHelper.printNoNull(this);
     }
 
     /**

@@ -253,6 +253,16 @@ public class StringUtils {
         return sb.toString();
     }
 
+    /**
+     * 字符串是否包含文本
+     *
+     * @param str 原字符串
+     * @return true
+     */
+    public static boolean hasText(String str) {
+        return str != null && str.trim().length() > 0;
+    }
+
     public static void main(String[] args) {
         System.out.println(digitUppercase(141241414.5));
     }
