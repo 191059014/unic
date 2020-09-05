@@ -14,7 +14,7 @@ public class KeyUtils {
      * @return 标识+yyyyMMddHHmmssSSS（17位）+随机数（8位）
      */
     public static String getUniqueKey(String pkFlag) {
-        return new StringBuilder(pkFlag).append(DateUtils.getNowTimeStr(DateUtils.FORMAT_8)).append(RandomUtils.getRandomOfLength(8)).toString();
+        return new StringBuilder(pkFlag).append(DateUtils.getNowTimeStr(DateUtils.FORMAT_8)).append(RandomUtils.getRandomOfLength(6)).toString();
     }
 
 }
