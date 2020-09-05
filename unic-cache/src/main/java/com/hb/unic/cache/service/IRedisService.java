@@ -20,15 +20,7 @@ public interface IRedisService {
      * @param key 缓存key
      * @return 缓存值
      */
-    Object get(String key);
-
-    /**
-     * 获取String类型缓存
-     *
-     * @param key 缓存key
-     * @return 缓存值
-     */
-    String getString(String key);
+    String get(String key);
 
     /**
      * 获取Bean类型缓存
