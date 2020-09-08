@@ -16,6 +16,10 @@ public class BusinessException extends StandardRuntimeException {
      */
     private static final long serialVersionUID = -7609091570577553080L;
 
+    public BusinessException(String key) {
+        super(key);
+    }
+
     public BusinessException(String key, String message) {
         super(key, message);
     }
