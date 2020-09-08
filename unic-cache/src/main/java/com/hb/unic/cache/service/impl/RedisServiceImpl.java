@@ -89,12 +89,7 @@ public class RedisServiceImpl extends AbstractRedisService implements IRedisServ
     }
 
     @Override
-    public Object get(String key) {
-        return objectRedisTemplate.opsForValue().get(key);
-    }
-
-    @Override
-    public String getString(String key) {
+    public String get(String key) {
         return stringRedisTemplate.opsForValue().get(key);
     }
 

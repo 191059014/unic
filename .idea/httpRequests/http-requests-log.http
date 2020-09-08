@@ -1,0 +1,396 @@
+GET http://localhost:8080/bs/noauth/tools/redis/get/bs-managejwt:token:huangbiao
+Accept: */*
+Cache-Control: no-cache
+
+<> 2020-09-05T060442.200.json
+
+###
+
+GET http://localhost:8080/bs/noauth/tools/redis/get/bs-managejwt:token:huangbiao
+Accept: */*
+Cache-Control: no-cache
+
+<> 2020-09-05T060428.200.json
+
+###
+
+POST http://localhost:8080/bs/noauth/tools/redis/set/testKey/600
+Accept: */*
+Cache-Control: no-cache
+Content-Type: application/json
+
+{"userName":"zhangsan"}
+
+<> 2020-09-05T060336.200.json
+
+###
+
+GET http://localhost:8080/bs/noauth/tools/redis/get/testKey
+Accept: */*
+Cache-Control: no-cache
+
+<> 2020-09-05T055948.200.json
+
+###
+
+POST http://localhost:8080/bs/noauth/tools/redis/set/testKey/600
+Accept: */*
+Cache-Control: no-cache
+Content-Type: application/json
+
+{"userName":"zhangsan"}
+
+<> 2020-09-05T055831.200.json
+
+###
+
+POST http://localhost:8080/bs/noauth/tools/redis/set/testKey/600?value=123
+Accept: */*
+Cache-Control: no-cache
+Content-Type: application/json
+
+{"userName":"zhangsan"}
+
+<> 2020-09-05T055812.200.json
+
+###
+
+POST http://localhost:8080/bs/noauth/tools/redis/set/testKey/600?value=123
+Accept: */*
+Cache-Control: no-cache
+Content-Type: application/json
+
+{"userName":"zhangsan"}
+
+<> 2020-09-05T055736.404.json
+
+###
+
+POST http://localhost:8080/bs/noauth/tools/redis/set/testKey/600
+Accept: */*
+Cache-Control: no-cache
+Content-Type: application/json
+
+{"userName":"zhangsan"}
+
+<> 2020-09-05T055727.404.json
+
+###
+
+POST http://localhost:8080/bs/noauth/tools/redis/set/testKey/600
+Accept: */*
+Cache-Control: no-cache
+Content-Type: application/json
+
+{"userName":"zhangsan"}
+
+<> 2020-09-05T055648.404.json
+
+###
+
+POST http://localhost:8080/bs/noauth/tools/redis/set/testKey/600
+Accept: */*
+Cache-Control: no-cache
+Content-Type: application/json
+
+{"userName":"zhangsan"}
+
+<> 2020-09-05T055555.404.json
+
+###
+
+POST http://localhost:8080/bs/noauth/tools/redis/set/testKey/600/
+Accept: */*
+Cache-Control: no-cache
+Content-Type: application/json
+
+{"userName":"zhangsan"}
+
+<> 2020-09-05T055550.404.json
+
+###
+
+POST http://localhost:8080/bs/noauth/tools/redis/set/testKey/600/213
+Accept: */*
+Cache-Control: no-cache
+Content-Type: application/json
+
+{"userName":"zhangsan"}
+
+<> 2020-09-05T055534.200.json
+
+###
+
+POST http://localhost:8080/bs/noauth/tools/redis/set/testKey/600/
+Accept: */*
+Cache-Control: no-cache
+Content-Type: application/json
+
+{"userName":"zhangsan"}
+
+<> 2020-09-05T055436.404.json
+
+###
+
+POST http://localhost:8080/bs/noauth/tools/redis/set/testKey/600/
+Accept: */*
+Cache-Control: no-cache
+Content-Type: application/json
+
+{"userName":"zhangsan"}
+
+<> 2020-09-05T055417.404.json
+
+###
+
+POST http://localhost:8080/bs/noauth/tools/redis/set/testKey/600
+Accept: */*
+Cache-Control: no-cache
+Content-Type: application/json
+
+{"userName":"zhangsan"}
+
+<> 2020-09-05T055341.404.json
+
+###
+
+POST http://localhost:8080/bs/noauth/tools/redis/set/testKey/600
+Accept: */*
+Cache-Control: no-cache
+
+{"userName":"zhangsan"}
+
+<> 2020-09-05T055301.404.json
+
+###
+
+POST http://localhost:8080/bs/noauth/tools/redis/set/testKey/600
+Accept: */*
+Cache-Control: no-cache
+{"userName": "zhangsan"}
+
+<> 2020-09-05T055217.400.html
+
+###
+
+GET http://localhost:8080/bs/noauth/tools/redis/set/testKey/{userName:zhangsan}/600
+Accept: */*
+Cache-Control: no-cache
+
+###
+
+GET http://localhost:8080/bs/noauth/tools/redis/set/testKey/{"userName":"zhangsan"}/600
+Accept: */*
+Cache-Control: no-cache
+
+###
+
+GET http://localhost:8080/bs/noauth/tools/redis/get/testKey
+Accept: */*
+Cache-Control: no-cache
+
+<> 2020-09-05T054544.500.json
+
+###
+
+GET http://localhost:8080/bs/noauth/tools/redis/set/testKey/testValue/600
+Accept: */*
+Cache-Control: no-cache
+
+<> 2020-09-05T054453.200.json
+
+###
+
+GET http://localhost:8080/bs/noauth/tools/redis/get/bs-managejwt:token:huangbiao
+Accept: */*
+Cache-Control: no-cache
+
+<> 2020-09-05T053450.500.json
+
+###
+
+GET http://localhost:8080/bs/noauth/tools/redis/get/bs-managejwt:token:huangbiao
+Accept: */*
+Cache-Control: no-cache
+
+<> 2020-09-05T053045.500.json
+
+###
+
+GET http://localhost:8080/bs/noauth/tools/combobox/ResourceType
+Accept: */*
+Cache-Control: no-cache
+
+<> 2020-09-05T053010.200.json
+
+###
+
+GET http://localhost:8080/bs/noauth/tools/combobox/ResourceType
+Accept: */*
+Cache-Control: no-cache
+
+<> 2020-09-05T052804.200.json
+
+###
+
+POST http://localhost:8080/bs/noauth/user/addOne
+Accept: */*
+Cache-Control: no-cache
+Content-Type: application/json
+
+{"userName":"huangbiao","password":"123456","mobile":"18310673001"}
+
+<> 2020-09-05T052720.404.json
+
+###
+
+POST http://localhost:8080/bs/auth/user/findOne
+Accept: */*
+Cache-Control: no-cache
+Content-Type: application/json
+token: Bearer eyJhbGciOiJIUzI1NiJ9.eyJqdGkiOiJ1MjAyMDA5MDUxNjQ4MDY2NDEwOTM4ODE4OCIsInN1YiI6Imh1YW5nYmlhbyIsImlhdCI6MTU5OTI5NzgxMSwiZXhwIjoxNTk5MzU3ODExfQ.Z8dcS3WYzFDlF9kfzdvz1Jtfkf_6-raWCeGE4U3y580
+
+{"userId":"1234567","mobile":"1234567"}
+
+<> 2020-09-05T052703.200.json
+
+###
+
+POST http://localhost:8080/bs/auth/user/findOne
+Accept: */*
+Cache-Control: no-cache
+Content-Type: application/json
+token: Bearer eyJhbGciOiJIUzI1NiJ9.eyJqdGkiOiJ1MjAyMDA5MDUxNjQ4MDY2NDEwOTM4ODE4OCIsInN1YiI6Imh1YW5nYmlhbyIsImlhdCI6MTU5OTI5NzgxMSwiZXhwIjoxNTk5MzU3ODExfQ.Z8dcS3WYzFDlF9kfzdvz1Jtfkf_6-raWCeGE4U3y580
+
+{"userId":"1234567","mobile":"1234567"}
+
+<> 2020-09-05T052635.200.json
+
+###
+
+POST http://localhost:8080/bs/auth/user/findOne
+Accept: */*
+Cache-Control: no-cache
+Content-Type: application/json
+token: Bearer eyJhbGciOiJIUzI1NiJ9.eyJqdGkiOiJ1MjAyMDA5MDUxNjQ4MDY2NDEwOTM4ODE4OCIsInN1YiI6Imh1YW5nYmlhbyIsImlhdCI6MTU5OTI5NzgxMSwiZXhwIjoxNTk5MzU3ODExfQ.Z8dcS3WYzFDlF9kfzdvz1Jtfkf_6-raWCeGE4U3y580
+
+{"userId":"1234567","mobile":"1234567"}
+
+<> 2020-09-05T052609.200.json
+
+###
+
+POST http://localhost:8080/bs/auth/user/findOne
+Accept: */*
+Cache-Control: no-cache
+Content-Type: application/json
+token: Bearer eyJhbGciOiJIUzI1NiJ9.eyJqdGkiOiJ1MjAyMDA5MDUxNjQ4MDY2NDEwOTM4ODE4OCIsInN1YiI6Imh1YW5nYmlhbyIsImlhdCI6MTU5OTI5NzgxMSwiZXhwIjoxNTk5MzU3ODExfQ.Z8dcS3WYzFDlF9kfzdvz1Jtfkf_6-raWCeGE4U3y580
+
+{"userId":"1234567","mobile":"1234567"}
+
+<> 2020-09-05T052359.200.json
+
+###
+
+POST http://localhost:8080/bs/auth/user/findOne
+Accept: */*
+Cache-Control: no-cache
+Content-Type: application/json
+token: Bearer eyJhbGciOiJIUzI1NiJ9.eyJqdGkiOiJ1MjAyMDA5MDUxNjQ4MDY2NDEwOTM4ODE4OCIsInN1YiI6Imh1YW5nYmlhbyIsImlhdCI6MTU5OTI5NzY5NiwiZXhwIjoxNTk5MzU3Njk2fQ.g4cjMj1iMSKnqlPwGOF57TXcNZxwE736Oom2Gjk5FzQ
+
+{"userId":"1234567","mobile":"1234567"}
+
+<> 2020-09-05T052307.200.json
+
+###
+
+POST http://localhost:8080/bs/auth/user/findOne
+Accept: */*
+Cache-Control: no-cache
+Content-Type: application/json
+token: Bearer eyJhbGciOiJIUzI1NiJ9.eyJqdGkiOiJ1MjAyMDA5MDUxNjQ4MDY2NDEwOTM4ODE4OCIsInN1YiI6Imh1YW5nYmlhbyIsImlhdCI6MTU5OTI5NzY5NiwiZXhwIjoxNTk5MzU3Njk2fQ.g4cjMj1iMSKnqlPwGOF57TXcNZxwE736Oom2Gjk5FzQ
+
+{"userId":"1234567","mobile":"1234567"}
+
+<> 2020-09-05T052215.200.json
+
+###
+
+POST http://localhost:8080/bs/auth/user/findOne
+Accept: */*
+Cache-Control: no-cache
+Content-Type: application/json
+token: Bearer eyJhbGciOiJIUzI1NiJ9.eyJqdGkiOiJVMSIsInN1YiI6Imh1YW5nYmlhbyIsImlhdCI6MTU5OTIxMjAyMCwiZXhwIjoxNTk5MjE4MDIwfQ.on33rce9hhZCxFx6UzPpy3_SMI90kig4C8a2t1-usw8
+
+{"userId":"1234567","mobile":"1234567"}
+
+<> 2020-09-05T051416.500.json
+
+###
+
+POST http://localhost:8080/bs/noauth/user/addOne
+Accept: */*
+Cache-Control: no-cache
+Content-Type: application/json
+
+{"userName":"huangbiao","password":"123456","mobile":"18310673001"}
+
+<> 2020-09-05T051201.200.json
+
+###
+
+POST http://localhost:8080/bs/noauth/user/addOne
+Accept: */*
+Cache-Control: no-cache
+Content-Type: application/json
+
+{"userName":"huangbiao","password":"123456","mobile":"18310673001"}
+
+<> 2020-09-05T051119.200.json
+
+###
+
+POST http://localhost:8080/bs/noauth/user/addOne
+Accept: */*
+Cache-Control: no-cache
+Content-Type: application/json
+
+{"userName":"huangbiao","password":"123456","mobile":"18310673000"}
+
+<> 2020-09-05T044807.200.json
+
+###
+
+POST http://localhost:8080/bs/auth/user/addOne
+Accept: */*
+Cache-Control: no-cache
+Content-Type: application/json
+
+{"userName":"huangbiao","password":"123456","mobile":"18310673000"}
+
+<> 2020-09-05T044648.200.json
+
+###
+
+POST http://localhost:8080/bs/auth/user/addOne
+Accept: */*
+Cache-Control: no-cache
+Content-Type: application/json
+
+{"userName":"huangbiao","password":"123456","mobile":"18310673000"}
+
+<> 2020-09-05T044523.200.json
+
+###
+
+POST http://localhost:8080/bs/noauth/user/addOne
+Accept: */*
+Cache-Control: no-cache
+Content-Type: application/json
+
+{"userName":"huangbiao","password":"123456","mobile":"18310673000"}
+
+<> 2020-09-05T044507.404.json
+
+###
+

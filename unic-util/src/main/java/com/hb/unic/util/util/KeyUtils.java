@@ -11,10 +11,10 @@ public class KeyUtils {
      * 生成唯一key
      *
      * @param pkFlag key标识
-     * @return 标识+yyyyMMddHHmmssSSS（17位）+随机数（8位）
+     * @return 标识+yyyyMMddHHmmssSSS（17位）+随机数（6位）
      */
     public static String getUniqueKey(String pkFlag) {
-        return new StringBuilder(pkFlag).append(DateUtils.getNowTimeStr(DateUtils.FORMAT_8)).append(RandomUtils.getRandomOfLength(8)).toString();
+        return new StringBuilder(pkFlag).append(DateUtils.getNowTimeStr(DateUtils.FORMAT_12)).append(RandomUtils.getRandomOfLength(6)).toString();
     }
 
 }
