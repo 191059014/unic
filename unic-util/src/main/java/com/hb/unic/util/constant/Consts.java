@@ -9,6 +9,11 @@ package com.hb.unic.util.constant;
 public class Consts {
 
     /**
+     * 默认值
+     */
+    public static final String DEFAULT_V = "-1";
+
+    /**
      * UTF-8编码方式
      */
     public static final String UTF_8 = "UTF-8";

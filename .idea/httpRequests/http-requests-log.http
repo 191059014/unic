@@ -1,3 +1,35 @@
+GET http://localhost:8080/bs/noauth/tools/addHighestSys
+Accept: */*
+Cache-Control: no-cache
+
+<> 2020-09-13T084159.200.json
+
+###
+
+GET http://localhost:8080/bs/noauth/tools/addHighestSys
+Accept: */*
+Cache-Control: no-cache
+
+<> 2020-09-13T083605.500.json
+
+###
+
+GET http://localhost:8080/bs/noauth/tools/addHighestSys
+Accept: */*
+Cache-Control: no-cache
+
+<> 2020-09-12T113242.500.json
+
+###
+
+GET http://localhost:8080/bs/noauth/tools/addHighestSys
+Accept: */*
+Cache-Control: no-cache
+
+<> 2020-09-12T112705.500.json
+
+###
+
 GET http://localhost:8080/bs/noauth/tools/redis/get/bs-managejwt:token:huangbiao
 Accept: */*
 Cache-Control: no-cache
