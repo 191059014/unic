@@ -56,7 +56,7 @@ public class Pagination<T> {
      * @return 校验结果，true为校验通过，false为失败
      */
     public static boolean verify(Integer pageNum, Integer pageSize) {
-        return pageNum != null && Integer.valueOf(0).compareTo(pageNum) < 0 && pageSize != null && Integer.valueOf(0).compareTo(pageSize) < 0;
+        return pageNum != null && pageNum > 0 && pageSize != null && pageSize > 0;
     }
 
     /**
