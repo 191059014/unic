@@ -83,7 +83,7 @@ public class Result<T> implements Serializable {
      * @param enumObj 返回码枚举对象
      * @return 完整返回对象
      */
-    public static Result of(Enum enumObj) {
+    public static <T> Result<T> of(Enum enumObj) {
         return of(getCode(enumObj), getMsg(enumObj), null);
     }
 

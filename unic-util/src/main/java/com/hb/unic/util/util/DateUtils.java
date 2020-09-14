@@ -89,6 +89,11 @@ public class DateUtils {
     public static final String FORMAT_12 = "yyMMddHHmmssSSS";
 
     /**
+     * 时区
+     */
+    public static final String TIME_ZONE_1 = "GMT+8";
+
+    /**
      * 最大日期
      */
     private static Date maxDate;

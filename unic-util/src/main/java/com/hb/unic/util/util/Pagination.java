@@ -1,5 +1,7 @@
 package com.hb.unic.util.util;
 
+import com.hb.unic.util.helper.ToStringHelper;
+
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -19,9 +21,9 @@ public class Pagination<T> {
      */
     private long count;
     /**
-     * 当前页数
+     * 开始行
      */
-    private int pageNum;
+    private int startRow;
     /**
      * 每页条数
      */
@@ -36,10 +38,10 @@ public class Pagination<T> {
     /**
      * 全参构造
      */
-    public Pagination(List<T> data, long count, int pageNum, int pageSize) {
+    public Pagination(List<T> data, long count, int startRow, int pageSize) {
         this.data = data;
         this.count = count;
-        this.pageNum = pageNum;
+        this.startRow = startRow;
         if (pageSize > 100)
             this.pageSize = 100;
         else
@@ -47,7 +49,18 @@ public class Pagination<T> {
     }
 
     /**
-     * ########## 计算起始记录行数 ##########
+     * 校验分页参数
+     *
+     * @param pageNum  第几页
+     * @param pageSize 每页条数
+     * @return 校验结果，true为校验通过，false为失败
+     */
+    public static boolean verify(Integer pageNum, Integer pageSize) {
+        return pageNum != null && Integer.valueOf(0).compareTo(pageNum) < 0 && pageSize != null && Integer.valueOf(0).compareTo(pageSize) < 0;
+    }
+
+    /**
+     * 根据当前页数和每页条数计算开始行数
      *
      * @param pageNum  当前第几页
      * @param pageSize 每页多少条
@@ -88,12 +101,12 @@ public class Pagination<T> {
         this.count = count;
     }
 
-    public int getPageNum() {
-        return pageNum;
+    public int getStartRow() {
+        return startRow;
     }
 
-    public void setPageNum(int pageNum) {
-        this.pageNum = pageNum;
+    public void setStartRow(int startRow) {
+        this.startRow = startRow;
     }
 
     public int getPageSize() {
@@ -102,6 +115,11 @@ public class Pagination<T> {
 
     public void setPageSize(int pageSize) {
         this.pageSize = pageSize;
+    }
+
+    @Override
+    public String toString() {
+        return ToStringHelper.printNoNull(this);
     }
 }
 
