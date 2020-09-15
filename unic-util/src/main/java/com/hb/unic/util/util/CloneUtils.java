@@ -73,7 +73,10 @@ public class CloneUtils {
         if (bean != null) {
             BeanMap beanMap = BeanMap.create(bean);
             for (Object key : beanMap.keySet()) {
-                map.put(key + "", beanMap.get(key));
+                Object value = beanMap.get(key);
+                if (value != null && !"".equals(value.toString())) {
+                    map.put(key + "", value);
+                }
             }
         }
         return map;
