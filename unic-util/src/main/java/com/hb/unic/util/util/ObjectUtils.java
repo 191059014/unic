@@ -25,17 +25,17 @@ public class ObjectUtils {
      * @param objs 多个Object元素
      * @return Object数组
      */
-    public static Object[] asArray(Object... objs) {
+    public static Object[] toArray(Object... objs) {
         return objs;
     }
 
     /**
-     * 将Object转换为Integer
+     * 将Object转换为String
      *
      * @param value 待转换的值
-     * @return Integer
+     * @return String
      */
-    public static String asString(Object value) {
+    public static String toString(Object value) {
         return value == null ? null : value.toString();
     }
 
@@ -45,7 +45,7 @@ public class ObjectUtils {
      * @param value 待转换的值
      * @return Integer
      */
-    public static Integer asInteger(Object value) {
+    public static Integer toInteger(Object value) {
         return value == null ? null : Integer.valueOf(value.toString());
     }
 
@@ -55,7 +55,7 @@ public class ObjectUtils {
      * @param value 待转换的值
      * @return Long
      */
-    public static Long asLong(Object value) {
+    public static Long toLong(Object value) {
         return value == null ? null : Long.valueOf(value.toString());
     }
 
@@ -63,10 +63,20 @@ public class ObjectUtils {
      * 将Object转换为Long
      *
      * @param value 待转换的值
-     * @return Long
+     * @return BigDecimal
      */
-    public static BigDecimal asBigDecimal(Object value) {
+    public static BigDecimal toBigDecimal(Object value) {
         return value == null ? BigDecimal.ZERO : new BigDecimal(value.toString());
+    }
+
+    /**
+     * 将Object转换为Boolean
+     *
+     * @param value 待转换的值
+     * @return Boolean
+     */
+    public static Boolean toBoolean(Object value) {
+        return value == null ? Boolean.FALSE : Boolean.valueOf(value.toString());
     }
 
     /**

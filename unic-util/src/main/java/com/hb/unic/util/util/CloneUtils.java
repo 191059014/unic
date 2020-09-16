@@ -4,8 +4,11 @@ import com.hb.unic.logger.Logger;
 import com.hb.unic.logger.LoggerFactory;
 import com.hb.unic.logger.util.LogExceptionWapper;
 import org.apache.commons.beanutils.BeanUtils;
-import org.springframework.cglib.beans.BeanMap;
 
+import java.beans.BeanInfo;
+import java.beans.Introspector;
+import java.beans.PropertyDescriptor;
+import java.lang.reflect.Method;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -26,6 +29,27 @@ public class CloneUtils {
     protected static Logger LOGGER = LoggerFactory.getLogger(CloneUtils.class);
 
     /**
+     * 复制属性, 可以是不通类型javabean
+     *
+     * @param source 源
+     * @param tClass 目标
+     * @return 目标对象
+     */
+    public static <S, T> T copyProperties(S source, Class<T> tClass) {
+        try {
+            T t = tClass.newInstance();
+            org.springframework.beans.BeanUtils.copyProperties(source, t);
+            return t;
+        } catch (Exception e) {
+            if (LOGGER.isErrorEnabled()) {
+                LOGGER.error("copyProperties Exception: {}", LogExceptionWapper.getStackTrace(e));
+            }
+            return null;
+        }
+
+    }
+
+    /**
      * 复制java bean
      *
      * @param bean 被复制的bean
@@ -36,7 +60,9 @@ public class CloneUtils {
         try {
             return bean == null ? null : (T) BeanUtils.cloneBean(bean);
         } catch (Exception e) {
-            LOGGER.error("cloneBean Exception: {}", LogExceptionWapper.getStackTrace(e));
+            if (LOGGER.isErrorEnabled()) {
+                LOGGER.error("cloneBean Exception: {}", LogExceptionWapper.getStackTrace(e));
+            }
             return null;
         }
     }
@@ -63,7 +89,7 @@ public class CloneUtils {
     }
 
     /**
-     * 将对象装换为map
+     * 将对象转换为map
      *
      * @param bean bean
      * @return Map
@@ -71,11 +97,26 @@ public class CloneUtils {
     public static <T> Map<String, Object> bean2Map(T bean) {
         Map<String, Object> map = new HashMap<>();
         if (bean != null) {
-            BeanMap beanMap = BeanMap.create(bean);
-            for (Object key : beanMap.keySet()) {
-                Object value = beanMap.get(key);
-                if (value != null && !"".equals(value.toString())) {
-                    map.put(key + "", value);
+            try {
+                //获取JavaBean的描述器
+                BeanInfo b = Introspector.getBeanInfo(bean.getClass(), Object.class);
+                //获取属性描述器
+                PropertyDescriptor[] pds = b.getPropertyDescriptors();
+                //对属性迭代
+                for (PropertyDescriptor pd : pds) {
+                    //属性名称
+                    String propertyName = pd.getName();
+                    //属性值, 用getter方法获取
+                    Method m = pd.getReadMethod();
+                    Object properValue = m.invoke(bean);//用对象执行getter方法获得属性值
+                    if (properValue != null && !"".equals(properValue.toString())) {
+                        //把属性名-属性值 存到Map中
+                        map.put(propertyName, properValue);
+                    }
+                }
+            } catch (Exception e) {
+                if (LOGGER.isErrorEnabled()) {
+                    LOGGER.error("bean2Map Exception: {}", LogExceptionWapper.getStackTrace(e));
                 }
             }
         }
@@ -83,7 +124,7 @@ public class CloneUtils {
     }
 
     /**
-     * 将map装换为javabean对象
+     * 将map装换为javabean对象, 要求map的value的类型和bean属性的类型一致, 否则会出现异常
      *
      * @param map       map
      * @param beanClass beanClass
@@ -95,7 +136,9 @@ public class CloneUtils {
             BeanUtils.populate(t, map);
             return t;
         } catch (Exception e) {
-            LOGGER.error("map2Bean Exception: {}", LogExceptionWapper.getStackTrace(e));
+            if (LOGGER.isErrorEnabled()) {
+                LOGGER.error("map2Bean Exception: {}", LogExceptionWapper.getStackTrace(e));
+            }
             return null;
         }
     }

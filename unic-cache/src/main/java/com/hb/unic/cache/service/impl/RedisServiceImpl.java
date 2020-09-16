@@ -80,7 +80,7 @@ public class RedisServiceImpl extends AbstractRedisService implements IRedisServ
                     || value instanceof Long
                     || value instanceof BigDecimal
                     || value instanceof Double) {
-                json = ObjectUtils.asString(value);
+                json = ObjectUtils.toString(value);
             } else {
                 json = JsonUtils.toJson(value);
             }
