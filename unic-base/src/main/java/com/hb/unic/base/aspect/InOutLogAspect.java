@@ -4,7 +4,7 @@ import com.google.common.base.Stopwatch;
 import com.hb.unic.base.annotation.InOutLog;
 import com.hb.unic.logger.Logger;
 import com.hb.unic.logger.LoggerFactory;
-import com.hb.unic.util.util.StringUtils;
+import com.hb.unic.util.util.StrUtils;
 import org.aspectj.lang.ProceedingJoinPoint;
 import org.aspectj.lang.annotation.Around;
 import org.aspectj.lang.annotation.Aspect;
@@ -42,10 +42,10 @@ public class InOutLogAspect {
         String methodName = signature.getName();
         InOutLog inOutLog = signature.getMethod().getAnnotation(InOutLog.class);
         String value = inOutLog.value();
-        String baseLog = StringUtils.joint("[", className, "-", methodName, "-", value);
+        String baseLog = StrUtils.joint("[", className, "-", methodName, "-", value, "]");
         LOGGER.info("{}入参={}", baseLog, args);
         Object proceed = joinPoint.proceed(args);
-        LOGGER.info("{}出参={}, 耗时={}秒", baseLog, proceed, stopwatch.elapsed(TimeUnit.SECONDS));
+        LOGGER.info("{}出参={}, 耗时={}毫秒", baseLog, proceed, stopwatch.elapsed(TimeUnit.MILLISECONDS));
         return proceed;
     }
 

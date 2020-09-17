@@ -4,6 +4,7 @@ import com.hb.unic.logger.Logger;
 import com.hb.unic.logger.LoggerFactory;
 import com.hb.unic.logger.util.LogExceptionWapper;
 import org.apache.commons.beanutils.BeanUtils;
+import org.apache.commons.collections4.CollectionUtils;
 
 import java.beans.BeanInfo;
 import java.beans.Introspector;
@@ -43,6 +44,30 @@ public class CloneUtils {
         } catch (Exception e) {
             if (LOGGER.isErrorEnabled()) {
                 LOGGER.error("copyProperties Exception: {}", LogExceptionWapper.getStackTrace(e));
+            }
+            return null;
+        }
+
+    }
+
+    /**
+     * 复制list
+     *
+     * @param sourceList 源
+     * @param clazz      目标对象class
+     */
+    public static <S, T> List<T> copyPropertiesList(List<S> sourceList, Class<T> clazz) {
+        try {
+            List<T> list = new ArrayList<>();
+            for (Object items : sourceList) {
+                T target = clazz.newInstance();
+                BeanUtils.copyProperties(items, target);
+                list.add(target);
+            }
+            return list;
+        } catch (Exception e) {
+            if (LOGGER.isErrorEnabled()) {
+                LOGGER.error("copyPropertiesList Exception: {}", LogExceptionWapper.getStackTrace(e));
             }
             return null;
         }

@@ -10,15 +10,15 @@ import java.io.UnsupportedEncodingException;
  * ========== 字符串工具类 ==========
  *
  * @author Mr.huang
- * @version com.hb.web.util.StringUtils.java, v1.0
+ * @version com.hb.web.util.StrUtils.java, v1.0
  * @date 2019年07月15日 13时34分
  */
-public class StringUtils {
+public class StrUtils {
 
     /**
      * the constant LOGGER
      */
-    private static final Logger LOGGER = LoggerFactory.getLogger(StringUtils.class);
+    private static final Logger LOGGER = LoggerFactory.getLogger(StrUtils.class);
 
     /**
      * ########## 左边补0 ##########

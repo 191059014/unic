@@ -61,7 +61,7 @@ public class EnumUtils {
     public static <T extends Enum> Object get(T t, String propertyName) {
         Method method = null;
         try {
-            method = t.getClass().getMethod(GET_METHOD_PREFIX + StringUtils.upperFirst(propertyName));
+            method = t.getClass().getMethod(GET_METHOD_PREFIX + StrUtils.upperFirst(propertyName));
             return method.invoke(t);
         } catch (NoSuchMethodException e) {
             LOGGER.info("get property from enum NoSuchMethodException: {}", LogExceptionWapper.getStackTrace(e));
