@@ -15,7 +15,7 @@ public class ListBuilder {
     /**
      * 内部真实list
      */
-    private List realList;
+    private List<Object> realList;
 
     /**
      * 构造方法
@@ -42,6 +42,15 @@ public class ListBuilder {
     public ListBuilder add(Object... elements) {
         this.realList.addAll(Arrays.asList(elements));
         return this;
+    }
+
+    /**
+     * 获取真实list
+     *
+     * @return List<T>
+     */
+    public List<Object> get() {
+        return this.realList;
     }
 
     /**

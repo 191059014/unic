@@ -80,10 +80,19 @@ public class MapBuilder {
     /**
      * 获取真实map
      *
+     * @return Map
+     */
+    public <T> Map<String, Object> get() {
+        return this.realMap;
+    }
+
+    /**
+     * 获取真实map
+     *
      * @param valueClass value的类型
      * @return Map
      */
-    public <T> Map<String, T> get(Class<T> valueClass) {
+    public <T> Map<String, T> get(Class<T>... valueClass) {
         return (Map<String, T>) this.realMap;
     }
 

@@ -1,8 +1,8 @@
 package com.hb.unic.util.easybuild;
 
+import java.util.Arrays;
 import java.util.HashSet;
 import java.util.Set;
-import java.util.stream.Stream;
 
 /**
  * 条件集合工具类
@@ -15,13 +15,13 @@ public class SetBuilder {
     /**
      * 内部真实list
      */
-    private Set realSet;
+    private Set<Object> realSet;
 
     /**
      * 构造方法
      */
     private SetBuilder() {
-        this.realSet = new HashSet(8);
+        this.realSet = new HashSet<>(8);
     }
 
     /**
@@ -40,8 +40,17 @@ public class SetBuilder {
      * @return SetBuilder
      */
     public SetBuilder add(Object... elements) {
-        Stream.of(elements).forEach(obj -> realSet.add(obj));
+        realSet.addAll(Arrays.asList(elements));
         return this;
+    }
+
+    /**
+     * 获取真实set
+     *
+     * @return List<T>
+     */
+    public Set<Object> get() {
+        return this.realSet;
     }
 
     /**
