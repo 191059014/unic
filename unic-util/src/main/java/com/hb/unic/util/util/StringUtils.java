@@ -245,10 +245,10 @@ public class StringUtils {
      *
      * @return 字符串
      */
-    public static String joint(String... strArr) {
+    public static String joint(Object... objArr) {
         StringBuilder sb = new StringBuilder();
-        for (int i = 0; i < strArr.length; i++) {
-            sb.append(strArr[i]);
+        for (int i = 0; i < objArr.length; i++) {
+            sb.append(objArr[i]);
         }
         return sb.toString();
     }
