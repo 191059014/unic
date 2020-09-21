@@ -100,6 +100,56 @@ public class ObjectUtils {
         return null;
     }
 
+    /**
+     * 是否全为null
+     *
+     * @param objArr 数组
+     * @return true-全为null
+     */
+    public static boolean isAllNull(Object... objArr) {
+        if (objArr == null)
+            return true;
+        for (Object obj : objArr)
+            if (obj != null)
+                return false;
+        return true;
+    }
+
+    /**
+     * 最低有一个不为null
+     *
+     * @param objArr 数组
+     * @return true-最低有一个不为null
+     */
+    public static boolean isAnyNotNull(Object... objArr) {
+        return !isAllNull(objArr);
+    }
+
+    /**
+     * 最低有一个为null
+     *
+     * @param objArr 数组
+     * @return true-最低有一个为null
+     */
+    public static boolean isAnyNull(Object... objArr) {
+        return !isAllNotNull(objArr);
+    }
+
+    /**
+     * 全否全不为null
+     *
+     * @param objArr 数组
+     * @return true-全不为null
+     */
+    public static boolean isAllNotNull(Object... objArr) {
+        if (objArr == null)
+            return false;
+        for (Object obj : objArr)
+            if (obj == null)
+                return false;
+        return true;
+    }
+
 }
 
     
