@@ -21,7 +21,7 @@ public @interface InOutLog {
      *
      * @return 日志描述
      */
-    String value();
+    String value() default "";
 
 }
 
