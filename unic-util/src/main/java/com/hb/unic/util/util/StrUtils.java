@@ -1,6 +1,5 @@
 package com.hb.unic.util.util;
 
-import com.hb.unic.logger.util.LogExceptionWapper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -204,7 +203,7 @@ public class StrUtils {
         try {
             filed = new String(filedByte, charset);
         } catch (UnsupportedEncodingException e) {
-            LOGGER.error("byte arr to string error:{}", LogExceptionWapper.getStackTrace(e));
+            LOGGER.error("byte arr to string error=", e);
         }
         return filed;
     }

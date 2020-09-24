@@ -1,8 +1,7 @@
 package com.hb.unic.util.util;
 
-import com.hb.unic.logger.Logger;
-import com.hb.unic.logger.LoggerFactory;
-import com.hb.unic.logger.util.LogExceptionWapper;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import javax.servlet.http.HttpServletRequest;
 import java.net.Inet4Address;
@@ -107,7 +106,7 @@ public class IpUtils {
             }
         } catch (Exception e) {
             if (LOGGER.isErrorEnabled()) {
-                LOGGER.error("获取本机的局域网ip地址异常={}", LogExceptionWapper.getStackTrace(e));
+                LOGGER.error("获取本机的局域网ip地址异常=", e);
             }
         }
         return localHostAddress;

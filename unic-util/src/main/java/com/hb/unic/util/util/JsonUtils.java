@@ -8,9 +8,8 @@ import com.fasterxml.jackson.databind.JavaType;
 import com.fasterxml.jackson.databind.MapperFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.SerializationFeature;
-import com.hb.unic.logger.Logger;
-import com.hb.unic.logger.LoggerFactory;
-import com.hb.unic.logger.util.LogExceptionWapper;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.io.IOException;
 import java.text.SimpleDateFormat;
@@ -72,7 +71,7 @@ public class JsonUtils {
         try {
             return MAPPER.writeValueAsString(o);
         } catch (JsonProcessingException e) {
-            LOGGER.info("转换json异常：{}", LogExceptionWapper.getStackTrace(e));
+            LOGGER.info("转换json异常=", e);
             return null;
         }
     }
@@ -87,7 +86,7 @@ public class JsonUtils {
         try {
             return MAPPER.writerWithDefaultPrettyPrinter().writeValueAsString(o);
         } catch (JsonProcessingException e) {
-            LOGGER.info("转换格式化json异常：{}", LogExceptionWapper.getStackTrace(e));
+            LOGGER.info("转换格式化json异常=", e);
             return null;
         }
     }
@@ -104,7 +103,7 @@ public class JsonUtils {
         try {
             return MAPPER.readValue(json, clazz);
         } catch (IOException e) {
-            LOGGER.info("转换Bean异常：{}", LogExceptionWapper.getStackTrace(e));
+            LOGGER.info("转换Bean异常=", e);
             return null;
         }
     }
@@ -122,7 +121,7 @@ public class JsonUtils {
         try {
             return MAPPER.readValue(json, javaType);
         } catch (IOException e) {
-            LOGGER.info("转换List异常：{}", LogExceptionWapper.getStackTrace(e));
+            LOGGER.info("转换List异常=", e);
             return null;
         }
     }
@@ -140,7 +139,7 @@ public class JsonUtils {
         try {
             return MAPPER.readValue(json, javaType);
         } catch (IOException e) {
-            LOGGER.info("转换Map异常：{}", LogExceptionWapper.getStackTrace(e));
+            LOGGER.info("转换Map异常=", e);
             return null;
         }
     }
@@ -157,7 +156,7 @@ public class JsonUtils {
         try {
             return MAPPER.readValue(json, valueTypeRef);
         } catch (IOException e) {
-            LOGGER.info("转换指定Type异常：{}", LogExceptionWapper.getStackTrace(e));
+            LOGGER.info("转换指定Type异常=", e);
             return null;
         }
     }

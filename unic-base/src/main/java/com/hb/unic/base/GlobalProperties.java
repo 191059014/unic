@@ -1,5 +1,6 @@
 package com.hb.unic.base;
 
+import com.hb.unic.util.tool.Assert;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.InitializingBean;
@@ -51,7 +52,9 @@ public class GlobalProperties implements InitializingBean {
      * @return 值
      */
     public static String getString(String key) {
-        return props.getProperty(key);
+        String value = props.getProperty(key);
+        Assert.notNull(value, "NotExistConfigKey[" + key + "]");
+        return value;
     }
 
     /**
@@ -61,8 +64,7 @@ public class GlobalProperties implements InitializingBean {
      * @return 值
      */
     public static long getLong(String key) {
-        String value = props.getProperty(key);
-        return value == null ? 0L : Long.parseLong(value);
+        return Long.parseLong(getString(key));
     }
 
     /**
@@ -72,8 +74,7 @@ public class GlobalProperties implements InitializingBean {
      * @return 值
      */
     public static int getInteger(String key) {
-        String value = props.getProperty(key);
-        return value == null ? 0 : Integer.parseInt(value);
+        return Integer.parseInt(getString(key));
     }
 
     /**
@@ -83,8 +84,7 @@ public class GlobalProperties implements InitializingBean {
      * @return 值
      */
     public static double getDouble(String key) {
-        String value = props.getProperty(key);
-        return value == null ? 0.00 : Double.parseDouble(value);
+        return Double.parseDouble(getString(key));
     }
 
     /**
@@ -94,8 +94,7 @@ public class GlobalProperties implements InitializingBean {
      * @return 值
      */
     public static BigDecimal getBigDecimal(String key) {
-        String value = props.getProperty(key);
-        return value == null ? BigDecimal.ZERO : new BigDecimal(value);
+        return new BigDecimal(getString(key));
     }
 
     @Override

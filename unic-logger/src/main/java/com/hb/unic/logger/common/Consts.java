@@ -20,7 +20,7 @@ public class Consts {
     /**
      * http过滤器拦截路径
      */
-    public static final String HTTP_FILTER_URL_PATTERNS = "httpFilterUrlPatterns";
+    public static final String HTTP_FILTER_URL_PATTERNS = "traceIdHttpFilterUrlPatterns";
 
     /**
      * traceId默认前缀
@@ -31,6 +31,11 @@ public class Consts {
      * 拦截路径分隔符
      */
     public static final String FILTER_URL_PATTERNS_SEPARATOR = ",";
+
+    /**
+     * traceId过滤器模型
+     */
+    public static final String TRACEID_FILTER_MODE = "traceIdFilterMode";
 
 }
 

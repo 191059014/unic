@@ -23,7 +23,7 @@ public interface IRedisService {
     String get(String key);
 
     /**
-     * 获取Bean类型缓存
+     * 获取Bean类型缓存，注意：bean里面不能包含复杂类型
      *
      * @param key 缓存key
      * @return 缓存值
@@ -71,6 +71,15 @@ public interface IRedisService {
     Long getExpire(String key);
 
     /**
+     * 设置某个key的过期时间，单位为秒
+     *
+     * @param key  缓存key
+     * @param time 过期时间
+     * @return 结果
+     */
+    boolean setExpire(String key, long time);
+
+    /**
      * 缓存值递增
      *
      * @param key 缓存key
@@ -84,7 +93,7 @@ public interface IRedisService {
      * @param key 缓存key
      * @return 下一个值
      */
-    Long incrementBy(String key, Long incrmentNum);
+    Long incrementBy(String key, long incrmentNum);
 
     /**
      * 删除缓存

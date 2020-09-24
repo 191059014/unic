@@ -9,10 +9,10 @@ package com.hb.unic.logger.model;
  */
 public class LoggerEntity {
 
-    // 链路追踪trace_id
-    private String trace_id;
     // 日志摘要信息
     private Object content;
+    // 链路追踪trace_id
+    private String trace_id;
     // 日期
     private String log_date;
     // 级别

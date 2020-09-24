@@ -1,9 +1,8 @@
 package com.hb.unic.util.util;
 
-import com.hb.unic.logger.Logger;
-import com.hb.unic.logger.LoggerFactory;
-import com.hb.unic.logger.util.LogExceptionWapper;
 import org.apache.commons.lang3.ArrayUtils;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.lang.reflect.Field;
 import java.lang.reflect.Modifier;
@@ -36,7 +35,7 @@ public class ReflectUtils {
         try {
             return Class.forName(entityName);
         } catch (ClassNotFoundException e) {
-            LOGGER.error("getType error: {}", LogExceptionWapper.getStackTrace(e));
+            LOGGER.error("getType error=", e);
         }
         return null;
     }
@@ -77,7 +76,7 @@ public class ReflectUtils {
                 map.put(name, value);
             }
         } catch (IllegalAccessException e) {
-            LOGGER.error("getAllFieldsExcludeStaticAndFinal error: {}", LogExceptionWapper.getStackTrace(e));
+            LOGGER.error("getAllFieldsExcludeStaticAndFinal error=", e);
         }
         return map;
     }
@@ -102,7 +101,7 @@ public class ReflectUtils {
                 field.set(t, value);
             }
         } catch (Exception e) {
-            LOGGER.error("setPropertyValue error: {}", LogExceptionWapper.getStackTrace(e));
+            LOGGER.error("setPropertyValue error=", e);
         }
     }
 

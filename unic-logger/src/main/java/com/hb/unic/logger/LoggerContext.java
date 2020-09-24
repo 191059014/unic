@@ -36,8 +36,14 @@ public class LoggerContext implements InitializingBean {
     /**
      * http过滤器拦截路径
      */
-    @Value("${unicLogger.httpFilter.urlPatterns:/*}")
+    @Value("${unicLogger.traceIdHttpFilterUrlPatterns:/*}")
     private String httpFilterUrlPatterns;
+
+    /**
+     * http过滤器拦截路径
+     */
+    @Value("${unicLogger.traceIdFilterMode}")
+    private String traceIdFilterMode;
 
     /**
      * 配置集合
@@ -48,6 +54,7 @@ public class LoggerContext implements InitializingBean {
     public void afterPropertiesSet() throws Exception {
         maps.put(Consts.APP_NAME, appName);
         maps.put(Consts.HTTP_FILTER_URL_PATTERNS, httpFilterUrlPatterns);
+        maps.put(Consts.TRACEID_FILTER_MODE, traceIdFilterMode);
         LOGGER.info("LoggerContext accept properties: {}", maps);
     }
 

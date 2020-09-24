@@ -1,8 +1,5 @@
 package com.hb.unic.util.tool;
 
-import com.hb.unic.logger.Logger;
-import com.hb.unic.logger.LoggerFactory;
-import com.hb.unic.logger.util.LogExceptionWapper;
 import com.hb.unic.util.util.JsonUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.http.HttpResponse;
@@ -11,6 +8,8 @@ import org.apache.http.client.methods.HttpPost;
 import org.apache.http.entity.StringEntity;
 import org.apache.http.impl.client.HttpClients;
 import org.apache.http.util.EntityUtils;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.util.HashMap;
 import java.util.List;
@@ -55,7 +54,7 @@ public class DingAlerm {
             return true;
         } catch (Exception e) {
             if (LOGGER.isErrorEnabled()) {
-                LOGGER.error("{}发送普通消息异常：{}", baseLog, LogExceptionWapper.getStackTrace(e));
+                LOGGER.error("{}发送普通消息异常=", baseLog, e);
             }
             return false;
         }

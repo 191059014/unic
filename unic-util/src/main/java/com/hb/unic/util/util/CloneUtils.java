@@ -1,10 +1,8 @@
 package com.hb.unic.util.util;
 
-import com.hb.unic.logger.Logger;
-import com.hb.unic.logger.LoggerFactory;
-import com.hb.unic.logger.util.LogExceptionWapper;
 import org.apache.commons.beanutils.BeanUtils;
-import org.apache.commons.collections4.CollectionUtils;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.beans.BeanInfo;
 import java.beans.Introspector;
@@ -43,7 +41,7 @@ public class CloneUtils {
             return t;
         } catch (Exception e) {
             if (LOGGER.isErrorEnabled()) {
-                LOGGER.error("copyProperties Exception: {}", LogExceptionWapper.getStackTrace(e));
+                LOGGER.error("copyProperties Exception={}", e);
             }
             return null;
         }
@@ -67,7 +65,7 @@ public class CloneUtils {
             return list;
         } catch (Exception e) {
             if (LOGGER.isErrorEnabled()) {
-                LOGGER.error("copyPropertiesList Exception: {}", LogExceptionWapper.getStackTrace(e));
+                LOGGER.error("copyPropertiesList Exception=", e);
             }
             return null;
         }
@@ -86,7 +84,7 @@ public class CloneUtils {
             return bean == null ? null : (T) BeanUtils.cloneBean(bean);
         } catch (Exception e) {
             if (LOGGER.isErrorEnabled()) {
-                LOGGER.error("cloneBean Exception: {}", LogExceptionWapper.getStackTrace(e));
+                LOGGER.error("cloneBean Exception=", e);
             }
             return null;
         }
@@ -141,7 +139,7 @@ public class CloneUtils {
                 }
             } catch (Exception e) {
                 if (LOGGER.isErrorEnabled()) {
-                    LOGGER.error("bean2Map Exception: {}", LogExceptionWapper.getStackTrace(e));
+                    LOGGER.error("bean2Map Exception=", e);
                 }
             }
         }
@@ -162,7 +160,7 @@ public class CloneUtils {
             return t;
         } catch (Exception e) {
             if (LOGGER.isErrorEnabled()) {
-                LOGGER.error("map2Bean Exception: {}", LogExceptionWapper.getStackTrace(e));
+                LOGGER.error("map2Bean Exception=", e);
             }
             return null;
         }

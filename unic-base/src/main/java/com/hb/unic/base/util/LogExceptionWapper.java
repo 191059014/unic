@@ -1,4 +1,4 @@
-package com.hb.unic.logger.util;
+package com.hb.unic.base.util;
 
 import java.io.PrintWriter;
 import java.io.StringWriter;

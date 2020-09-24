@@ -23,13 +23,13 @@ public class FilterUtils {
      * 构建简单的filter
      *
      * @param filter      具体的filter
-     * @param urlPatterns 拦截路径
      * @param filterName  过滤器名称
      * @param enable      是否自动注册
      * @param order       顺序
+     * @param urlPatterns 拦截路径
      * @return FilterRegistrationBean
      */
-    public static FilterRegistrationBean buildSimpleFilter(Filter filter, String urlPatterns, String filterName, boolean enable, int order) {
+    public static FilterRegistrationBean buildSimpleFilter(Filter filter, String filterName, boolean enable, int order, String... urlPatterns) {
         FilterRegistrationBean registration = new FilterRegistrationBean();
         registration.setFilter(filter);
         registration.addUrlPatterns(urlPatterns);

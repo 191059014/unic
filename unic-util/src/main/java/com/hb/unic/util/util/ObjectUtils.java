@@ -1,9 +1,8 @@
 package com.hb.unic.util.util;
 
-import com.hb.unic.logger.Logger;
-import com.hb.unic.logger.LoggerFactory;
-import com.hb.unic.logger.util.LogExceptionWapper;
 import org.apache.commons.lang3.StringUtils;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.math.BigDecimal;
 
@@ -94,7 +93,7 @@ public class ObjectUtils {
                     return clz.newInstance();
                 }
             } catch (Exception e) {
-                LOGGER.error("newInstance error: {}", LogExceptionWapper.getStackTrace(e));
+                LOGGER.error("newInstance error=", e);
             }
         }
         return null;

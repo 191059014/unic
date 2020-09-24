@@ -64,7 +64,7 @@ public class JsonUtils {
         try {
             return MAPPER.writeValueAsString(o);
         } catch (JsonProcessingException e) {
-            LOGGER.info("转换json异常：{}", LogExceptionWapper.getStackTrace(e));
+            LOGGER.info("转换json异常=", e);
             return null;
         }
     }

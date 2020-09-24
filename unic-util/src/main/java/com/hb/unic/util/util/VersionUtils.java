@@ -5,7 +5,7 @@ public class VersionUtils {
     /**
      * 初始版本
      */
-    public static String InitVersion = "1.0.0";
+    private static String InitVersion = "1.0.0";
 
     public static void main(String[] args) {
         System.out.println(getInitVersion());

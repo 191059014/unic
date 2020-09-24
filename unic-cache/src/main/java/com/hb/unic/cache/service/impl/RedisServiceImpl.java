@@ -2,8 +2,6 @@ package com.hb.unic.cache.service.impl;
 
 import com.hb.unic.cache.service.IRedisService;
 import com.hb.unic.cache.util.JsonUtils;
-import com.hb.unic.logger.Logger;
-import com.hb.unic.logger.LoggerFactory;
 import com.hb.unic.util.util.ObjectUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnClass;
@@ -27,13 +25,8 @@ import java.util.concurrent.TimeUnit;
  */
 @Primary
 @Component
-@ConditionalOnClass(RedisTemplate.class)
+@ConditionalOnClass(StringRedisTemplate.class)
 public class RedisServiceImpl extends AbstractRedisService implements IRedisService {
-
-    /**
-     * 自定义 log
-     */
-    private static final Logger LOGGER = LoggerFactory.getLogger(RedisServiceImpl.class);
 
     /**
      * 字符串类型redis操作工具
@@ -124,12 +117,17 @@ public class RedisServiceImpl extends AbstractRedisService implements IRedisServ
     }
 
     @Override
+    public boolean setExpire(String key, long time) {
+        return stringRedisTemplate.expire(key, time, TimeUnit.SECONDS);
+    }
+
+    @Override
     public Long increment(String key) {
         return stringRedisTemplate.opsForValue().increment(key);
     }
 
     @Override
-    public Long incrementBy(String key, Long incrmentNum) {
+    public Long incrementBy(String key, long incrmentNum) {
         return stringRedisTemplate.opsForValue().increment(key, incrmentNum);
     }
 

@@ -1,4 +1,4 @@
-package com.hb.unic.logger.util;
+package com.hb.unic.base.util;
 
 /**
  * @author guoll

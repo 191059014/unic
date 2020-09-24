@@ -1,9 +1,8 @@
 package com.hb.unic.util.util;
 
 import com.fasterxml.jackson.databind.util.StdDateFormat;
-import com.hb.unic.logger.Logger;
-import com.hb.unic.logger.LoggerFactory;
-import com.hb.unic.logger.util.LogExceptionWapper;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.sql.Timestamp;
 import java.text.ParseException;
@@ -108,7 +107,7 @@ public class DateUtils {
             maxTimestamp = new Timestamp(maxDate.getTime());
         } catch (ParseException e) {
             if (LOGGER.isErrorEnabled()) {
-                LOGGER.error("init maxDate or maxTimestamp failed: {}", LogExceptionWapper.getStackTrace(e));
+                LOGGER.error("init maxDate or maxTimestamp failed=", e);
             }
         }
     }
@@ -195,7 +194,7 @@ public class DateUtils {
         try {
             return new SimpleDateFormat(dateFormat).parse(dateValue);
         } catch (ParseException e) {
-            LOGGER.error("str2date occur error: {}", LogExceptionWapper.getStackTrace(e));
+            LOGGER.error("str2date occur error=", e);
             return null;
         }
     }

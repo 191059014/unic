@@ -1,5 +1,8 @@
 package com.hb.unic.base.filter;
 
+import com.hb.unic.base.util.LogHelper;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.core.Ordered;
 import org.springframework.core.annotation.Order;
@@ -25,8 +28,15 @@ import java.io.IOException;
 @Configuration
 public class CustomCorsFilter implements Filter {
 
+    /**
+     * 日志
+     */
+    private static final Logger LOGGER = LoggerFactory.getLogger(CustomCorsFilter.class);
+
     @Override
     public void doFilter(ServletRequest servletRequest, ServletResponse servletResponse, FilterChain filterChain) throws IOException, ServletException {
+        String baseLog = LogHelper.getBaseLog("跨域过滤器");
+        LOGGER.debug("{}开始", baseLog);
         HttpServletRequest request = (HttpServletRequest) servletRequest;
         HttpServletResponse response = (HttpServletResponse) servletResponse;
         response.setHeader("Access-Control-Allow-Origin", "*");
@@ -35,10 +45,12 @@ public class CustomCorsFilter implements Filter {
         response.setHeader("Access-Control-Allow-Max-Age", "3600");
         response.setHeader("Access-Control-Allow-Headers", "*");
         if (RequestMethod.OPTIONS.toString().equalsIgnoreCase(request.getMethod())) {
+            LOGGER.debug("{}options请求，直接返回成功", baseLog);
             response.setStatus(HttpServletResponse.SC_OK);
         } else {
             filterChain.doFilter(servletRequest, servletResponse);
         }
+        LOGGER.debug("{}结束", baseLog);
     }
 
 }

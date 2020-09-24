@@ -1,8 +1,8 @@
 package com.hb.unic.base.exception;
 
-import com.hb.unic.logger.Logger;
-import com.hb.unic.logger.LoggerFactory;
 import org.apache.commons.lang3.StringUtils;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * ========== 标准的运行时异常 ==========
