@@ -20,6 +20,16 @@ public class StrUtils {
     private static final Logger LOGGER = LoggerFactory.getLogger(StrUtils.class);
 
     /**
+     * 判断是否为空字符串
+     *
+     * @param str 字符串
+     * @return true为空
+     */
+    public static boolean isBlank(String str) {
+        return str == null || str.trim().length() == 0 || "null".equals(str) || "undefined".equals(str);
+    }
+
+    /**
      * ########## 左边补0 ##########
      *
      * @param str    原字符串
@@ -265,5 +275,4 @@ public class StrUtils {
     public static void main(String[] args) {
         System.out.println(digitUppercase(141241414.5));
     }
-
 }
