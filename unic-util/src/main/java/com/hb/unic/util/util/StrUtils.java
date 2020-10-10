@@ -272,6 +272,26 @@ public class StrUtils {
         return str != null && str.trim().length() > 0;
     }
 
+    /**
+     * 获取字符串的asc码
+     *
+     * @param str 字符串
+     * @return asc码
+     */
+    public static String getAscII(String str) {
+        if (!hasText(str)) {
+            return "0";
+        }
+        StringBuilder indexSB = new StringBuilder();
+        for (int i = 0; i < str.length(); ++i) {
+            char[] strChar = str.substring(i, i + 1).toCharArray();
+            for (char s : strChar) {
+                indexSB.append((byte) s);
+            }
+        }
+        return indexSB.toString();
+    }
+
     public static void main(String[] args) {
         System.out.println(digitUppercase(141241414.5));
     }
