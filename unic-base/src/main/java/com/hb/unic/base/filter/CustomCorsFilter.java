@@ -3,6 +3,7 @@ package com.hb.unic.base.filter;
 import com.hb.unic.base.util.LogHelper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.boot.autoconfigure.condition.ConditionalOnExpression;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.core.Ordered;
 import org.springframework.core.annotation.Order;
@@ -26,6 +27,7 @@ import java.io.IOException;
  */
 @Order(Ordered.HIGHEST_PRECEDENCE)
 @Configuration
+@ConditionalOnExpression("'true'.equals('${unicBase.openCors}')")
 public class CustomCorsFilter implements Filter {
 
     /**
