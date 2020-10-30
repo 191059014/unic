@@ -34,81 +34,81 @@ public class StandardRuntimeException extends RuntimeException {
 
     public StandardRuntimeException() {
         processKey(null, null);
-        if (this.LOGGER.isErrorEnabled())
-            this.LOGGER.error(getKey());
+        if (LOGGER.isErrorEnabled())
+            LOGGER.error(getKey());
     }
 
     public StandardRuntimeException(Throwable e) {
         super(e);
         processKey(null, e);
-        if (this.LOGGER.isErrorEnabled())
-            this.LOGGER.error(getKey(), e);
+        if (LOGGER.isErrorEnabled())
+            LOGGER.error(getKey(), e);
     }
 
     public StandardRuntimeException(String key) {
         processKey(key, null);
-        if (this.LOGGER.isErrorEnabled())
-            this.LOGGER.error(getKey());
+        if (LOGGER.isErrorEnabled())
+            LOGGER.error(getKey());
     }
 
     public StandardRuntimeException(String key, String message) {
         super(message);
         processKey(key, null);
-        if (this.LOGGER.isErrorEnabled())
-            this.LOGGER.error(getKey());
+        if (LOGGER.isErrorEnabled())
+            LOGGER.error(getKey());
     }
 
     public StandardRuntimeException(String key, Throwable e) {
         super(e);
         processKey(key, e);
-        if (this.LOGGER.isErrorEnabled())
-            this.LOGGER.error(getKey(), e);
+        if (LOGGER.isErrorEnabled())
+            LOGGER.error(getKey(), e);
     }
 
     public StandardRuntimeException(String key, Object[] paras) {
         processKey(key, null);
         this.paras = paras;
-        if (this.LOGGER.isErrorEnabled())
-            this.LOGGER.error(getKey());
+        if (LOGGER.isErrorEnabled())
+            LOGGER.error(getKey());
     }
 
     public StandardRuntimeException(Throwable e, Object[] paras) {
         super(e);
         processKey(null, e);
         this.paras = paras;
-        if (this.LOGGER.isErrorEnabled())
-            this.LOGGER.error(getKey(), e);
+        if (LOGGER.isErrorEnabled())
+            LOGGER.error(getKey(), e);
     }
 
     public StandardRuntimeException(String key, String message, Object[] paras) {
         super(message);
         processKey(key, null);
         this.paras = paras;
-        if (this.LOGGER.isErrorEnabled())
-            this.LOGGER.error(getKey());
+        if (LOGGER.isErrorEnabled())
+            LOGGER.error(getKey());
     }
 
     public StandardRuntimeException(String key, Throwable e, Object[] paras) {
         super(e);
         processKey(key, e);
         this.paras = paras;
-        if (this.LOGGER.isErrorEnabled())
-            this.LOGGER.error(getKey(), e);
+        if (LOGGER.isErrorEnabled())
+            LOGGER.error(getKey(), e);
     }
 
     public StandardRuntimeException(String key, String message, Throwable e) {
         super(message, e);
         processKey(key, e);
-        if (this.LOGGER.isErrorEnabled())
-            this.LOGGER.error(getKey(), e);
+        if (LOGGER.isErrorEnabled())
+            LOGGER.error(getKey(), e);
     }
 
     public StandardRuntimeException(String key, String message, Throwable e, Object[] paras) {
         super(message, e);
         processKey(key, e);
         this.paras = paras;
-        if (this.LOGGER.isErrorEnabled())
-            this.LOGGER.error(getKey(), e);
+        if (LOGGER.isErrorEnabled())
+            LOGGER.error(getKey(), e);
     }
 
     public String getKey() {
@@ -137,7 +137,7 @@ public class StandardRuntimeException extends RuntimeException {
         } else if (e != null) {
             this.key = e.getClass().getSimpleName();
         }
-        if ((ste != null) && (ste.length > pos)) {
+        if (ste.length > pos) {
             String clzName = ste[pos].getClassName();
             String methodName = ste[pos].getMethodName();
             this.stack = (clzName + "." + methodName);
