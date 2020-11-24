@@ -37,7 +37,7 @@
         <commons-beanutils.version>1.9.3</commons-beanutils.version>
         <commons-io.version>2.5</commons-io.version>
         <slf4j-api.version>1.7.25</slf4j-api.version>
-        <junit.version>4.11</junit.version>
+        <junit.version>4.13.1</junit.version>
         <jackson.version>2.9.8</jackson.version>
         <guava.version>26.0-jre</guava.version>
         <hutool.version>5.5.1</hutool.version>
