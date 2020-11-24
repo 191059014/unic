@@ -17,11 +17,6 @@
 
     <dependencies>
 
-        <dependency>
-            <groupId>com.hb.unic</groupId>
-            <artifactId>unic-logger</artifactId>
-        </dependency>
-
         <!-- groovy支持-->
         <dependency>
             <groupId>org.codehaus.groovy</groupId>
@@ -50,6 +45,12 @@
         <dependency>
             <groupId>org.springframework</groupId>
             <artifactId>spring-context</artifactId>
+        </dependency>
+
+        <!-- servlet -->
+        <dependency>
+            <groupId>javax.servlet</groupId>
+            <artifactId>javax.servlet-api</artifactId>
         </dependency>
 
         <!-- commons-lang3 -->
@@ -93,6 +94,12 @@
         <dependency>
             <groupId>com.google.guava</groupId>
             <artifactId>guava</artifactId>
+        </dependency>
+
+        <!-- hutool -->
+        <dependency>
+            <groupId>cn.hutool</groupId>
+            <artifactId>hutool-all</artifactId>
         </dependency>
 
     </dependencies>

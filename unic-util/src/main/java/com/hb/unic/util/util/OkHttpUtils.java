@@ -1,8 +1,6 @@
 package com.hb.unic.util.util;
 
 import com.google.common.base.Stopwatch;
-import com.hb.unic.logger.Logger;
-import com.hb.unic.logger.LoggerFactory;
 import com.hb.unic.util.constant.Consts;
 import okhttp3.Call;
 import okhttp3.FormBody;
@@ -11,6 +9,8 @@ import okhttp3.OkHttpClient;
 import okhttp3.Request;
 import okhttp3.RequestBody;
 import okhttp3.Response;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import javax.net.ssl.HostnameVerifier;
 import javax.net.ssl.SSLContext;
