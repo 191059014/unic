@@ -22,7 +22,8 @@ public class StrUtils {
     /**
      * 是否是空的字符串
      *
-     * @param str 字符串
+     * @param str
+     *            字符串
      * @return true为空
      */
     public static boolean isBlank(String str) {
@@ -30,29 +31,40 @@ public class StrUtils {
     }
 
     /**
-     * ########## 左边补0 ##########
+     * 填充0在开头或结尾
      *
-     * @param str    原字符串
-     * @param length 期望的长度
-     * @return 补0后的字符串
+     * @param source
+     *            原字符串
+     * @param targetLength
+     *            目标长度
+     * @param fillZeroAtLeft
+     *            是否补0在起始位置
+     * @return 字符串
      */
-    public static String fillZero(String str, int length) {
-        int addLength = length - str.length();
-        if (addLength == 0) {
-            return str;
+    public static String fillZero(String source, int targetLength, boolean fillZeroAtLeft) {
+        if (source == null) {
+            return null;
         }
-        StringBuilder zero = new StringBuilder();
-        for (int i = 0; i < addLength; i++) {
-            zero.append("0");
+        if (source.length() > targetLength) {
+            return source.substring(0, targetLength);
         }
-        zero.append(str);
-        return zero.toString();
+        StringBuilder zeroSb = new StringBuilder();
+        for (int i = 0; i < targetLength - source.length(); i++) {
+            zeroSb.append("0");
+        }
+        if (fillZeroAtLeft) {
+            zeroSb.append(source);
+        } else {
+            zeroSb.insert(0, source);
+        }
+        return zeroSb.toString();
     }
 
     /**
      * ########## 转换null为空字符串 ##########
      *
-     * @param obj 对象
+     * @param obj
+     *            对象
      * @return 字符串
      */
     public static String convertNull(Object obj) {
@@ -65,7 +77,8 @@ public class StrUtils {
     /**
      * 首字母大写
      *
-     * @param value 字符串
+     * @param value
+     *            字符串
      * @return 转换后的值
      */
     public static String upperFirst(String value) {
@@ -81,7 +94,8 @@ public class StrUtils {
     /**
      * 首字母小写
      *
-     * @param value 字符串
+     * @param value
+     *            字符串
      * @return 转换后的值
      */
     public static String lowerFirst(String value) {
@@ -97,8 +111,10 @@ public class StrUtils {
     /**
      * 截取src中首次包含dest字符串前面的内容
      *
-     * @param src  字符串
-     * @param dest 目标
+     * @param src
+     *            字符串
+     * @param dest
+     *            目标
      * @return 字符串
      */
     public static String before(String src, String dest) {
@@ -113,8 +129,10 @@ public class StrUtils {
     /**
      * 截取src中首次包含dest字符串后面的内容
      *
-     * @param src  字符串
-     * @param dest 目标
+     * @param src
+     *            字符串
+     * @param dest
+     *            目标
      * @return 字符串
      */
     public static String after(String src, String dest) {
@@ -129,8 +147,10 @@ public class StrUtils {
     /**
      * 截取src中最后一次包含dest字符串前面的内容
      *
-     * @param src  字符串
-     * @param dest 目标
+     * @param src
+     *            字符串
+     * @param dest
+     *            目标
      * @return 字符串
      */
     public static String lastBefore(String src, String dest) {
@@ -145,8 +165,10 @@ public class StrUtils {
     /**
      * 截取src中最后一次包含dest字符串后面的内容
      *
-     * @param src  字符串
-     * @param dest 目标
+     * @param src
+     *            字符串
+     * @param dest
+     *            目标
      * @return 字符串
      */
     public static String lastAfter(String src, String dest) {
@@ -161,7 +183,8 @@ public class StrUtils {
     /**
      * 将下划线风格替换为驼峰风格
      *
-     * @param underlineStr 要转换的列名
+     * @param underlineStr
+     *            要转换的列名
      * @return 驼峰字段
      */
     public static String underline2Hump(String underlineStr) {
@@ -186,7 +209,8 @@ public class StrUtils {
     /**
      * 将驼峰风格替换为下划线风格
      *
-     * @param humpStr 要转换的列名
+     * @param humpStr
+     *            要转换的列名
      * @return 下划线风格字段
      */
     public static String hump2Underline(String humpStr) {
@@ -204,8 +228,10 @@ public class StrUtils {
     /**
      * 将byte数组转换为字符串
      *
-     * @param filedByte 数组
-     * @param charset   编码
+     * @param filedByte
+     *            数组
+     * @param charset
+     *            编码
      * @return 字符串
      */
     public static String toString(byte[] filedByte, String charset) {
@@ -221,7 +247,8 @@ public class StrUtils {
     /**
      * 将数值转换为金额的中文显示方式
      *
-     * @param n 金额数值
+     * @param n
+     *            金额数值
      * @return 金额的中文显示方式
      */
     public static String digitUppercase(double n) {
@@ -232,12 +259,13 @@ public class StrUtils {
         n = Math.abs(n);
         String s = "";
         for (int i = 0; i < fraction.length; i++) {
-            s = s + new StringBuilder().append(digit[((int) (Math.floor(n * 10.0D * Math.pow(10.0D, i)) % 10.0D))]).append(fraction[i]).toString().replaceAll("(零.)+", "");
+            s = s + new StringBuilder().append(digit[((int)(Math.floor(n * 10.0D * Math.pow(10.0D, i)) % 10.0D))])
+                .append(fraction[i]).toString().replaceAll("(零.)+", "");
         }
         if (s.length() < 1) {
             s = "整";
         }
-        int integerPart = (int) Math.floor(n);
+        int integerPart = (int)Math.floor(n);
         for (int i = 0; (i < unit[0].length) && (integerPart > 0); i++) {
             String p = "";
             for (int j = 0; (j < unit[1].length) && (n > 0.0D); j++) {
@@ -246,7 +274,8 @@ public class StrUtils {
             }
             s = p.replaceAll("(零.)*零$", "").replaceAll("^$", "零") + unit[0][i] + s;
         }
-        return head + s.replaceAll("(零.)*零元", "元").replaceFirst("(零.)+", "").replaceAll("(零.)+", "零").replaceAll("^整$", "零元整");
+        return head
+            + s.replaceAll("(零.)*零元", "元").replaceFirst("(零.)+", "").replaceAll("(零.)+", "零").replaceAll("^整$", "零元整");
     }
 
     /**
@@ -265,7 +294,8 @@ public class StrUtils {
     /**
      * 字符串是否包含文本
      *
-     * @param str 原字符串
+     * @param str
+     *            原字符串
      * @return true
      */
     public static boolean hasText(String str) {
@@ -275,25 +305,62 @@ public class StrUtils {
     /**
      * 获取字符串的asc码
      *
-     * @param str 字符串
+     * @param str
+     *            字符串
      * @return asc码
      */
     public static String getAscII(String str) {
         if (!hasText(str)) {
             return "0";
         }
-        StringBuilder indexSB = new StringBuilder();
+        StringBuilder indexSb = new StringBuilder();
         for (int i = 0; i < str.length(); ++i) {
             char[] strChar = str.substring(i, i + 1).toCharArray();
             for (char s : strChar) {
-                indexSB.append((byte) s);
+                indexSb.append((byte)s);
             }
         }
-        return indexSB.toString();
+        return indexSb.toString();
+    }
+
+    /**
+     * 十进制转二进制，并指定字符串长度，左边补0
+     *
+     * @param number
+     *            十进制数
+     * @param targetLength
+     *            二进制字符串最终长度
+     * @return 指定长度的二进制字符串
+     */
+    public static String decimal2Binary(int number, int targetLength) {
+        String binaryString = Integer.toBinaryString(number);
+        return fillZero(binaryString, targetLength, true);
+    }
+
+    /**
+     * 十进制转二进制，并指定字符串长度，左边补0
+     *
+     * @param number
+     *            十进制数
+     * @return 指定长度的二进制字符串
+     */
+    public static String decimal2Binary(int number) {
+        return Integer.toBinaryString(number);
+    }
+
+    /**
+     * 二进制转十进制
+     *
+     * @param binaryString
+     *            二进制字符串
+     * @return 十进制数
+     */
+    public static int binary2Decimal(String binaryString) {
+        return Integer.parseInt(binaryString, 2);
     }
 
     public static void main(String[] args) {
-        System.out.println(digitUppercase(141241414.5));
+        System.out.println(decimal2Binary(0, 10));
     }
 
 }
