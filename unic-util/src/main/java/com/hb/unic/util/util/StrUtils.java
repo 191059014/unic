@@ -360,6 +360,7 @@ public class StrUtils {
     }
 
     public static void main(String[] args) {
+        System.out.println(binary2Decimal("1011111101"));
         System.out.println(decimal2Binary(0, 10));
     }
 
