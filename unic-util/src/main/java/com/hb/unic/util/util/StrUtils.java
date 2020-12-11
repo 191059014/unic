@@ -33,23 +33,21 @@ public class StrUtils {
     /**
      * 填充0在开头或结尾
      *
-     * @param source
-     *            原字符串
-     * @param targetLength
-     *            目标长度
-     * @param fillZeroAtLeft
-     *            是否补0在起始位置
+     * @param source         原字符串
+     * @param targetLength   目标长度
+     * @param fillZeroAtLeft 是否补0在起始位置
      * @return 字符串
      */
-    public static String fillZero(String source, int targetLength, boolean fillZeroAtLeft) {
+    public static String fillZero(Object source, int targetLength, boolean fillZeroAtLeft) {
         if (source == null) {
             return null;
         }
-        if (source.length() > targetLength) {
-            return source.substring(0, targetLength);
+        String s = source.toString();
+        if (s.length() > targetLength) {
+            return s.substring(0, targetLength);
         }
         StringBuilder zeroSb = new StringBuilder();
-        for (int i = 0; i < targetLength - source.length(); i++) {
+        for (int i = 0; i < targetLength - s.length(); i++) {
             zeroSb.append("0");
         }
         if (fillZeroAtLeft) {
