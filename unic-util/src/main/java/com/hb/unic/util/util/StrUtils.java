@@ -31,11 +31,40 @@ public class StrUtils {
     }
 
     /**
+     * 在左边填充0
+     *
+     * @param source
+     *            原字符串
+     * @param targetLength
+     *            目标长度
+     * @return 字符串
+     */
+    public static String fillZeroAtLeft(Object source, int targetLength) {
+        return fillZero(source, targetLength, true);
+    }
+
+    /**
+     * 在右边填充0
+     *
+     * @param source
+     *            原字符串
+     * @param targetLength
+     *            目标长度
+     * @return 字符串
+     */
+    public static String fillZeroAtRight(Object source, int targetLength) {
+        return fillZero(source, targetLength, false);
+    }
+
+    /**
      * 填充0在开头或结尾
      *
-     * @param source         原字符串
-     * @param targetLength   目标长度
-     * @param fillZeroAtLeft 是否补0在起始位置
+     * @param source
+     *            原字符串
+     * @param targetLength
+     *            目标长度
+     * @param fillZeroAtLeft
+     *            是否补0在起始位置
      * @return 字符串
      */
     public static String fillZero(Object source, int targetLength, boolean fillZeroAtLeft) {
