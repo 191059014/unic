@@ -85,7 +85,7 @@ public class KeyUtils {
      * @return 索引
      */
     private static long getIndexByAsc(long num, Object obj) {
-        String str = StrUtils.getAscII(obj == null ? "" : obj.toString());
+        String str = StrUtils.getAscii(obj == null ? "" : obj.toString());
         BigDecimal bc = new BigDecimal(str);
         BigDecimal[] results = bc.divideAndRemainder(new BigDecimal(num));
         return (long) results[1].intValue();

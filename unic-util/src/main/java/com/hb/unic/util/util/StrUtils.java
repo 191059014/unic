@@ -4,6 +4,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.io.UnsupportedEncodingException;
+import java.math.BigDecimal;
 
 /**
  * ========== 字符串工具类 ==========
@@ -330,13 +331,15 @@ public class StrUtils {
     }
 
     /**
-     * 获取字符串的asc码
+     * 获取asc码
      *
-     * @param str
-     *            字符串
+     * @param obj
+     *            obj
+     *
      * @return asc码
      */
-    public static String getAscII(String str) {
+    public static String getAscii(Object obj) {
+        String str = obj == null ? "" : obj.toString();
         if (!hasText(str)) {
             return "0";
         }
@@ -348,6 +351,22 @@ public class StrUtils {
             }
         }
         return indexSb.toString();
+    }
+
+    /**
+     * 先对指定对象取ASCII码后取模运算
+     * 
+     * @param obj
+     *            被除数
+     * @param numObj
+     *            除数
+     * @return 余数
+     */
+    public static long getModValue(Object obj, Object numObj) {
+        String str = getAscii(obj);
+        BigDecimal bc = new BigDecimal(str);
+        BigDecimal[] results = bc.divideAndRemainder(new BigDecimal(numObj.toString()));
+        return results[1].longValue();
     }
 
     /**
