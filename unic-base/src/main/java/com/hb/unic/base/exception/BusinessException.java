@@ -1,55 +1,80 @@
 package com.hb.unic.base.exception;
 
-import com.hb.unic.base.common.Result;
+import com.hb.unic.util.util.EnumUtils;
 
 /**
- * ========== 业务异常类 ==========
+ * 公共业务异常类
  *
- * @author Mr.huang
- * @version com.hb.unic.base.exception.BusinessException.java, v1.0
- * @date 2019年09月05日 14时40分
+ * @version v0.1, 2021/1/27 13:36, create by huangbiao.
  */
-public class BusinessException extends StandardRuntimeException {
+public class BusinessException extends RuntimeException {
 
     /**
-     * 序列化
+     * 错误标识
      */
-    private static final long serialVersionUID = -7609091570577553080L;
+    private String key;
 
-    public BusinessException(String key) {
-        super(key);
-    }
+    /**
+     * 错误信息
+     */
+    private String msg;
+
+    /**
+     * 附带参数
+     */
+    private Object param;
 
     public BusinessException(String key, String message) {
-        super(key, message);
+        this(key, message, null);
     }
 
-    public BusinessException(String key, Object... paras) {
-        super(key, paras);
-    }
-
-    public BusinessException(String key, String message, Object... paras) {
-        super(key, message, paras);
+    public BusinessException(String key, String message, Object param) {
+        super(key);
+        this.key = key;
+        this.msg = message;
+        this.param = param;
     }
 
     /**
      * 枚举类，取code和msg字段
      *
-     * @param enumObj 枚举
+     * @param enumObj
+     *            枚举
      */
     public BusinessException(Enum enumObj) {
-        this(Result.getCode(enumObj), Result.getMsg(enumObj));
+        this(enumObj, null);
     }
 
     /**
      * 枚举类，取code和msg字段
      *
-     * @param enumObj 枚举
-     * @param paras   需要携带的参数
+     * @param enumObj
+     *            枚举
+     * @param param
+     *            需要携带的参数
      */
-    public BusinessException(Enum enumObj, Object... paras) {
-        this(Result.getCode(enumObj), Result.getMsg(enumObj), paras);
+    public BusinessException(Enum enumObj, Object param) {
+        super(String.valueOf(EnumUtils.get(enumObj, EnumUtils.KeysEnum.code.name())));
+        this.key = String.valueOf(EnumUtils.get(enumObj, EnumUtils.KeysEnum.code.name()));
+        this.msg = String.valueOf(EnumUtils.get(enumObj, EnumUtils.KeysEnum.msg.name()));
+        this.param = param;
     }
 
+    public String getKey() {
+        return key;
+    }
+
+    public String getMsg() {
+        return msg;
+    }
+
+    public Object getParam() {
+        return param;
+    }
+
+    @Override
+    public String toString() {
+        return "BusinessException(" + "key='" + key + '\'' + ", msg='" + msg + '\'' + ", param=" + param + ")";
+    }
 
 }
