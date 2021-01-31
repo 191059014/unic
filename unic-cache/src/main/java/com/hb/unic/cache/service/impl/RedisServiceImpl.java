@@ -20,7 +20,7 @@ import java.util.concurrent.TimeUnit;
  * ========== redis工具类 ==========
  *
  * @author Mr.huang
- * @version com.hb.web.helper.RedisTools.java, v1.0
+ * @version v1.0
  * @date 2019年06月11日 00时19分
  */
 @Primary

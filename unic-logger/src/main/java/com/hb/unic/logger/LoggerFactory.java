@@ -4,7 +4,7 @@ package com.hb.unic.logger;
  * ========== 自定义logger ==========
  *
  * @author Mr.huang
- * @version com.hb.web.helper.LoggerFactory.java, v1.0
+ * @version v1.0
  * @date 2019年07月16日 10时20分
  */
 public class LoggerFactory {

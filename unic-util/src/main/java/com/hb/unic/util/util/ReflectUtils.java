@@ -15,7 +15,7 @@ import java.util.stream.Stream;
  * ========== 反射工具类 ==========
  *
  * @author Mr.huang
- * @version com.hb.web.helper.Logger.java, v1.0
+ * @version v1.0
  * @date 2019年07月16日 11时42分
  */
 public class ReflectUtils {

@@ -41,6 +41,7 @@
         <jackson.version>2.9.8</jackson.version>
         <guava.version>26.0-jre</guava.version>
         <hutool.version>5.5.1</hutool.version>
+        <fastjson.version>1.2.69</fastjson.version>
         <javax.servlet.version>4.0.1</javax.servlet.version>
     </properties>
 
@@ -66,12 +67,6 @@
                 <groupId>org.codehaus.groovy</groupId>
                 <artifactId>groovy-all</artifactId>
                 <version>${groovy.version}</version>
-            </dependency>
-            <!-- commons-httpclient -->
-            <dependency>
-                <groupId>commons-httpclient</groupId>
-                <artifactId>commons-httpclient</artifactId>
-                <version>${commons-httpclient.version}</version>
             </dependency>
             <!-- okHttp3 -->
             <dependency>
@@ -169,6 +164,12 @@
                 <groupId>cn.hutool</groupId>
                 <artifactId>hutool-all</artifactId>
                 <version>${hutool.version}</version>
+            </dependency>
+            <!-- fastjson -->
+            <dependency>
+                <groupId>com.alibaba</groupId>
+                <artifactId>fastjson</artifactId>
+                <version>${fastjson.version}</version>
             </dependency>
         </dependencies>
     </dependencyManagement>

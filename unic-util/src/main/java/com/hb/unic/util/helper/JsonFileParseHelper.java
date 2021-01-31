@@ -16,7 +16,7 @@ import java.io.InputStream;
  * ========== json文件解析工具 ==========
  *
  * @author Mr.huang
- * @version com.hb.web.app.helper.JsonFileParseHelper.java, v1.0
+ * @version v1.0
  * @date 2019年06月15日 13时45分
  */
 public class JsonFileParseHelper {
