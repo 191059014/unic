@@ -62,6 +62,42 @@ public class OkHttpUtils {
     private static final OkHttpClient DEFAULT_CLIENT = getOkHttpClient(15L, 15L, 15L);
 
     /**
+     * ########## get请求 ##########
+     *
+     * @param url
+     *            请求ur
+     * @return response的body信息
+     */
+    public static String get(String url) throws Exception {
+        return doGet(url, null);
+    }
+
+    /**
+     * ########## get请求 ##########
+     *
+     * @param url
+     *            请求ur
+     * @param headers
+     *            请求头 读取超时时间
+     * @return response的body信息
+     */
+    public static String doGet(String url, Map<String, String> headers) throws Exception {
+        Stopwatch stopwatch = Stopwatch.createStarted();
+        Request.Builder builder = new Request.Builder().url(url);
+        if (headers != null) {
+            headers.forEach(builder::addHeader);
+        }
+        Request request = builder.get().build();
+        LOGGER.info("get请求 => {}\n请求头：{}", url, headers);
+        Call call = DEFAULT_CLIENT.newCall(request);
+        Response response = call.execute();
+        String body = response.body() == null ? "" : response.body().string();
+        LOGGER.info("get响应 => {}\n响应结果：{}\n总共耗时：{}ms", url, body, stopwatch.elapsed(TimeUnit.MILLISECONDS));
+        return body;
+
+    }
+
+    /**
      * ########## post请求 ##########
      *
      * @param url
@@ -145,42 +181,6 @@ public class OkHttpUtils {
         String body = response.body() == null ? "" : response.body().string();
         LOGGER.info("post响应 => {}\n响应结果：{}\n总共耗时：{}ms", url, body, stopwatch.elapsed(TimeUnit.MILLISECONDS));
         return body;
-    }
-
-    /**
-     * ########## get请求 ##########
-     *
-     * @param url
-     *            请求ur
-     * @return response的body信息
-     */
-    public static String get(String url) throws Exception {
-        return doGet(url, null);
-    }
-
-    /**
-     * ########## get请求 ##########
-     *
-     * @param url
-     *            请求ur
-     * @param headers
-     *            请求头 读取超时时间
-     * @return response的body信息
-     */
-    public static String doGet(String url, Map<String, String> headers) throws Exception {
-        Stopwatch stopwatch = Stopwatch.createStarted();
-        Request.Builder builder = new Request.Builder().url(url);
-        if (headers != null) {
-            headers.forEach(builder::addHeader);
-        }
-        Request request = builder.get().build();
-        LOGGER.info("get请求 => {}\n请求头：{}", url, headers);
-        Call call = DEFAULT_CLIENT.newCall(request);
-        Response response = call.execute();
-        String body = response.body() == null ? "" : response.body().string();
-        LOGGER.info("get响应 => {}\n响应结果：{}\n总共耗时：{}ms", url, body, stopwatch.elapsed(TimeUnit.MILLISECONDS));
-        return body;
-
     }
 
     /**
