@@ -34,27 +34,27 @@ public class OkHttpUtils {
     /**
      * form类型
      */
-    public static final String MULTIPART_FORM_DATA = "multipart/form-data";
+    private static final String MULTIPART_FORM_DATA = "multipart/form-data";
 
     /**
      * json编码
      */
-    public static final String JSON = "application/json;charset=utf-8";
+    private static final String JSON = "application/json;charset=utf-8";
 
     /**
      * xml编码
      */
-    public static final String XML = "text/xml;charset=utf-8";
+    private static final String XML = "text/xml;charset=utf-8";
 
     /**
      * Content-Type
      */
-    public static final String CONTENT_TYPE = "Content-Type";
+    private static final String CONTENT_TYPE = "Content-Type";
 
     /**
      * The constant LOGGER.
      */
-    protected static Logger LOGGER = LoggerFactory.getLogger(OkHttpUtils.class);
+    private static Logger LOGGER = LoggerFactory.getLogger(OkHttpUtils.class);
 
     /**
      * 默认okhttp单例对象
