@@ -241,7 +241,7 @@ public class OkHttpUtils {
         LOGGER.info("post请求 => {}\n请求头：{}\n表单参数：{}", url, headers, params);
         Response response = DEFAULT_CLIENT.newCall(request).execute();
         String body = response.body() == null ? "" : response.body().string();
-        LOGGER.info("get响应 => {}\n响应结果：{}\n总共耗时：{}ms", url, body, stopwatch.elapsed(TimeUnit.MILLISECONDS));
+        LOGGER.info("post响应 => {}\n响应结果：{}\n总共耗时：{}ms", url, body, stopwatch.elapsed(TimeUnit.MILLISECONDS));
         return body;
     }
 
