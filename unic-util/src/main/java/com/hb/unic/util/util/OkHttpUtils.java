@@ -17,10 +17,14 @@ import javax.net.ssl.SSLContext;
 import javax.net.ssl.SSLSocketFactory;
 import javax.net.ssl.TrustManager;
 import javax.net.ssl.X509TrustManager;
+import java.io.ByteArrayOutputStream;
 import java.security.SecureRandom;
 import java.security.cert.X509Certificate;
 import java.util.Map;
+import java.util.Objects;
 import java.util.concurrent.TimeUnit;
+import java.util.zip.ZipEntry;
+import java.util.zip.ZipOutputStream;
 
 /**
  * ========== OkHttp工具 ==========
@@ -59,7 +63,7 @@ public class OkHttpUtils {
     /**
      * 默认okhttp单例对象
      */
-    private static final OkHttpClient DEFAULT_CLIENT = getOkHttpClient(15L, 15L, 15L);
+    private static final OkHttpClient CLIENT = getOkHttpClient(15L, 15L, 15L);
 
     /**
      * ########## get请求 ##########
@@ -89,7 +93,7 @@ public class OkHttpUtils {
         }
         Request request = builder.get().build();
         LOGGER.info("get请求 => {}\n请求头：{}", url, headers);
-        Call call = DEFAULT_CLIENT.newCall(request);
+        Call call = CLIENT.newCall(request);
         Response response = call.execute();
         String body = response.body() == null ? "" : response.body().string();
         LOGGER.info("get响应 => {}\n响应结果：{}\n总共耗时：{}ms", url, body, stopwatch.elapsed(TimeUnit.MILLISECONDS));
@@ -122,7 +126,7 @@ public class OkHttpUtils {
      * @return response的body信息
      */
     public static String postJson(String url, Object reqBody, Map<String, String> headers) throws Exception {
-        return doPost(url, JsonUtils.toJson(reqBody), MediaType.get(JSON), headers);
+        return doPostJsonOrXml(url, JsonUtils.toJson(reqBody), MediaType.get(JSON), headers);
     }
 
     /**
@@ -150,7 +154,7 @@ public class OkHttpUtils {
      * @return response的body信息
      */
     public static String postXml(String url, String xml, Map<String, String> headers) throws Exception {
-        return doPost(url, xml, MediaType.get(XML), headers);
+        return doPostJsonOrXml(url, xml, MediaType.get(XML), headers);
     }
 
     /**
@@ -166,7 +170,7 @@ public class OkHttpUtils {
      *            请求头
      * @return response的body信息
      */
-    public static String doPost(String url, String reqBody, MediaType mediaType, Map<String, String> headers)
+    public static String doPostJsonOrXml(String url, String reqBody, MediaType mediaType, Map<String, String> headers)
         throws Exception {
         Stopwatch stopwatch = Stopwatch.createStarted();
         RequestBody requestBody = FormBody.create(mediaType, reqBody);
@@ -176,7 +180,7 @@ public class OkHttpUtils {
         }
         Request request = builder.post(requestBody).build();
         LOGGER.info("post请求 => {}\n请求头：{}\n请求体：{}", url, headers, reqBody);
-        Call call = DEFAULT_CLIENT.newCall(request);
+        Call call = CLIENT.newCall(request);
         Response response = call.execute();
         String body = response.body() == null ? "" : response.body().string();
         LOGGER.info("post响应 => {}\n响应结果：{}\n总共耗时：{}ms", url, body, stopwatch.elapsed(TimeUnit.MILLISECONDS));
@@ -185,7 +189,7 @@ public class OkHttpUtils {
 
     /**
      * form方式
-     * 
+     *
      * @param url
      *            url
      * @param headers
@@ -195,54 +199,110 @@ public class OkHttpUtils {
      * @return 结果
      */
     public static String postForm(String url, Map<String, String> headers, Map<String, String> params)
-        throws Exception {
-        return postForm(url, headers, params, null, null, null);
+            throws Exception {
+        MultipartBody.Builder multipartBuilder = new MultipartBody.Builder().setType(MultipartBody.FORM);
+        if (params != null && !params.isEmpty()) {
+            headers.forEach(multipartBuilder::addFormDataPart);
+        }
+        return doPostForm(url, headers, multipartBuilder);
     }
 
     /**
-     * form方式，支持单个文件参数
+     * form方式
      *
      * @param url
      *            url
      * @param headers
      *            请求头
-     * @param params
-     *            form参数
-     * @param fileParamName
-     *            文件参数的参数名
-     * @param fileName
-     *            文件名称
-     * @param fileText
-     *            文件内容
      * @return 结果
      */
-    public static String postForm(String url, Map<String, String> headers, Map<String, String> params,
-        String fileParamName, String fileName, String fileText) throws Exception {
+    public static String doPostForm(String url, Map<String, String> headers, MultipartBody.Builder multipartBuilder) throws Exception {
         Stopwatch stopwatch = Stopwatch.createStarted();
-        MultipartBody.Builder multipartBuilder = new MultipartBody.Builder().setType(MultipartBody.FORM);
-        /*
-         * 设置文件类型的参数
-         */
-        if (fileParamName != null) {
-            multipartBuilder.addFormDataPart(fileParamName, fileName,
-                RequestBody.create(MediaType.parse(MULTIPART_FORM_DATA), fileText.getBytes()));
-        }
-        /*
-         * 设置普通类型的参数
-         */
-        if (params != null && !params.isEmpty()) {
-            headers.forEach(multipartBuilder::addFormDataPart);
-        }
         Request.Builder requestBuilder = new Request.Builder();
         if (headers != null && !headers.isEmpty()) {
             headers.forEach(requestBuilder::header);
         }
         Request request = requestBuilder.url(url).post(multipartBuilder.build()).build();
-        LOGGER.info("post请求 => {}\n请求头：{}\n表单参数：{}", url, headers, params);
-        Response response = DEFAULT_CLIENT.newCall(request).execute();
+        LOGGER.info("post请求 => {}\n请求头：{}", url, headers);
+        Response response = CLIENT.newCall(request).execute();
         String body = response.body() == null ? "" : response.body().string();
         LOGGER.info("post响应 => {}\n响应结果：{}\n总共耗时：{}ms", url, body, stopwatch.elapsed(TimeUnit.MILLISECONDS));
         return body;
+    }
+
+    /**
+     * Multipart类型参数构造器
+     */
+    public static class MultipartBodyBuilder {
+
+        MultipartBody.Builder mb = new MultipartBody.Builder().setType(MultipartBody.FORM);
+
+        /**
+         * 创建对象
+         */
+        public static MultipartBodyBuilder create() {
+            return new MultipartBodyBuilder();
+        }
+
+        /**
+         * 添加普通的form参数
+         */
+        public MultipartBodyBuilder add(String key, String value) {
+            mb.addFormDataPart(key, value);
+            return this;
+        }
+
+        /**
+         * 添加普通的form参数
+         */
+        public MultipartBodyBuilder add(Map<String, String> params) {
+            if (params != null && !params.isEmpty()) {
+                params.forEach(mb::addFormDataPart);
+            }
+            return this;
+        }
+
+        /**
+         * 普通文件参数
+         */
+        public MultipartBodyBuilder addFile(String fileParamName, String fileName, String fileText) {
+            Objects.requireNonNull(fileParamName, "fileParamName is null");
+            Objects.requireNonNull(fileName, "fileName is null");
+            Objects.requireNonNull(fileText, "fileText is null");
+            mb.addFormDataPart(fileParamName, fileName,
+                    RequestBody.create(MediaType.parse(MULTIPART_FORM_DATA), fileText.getBytes()));
+            return this;
+        }
+
+        /**
+         * zip文件参数
+         */
+        public MultipartBodyBuilder addZip(String fileParamName, String fileName, String zipEntryName, String fileText) throws Exception {
+            Objects.requireNonNull(fileParamName, "fileParamName is null");
+            Objects.requireNonNull(fileName, "fileName is null");
+            Objects.requireNonNull(zipEntryName, "zipEntryName is null");
+            Objects.requireNonNull(fileText, "fileText is null");
+            ByteArrayOutputStream bos = new ByteArrayOutputStream();
+            ZipOutputStream zip = new ZipOutputStream(bos);
+            ZipEntry entry = new ZipEntry(zipEntryName);
+            zip.putNextEntry(entry);
+            zip.write(fileText.getBytes());
+            zip.closeEntry();
+            zip.close();
+            byte[] b = bos.toByteArray();
+            bos.close();
+            mb.addFormDataPart(fileParamName, fileName,
+                    RequestBody.create(MediaType.parse(MULTIPART_FORM_DATA), b));
+            return this;
+        }
+
+        /**
+         * 获取MultipartBody.Builder对象
+         */
+        public MultipartBody.Builder get() {
+            return mb;
+        }
+
     }
 
     /**
