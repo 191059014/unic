@@ -2,7 +2,7 @@ package com.hb.unic.config.controller;
 
 import com.hb.unic.base.annotation.InOutLog;
 import com.hb.unic.base.common.Result;
-import com.hb.unic.base.common.ResultCode;
+import com.hb.unic.base.common.ErrorCode;
 import com.hb.unic.common.standard.Dropdown;
 import com.hb.unic.common.standard.Page;
 import com.hb.unic.common.validator.Assert;
@@ -55,7 +55,7 @@ public class ExceptionBoardController {
     @PostMapping("/queryPages")
     public Result<Page<ExceptionBoardDO>> queryPages(@RequestBody ExceptionBoardDO exceptionBoard,
         @RequestParam("pageNum") Integer pageNum, @RequestParam("pageSize") Integer pageSize) {
-        Assert.ifTrueThrows(Check.incorrectPageParameter(pageNum, pageSize), ResultCode.PAGE_PARAM_ERROR);
+        Assert.ifTrueThrows(Check.incorrectPageParameter(pageNum, pageSize), ErrorCode.PAGE_PARAM_ERROR);
         return Result.success(exceptionBoardService.selectPages(exceptionBoard, pageNum, pageSize));
     }
 
@@ -69,7 +69,7 @@ public class ExceptionBoardController {
     @InOutLog("通过主键修改异常看板表")
     @PostMapping("/updateById")
     public Result updateById(@RequestBody ExceptionBoardDO exceptionBoard) {
-        Assert.notNull(exceptionBoard.getId(), ResultCode.PARAM_ILLEGAL);
+        Assert.notNull(exceptionBoard.getId(), ErrorCode.PARAM_ILLEGAL);
         return Result.success(exceptionBoardService.updateById(exceptionBoard));
     }
 

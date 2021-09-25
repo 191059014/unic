@@ -2,7 +2,7 @@ package com.hb.unic.rbac.controller;
 
 import com.hb.unic.base.annotation.InOutLog;
 import com.hb.unic.base.common.Result;
-import com.hb.unic.base.common.ResultCode;
+import com.hb.unic.base.common.ErrorCode;
 import com.hb.unic.common.standard.Page;
 import com.hb.unic.common.validator.Assert;
 import com.hb.unic.common.validator.Check;
@@ -84,7 +84,7 @@ public class SysRoleController {
     @PostMapping("/queryPages")
     public Result<Page<SysRoleDO>> queryPages(@RequestBody SysRoleDO sysRole, @RequestParam("pageNum") Integer pageNum,
         @RequestParam("pageSize") Integer pageSize) {
-        Assert.ifTrueThrows(Check.incorrectPageParameter(pageNum, pageSize), ResultCode.PAGE_PARAM_ERROR);
+        Assert.ifTrueThrows(Check.incorrectPageParameter(pageNum, pageSize), ErrorCode.PAGE_PARAM_ERROR);
         return Result.success(sysRoleService.selectPages(sysRole, pageNum, pageSize));
     }
 
@@ -98,7 +98,7 @@ public class SysRoleController {
     @PreAuthorize("hasAuthority('role_manage_add')")
     @PostMapping("/save")
     public Result save(@RequestBody SysRoleDO sysRole) {
-        Assert.hasText(sysRole.getRoleName(), ResultCode.PARAM_ILLEGAL);
+        Assert.hasText(sysRole.getRoleName(), ErrorCode.PARAM_ILLEGAL);
         return Result.success(sysRoleService.insert(sysRole));
     }
 
@@ -112,7 +112,7 @@ public class SysRoleController {
     @PreAuthorize("hasAuthority('role_manage_update')")
     @PostMapping("/updateById")
     public Result updateById(@RequestBody SysRoleDO sysRole) {
-        Assert.notNull(sysRole.getId(), ResultCode.PARAM_ILLEGAL);
+        Assert.notNull(sysRole.getId(), ErrorCode.PARAM_ILLEGAL);
         return Result.success(sysRoleService.updateById(sysRole));
     }
 
@@ -126,7 +126,7 @@ public class SysRoleController {
     @PreAuthorize("hasAuthority('role_manage_delete')")
     @GetMapping("/deleteById")
     public Result deleteById(@RequestParam("id") Long id) {
-        Assert.notNull(id, ResultCode.PARAM_ILLEGAL);
+        Assert.notNull(id, ErrorCode.PARAM_ILLEGAL);
         SysRoleDO sysRole = new SysRoleDO();
         sysRole.setId(id);
         return Result.success(sysRoleService.deleteById(sysRole));
@@ -153,7 +153,7 @@ public class SysRoleController {
     @GetMapping("/getRolesUnderUser")
     @InOutLog("获取指定用户拥有的角色")
     public Result<Set<Long>> getRolesUnderUser(@RequestParam("userId") Long userId) {
-        Assert.notNull(userId, ResultCode.PARAM_ILLEGAL);
+        Assert.notNull(userId, ErrorCode.PARAM_ILLEGAL);
         SysUserRoleDO userRoleQuery = new SysUserRoleDO();
         userRoleQuery.setUserId(userId);
         List<SysUserRoleDO> userRoleList = sysUserRoleService.selectList(userRoleQuery);
@@ -178,8 +178,8 @@ public class SysRoleController {
     @InOutLog("更新角色对应的权限")
     @Transactional(propagation = Propagation.REQUIRED, rollbackFor = Exception.class)
     public Result updateRolePermission(@RequestBody Set<Long> permissionIdSet, @RequestParam("roleId") Long roleId) {
-        Assert.notNull(roleId, ResultCode.PARAM_ILLEGAL);
-        Assert.notEmpty(permissionIdSet, ResultCode.PARAM_ILLEGAL);
+        Assert.notNull(roleId, ErrorCode.PARAM_ILLEGAL);
+        Assert.notEmpty(permissionIdSet, ErrorCode.PARAM_ILLEGAL);
         // 删除角色下所有的权限
         sysRolePermissionService.deleteByRoleId(roleId);
         // 新增权限
@@ -202,7 +202,7 @@ public class SysRoleController {
     @InOutLog("获取指定角色的所有权限")
     @GetMapping("/getPermissionsUnderRole")
     public Result<Set<Long>> getPermissionsUnderRole(@RequestParam("roleId") Long roleId) {
-        Assert.notNull(roleId, ResultCode.PARAM_ILLEGAL);
+        Assert.notNull(roleId, ErrorCode.PARAM_ILLEGAL);
         SysRolePermissionDO rolePermissionQuery = new SysRolePermissionDO();
         rolePermissionQuery.setRoleId(roleId);
         List<SysRolePermissionDO> rolePermissionList = sysRolePermissionService.selectList(rolePermissionQuery);

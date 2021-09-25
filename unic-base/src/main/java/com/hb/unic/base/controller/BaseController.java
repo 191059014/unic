@@ -1,7 +1,7 @@
 package com.hb.unic.base.controller;
 
 import com.hb.unic.base.common.Result;
-import com.hb.unic.base.common.ResultCode;
+import com.hb.unic.base.common.ErrorCode;
 import com.hb.unic.common.standard.BusinessException;
 import com.hb.unic.common.util.LogUtils;
 import lombok.extern.slf4j.Slf4j;
@@ -51,7 +51,7 @@ public class BaseController {
     public Result exception(Exception e) {
         String baseLog = LogUtils.getBaseLog("系统异常");
         log.error("{}\n{}", baseLog, LogUtils.getStackTrace(e));
-        return Result.fail(ResultCode.ERROR);
+        return Result.fail(ErrorCode.ERROR);
     }
 
 }

@@ -51,7 +51,7 @@ public class Result<T> {
      * @return 完整返回对象
      */
     public static <T> Result<T> success() {
-        return of(ResultCode.SUCCESS.getCode(), ResultCode.SUCCESS.getMsg(), null);
+        return of(ErrorCode.SUCCESS.getCode(), ErrorCode.SUCCESS.getMsg(), null);
     }
 
     /**
@@ -62,7 +62,7 @@ public class Result<T> {
      * @return 完整返回对象
      */
     public static <T> Result<T> success(T data) {
-        return of(ResultCode.SUCCESS.getCode(), ResultCode.SUCCESS.getMsg(), data);
+        return of(ErrorCode.SUCCESS.getCode(), ErrorCode.SUCCESS.getMsg(), data);
     }
 
     /**

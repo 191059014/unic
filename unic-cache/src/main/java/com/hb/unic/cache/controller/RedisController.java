@@ -1,7 +1,7 @@
 package com.hb.unic.cache.controller;
 
 import com.hb.unic.base.common.Result;
-import com.hb.unic.base.common.ResultCode;
+import com.hb.unic.base.common.ErrorCode;
 import com.hb.unic.base.controller.BaseController;
 import com.hb.unic.cache.Redis;
 import com.hb.unic.common.validator.Assert;
@@ -32,7 +32,7 @@ public class RedisController extends BaseController {
      */
     @GetMapping("/get/{key}")
     public Result<Map<String, Object>> get(@PathVariable("key") String key) {
-        Assert.hasText(key, ResultCode.PARAM_ILLEGAL);
+        Assert.hasText(key, ErrorCode.PARAM_ILLEGAL);
         Map<String, Object> map = new HashMap<>();
         map.put("value", Redis.strOps().opsForValue().get(key));
         map.put("expire", Redis.strOps().getExpire(key, TimeUnit.SECONDS));
@@ -48,7 +48,7 @@ public class RedisController extends BaseController {
      */
     @GetMapping("/delete/{key}")
     public Result<Boolean> delete(@PathVariable("key") String key) {
-        Assert.hasText(key, ResultCode.PARAM_ILLEGAL);
+        Assert.hasText(key, ErrorCode.PARAM_ILLEGAL);
         return Result.success(Redis.strOps().delete(key));
     }
 

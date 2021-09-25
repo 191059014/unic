@@ -2,7 +2,7 @@ package com.hb.unic.config.controller;
 
 import com.hb.unic.base.annotation.InOutLog;
 import com.hb.unic.base.common.Result;
-import com.hb.unic.base.common.ResultCode;
+import com.hb.unic.base.common.ErrorCode;
 import com.hb.unic.base.controller.BaseController;
 import com.hb.unic.common.standard.Page;
 import com.hb.unic.common.validator.Assert;
@@ -53,7 +53,7 @@ public class GlobalConfigController extends BaseController {
     @PostMapping("/queryPages")
     public Result<Page<GlobalConfigDO>> queryPages(@RequestBody GlobalConfigDO globalConfig,
         @RequestParam("pageNum") Integer pageNum, @RequestParam("pageSize") Integer pageSize) {
-        Assert.ifTrueThrows(Check.incorrectPageParameter(pageNum, pageSize), ResultCode.PAGE_PARAM_ERROR);
+        Assert.ifTrueThrows(Check.incorrectPageParameter(pageNum, pageSize), ErrorCode.PAGE_PARAM_ERROR);
         return Result.success(globalConfigService.selectPages(globalConfig, pageNum, pageSize));
     }
 
@@ -69,7 +69,7 @@ public class GlobalConfigController extends BaseController {
     public Result save(@RequestBody GlobalConfigDO config) {
         if (StringUtils.isAnyBlank(config.getSystemName(), config.getGroupName(), config.getConfigKey(),
             config.getConfigValue())) {
-            return Result.fail(ResultCode.PARAM_ILLEGAL);
+            return Result.fail(ErrorCode.PARAM_ILLEGAL);
         }
         GlobalConfigDO query = new GlobalConfigDO();
         query.setSystemName(config.getSystemName());
@@ -77,7 +77,7 @@ public class GlobalConfigController extends BaseController {
         query.setConfigKey(config.getConfigKey());
         List<GlobalConfigDO> existList = globalConfigService.selectList(query);
         if (!CollectionUtils.isEmpty(existList)) {
-            return Result.fail(ResultCode.RECORD_REPEAT);
+            return Result.fail(ErrorCode.RECORD_REPEAT);
         }
         return Result.success(globalConfigService.insert(config));
     }
@@ -92,7 +92,7 @@ public class GlobalConfigController extends BaseController {
     @InOutLog("通过主键修改全局配置表")
     @PostMapping("/updateById")
     public Result updateById(@RequestBody GlobalConfigDO config) {
-        Assert.notNull(config.getId(), ResultCode.PARAM_ILLEGAL);
+        Assert.notNull(config.getId(), ErrorCode.PARAM_ILLEGAL);
         GlobalConfigDO old = globalConfigService.selectById(config.getId());
         GlobalConfigDO query = new GlobalConfigDO();
         if (StringUtils.isBlank(config.getSystemName())) {
@@ -115,7 +115,7 @@ public class GlobalConfigController extends BaseController {
             List<GlobalConfigDO> repeatList =
                 existList.stream().filter(cfg -> cfg.getId().compareTo(old.getId()) != 0).collect(Collectors.toList());
             if (!CollectionUtils.isEmpty(repeatList)) {
-                return Result.fail(ResultCode.RECORD_REPEAT);
+                return Result.fail(ErrorCode.RECORD_REPEAT);
             }
         }
         return Result.success(globalConfigService.updateById(config));
@@ -131,7 +131,7 @@ public class GlobalConfigController extends BaseController {
     @InOutLog("通过主键删除全局配置表")
     @GetMapping("/deleteById")
     public Result deleteById(@RequestParam("id") Long id) {
-        Assert.notNull(id, ResultCode.PARAM_ILLEGAL);
+        Assert.notNull(id, ErrorCode.PARAM_ILLEGAL);
         GlobalConfigDO globalConfig = new GlobalConfigDO();
         globalConfig.setId(id);
         return Result.success(globalConfigService.deleteById(globalConfig));

@@ -2,7 +2,7 @@ package com.hb.unic.rbac.controller;
 
 import com.hb.unic.base.annotation.InOutLog;
 import com.hb.unic.base.common.Result;
-import com.hb.unic.base.common.ResultCode;
+import com.hb.unic.base.common.ErrorCode;
 import com.hb.unic.base.model.impl.AbstractBaseDO;
 import com.hb.unic.common.standard.Page;
 import com.hb.unic.common.validator.Assert;
@@ -89,7 +89,7 @@ public class SysUserController {
     @PostMapping("/queryPages")
     public Result<Page<SysUserDO>> queryPages(@RequestBody SysUserDO sysUser, @RequestParam("pageNum") Integer pageNum,
         @RequestParam("pageSize") Integer pageSize) {
-        Assert.ifTrueThrows(Check.incorrectPageParameter(pageNum, pageSize), ResultCode.PAGE_PARAM_ERROR);
+        Assert.ifTrueThrows(Check.incorrectPageParameter(pageNum, pageSize), ErrorCode.PAGE_PARAM_ERROR);
         return Result.success(sysUserService.selectPages(sysUser, pageNum, pageSize));
     }
 
@@ -104,8 +104,8 @@ public class SysUserController {
     @PostMapping("/save")
     @InOutLog("新增用户")
     public Result save(@RequestBody SysUserDO sysUser) {
-        Assert.hasText(sysUser.getUserName(), ResultCode.PARAM_ILLEGAL);
-        Assert.hasText(sysUser.getPassword(), ResultCode.PARAM_ILLEGAL);
+        Assert.hasText(sysUser.getUserName(), ErrorCode.PARAM_ILLEGAL);
+        Assert.hasText(sysUser.getPassword(), ErrorCode.PARAM_ILLEGAL);
         String encodePassword = new BCryptPasswordEncoder().encode(sysUser.getPassword());
         sysUser.setPassword(encodePassword);
         return Result.success(sysUserService.insert(sysUser));
@@ -121,10 +121,10 @@ public class SysUserController {
     @PreAuthorize("hasAuthority('user_manage_update')")
     @PostMapping("/updateById")
     public Result updateById(@RequestBody SysUserDO sysUser) {
-        Assert.notNull(sysUser.getId(), ResultCode.PARAM_ILLEGAL);
+        Assert.notNull(sysUser.getId(), ErrorCode.PARAM_ILLEGAL);
         int updateRows = sysUserService.updateById(sysUser);
         if (updateRows != 1) {
-            return Result.fail(ResultCode.FAIL);
+            return Result.fail(ErrorCode.FAIL);
         }
         RbacContext.clear();
         return Result.success(updateRows);
@@ -140,7 +140,7 @@ public class SysUserController {
     @PreAuthorize("hasAuthority('user_manage_delete')")
     @GetMapping("/deleteById")
     public Result deleteById(@RequestParam("id") Long id) {
-        Assert.notNull(id, ResultCode.PARAM_ILLEGAL);
+        Assert.notNull(id, ErrorCode.PARAM_ILLEGAL);
         SysUserDO sysUser = new SysUserDO();
         sysUser.setId(id);
         return Result.success(sysUserService.deleteById(sysUser));
@@ -159,8 +159,8 @@ public class SysUserController {
     @PostMapping("updateUserRole")
     @InOutLog("更新用户的角色")
     public Result updateUserRole(@RequestBody Set<Long> roleIdSet, @RequestParam("userId") Long userId) {
-        Assert.notNull(userId, ResultCode.PARAM_ILLEGAL);
-        Assert.notEmpty(roleIdSet, ResultCode.PARAM_ILLEGAL);
+        Assert.notNull(userId, ErrorCode.PARAM_ILLEGAL);
+        Assert.notEmpty(roleIdSet, ErrorCode.PARAM_ILLEGAL);
         // 删除用户的所有角色
         sysUserRoleService.deleteByUserId(userId);
         // 批量新增用户角色关系
@@ -259,8 +259,8 @@ public class SysUserController {
     @PostMapping("/updateCurrentUserPassword")
     public Result<Integer> updateCurrentUserPassword(@RequestBody UpdatePasswordRequest request) {
         SysUserDO currentUser = RbacContext.getCurrentUser();
-        Assert.notNull(request.getOldPassword(), ResultCode.PARAM_ILLEGAL);
-        Assert.notNull(request.getNewPassword(), ResultCode.PARAM_ILLEGAL);
+        Assert.notNull(request.getOldPassword(), ErrorCode.PARAM_ILLEGAL);
+        Assert.notNull(request.getNewPassword(), ErrorCode.PARAM_ILLEGAL);
         BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
         if (!passwordEncoder.matches(request.getOldPassword(), currentUser.getPassword())) {
             return Result.fail(RbacResultCode.OLD_PASSWORD_ERROR);
@@ -273,7 +273,7 @@ public class SysUserController {
         RbacContext.clear();
         int updateRows = sysUserService.updateById(update);
         if (updateRows != 1) {
-            return Result.fail(ResultCode.FAIL);
+            return Result.fail(ErrorCode.FAIL);
         }
         RbacContext.clear();
         return Result.success(updateRows);

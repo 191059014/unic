@@ -7,7 +7,7 @@ import com.hb.unic.common.standard.IErrorCode;
  *
  * @version v0.1, 2021/8/22 18:42, create by huangbiao.
  */
-public enum ResultCode implements IErrorCode {
+public enum ErrorCode implements IErrorCode {
 
     SUCCESS("10000", "成功"),
     ERROR("10001", "系统异常，请稍后再试！"),
@@ -15,7 +15,8 @@ public enum ResultCode implements IErrorCode {
     NO_DATA("10003", "无数据"),
     PARAM_ILLEGAL("10004", "参数非法"),
     PAGE_PARAM_ERROR("10005", "分页参数错误"),
-    RECORD_REPEAT("10008", "已存在唯一性相同的记录"),
+    RECORD_REPEAT("10006", "已存在唯一性相同的记录"),
+    INVALID_ORIGIN("10007", "Invalid Origin"),
     ;
 
     /**
@@ -28,7 +29,7 @@ public enum ResultCode implements IErrorCode {
      */
     private String msg;
 
-    ResultCode(String code, String msg) {
+    ErrorCode(String code, String msg) {
         this.code = code;
         this.msg = msg;
     }

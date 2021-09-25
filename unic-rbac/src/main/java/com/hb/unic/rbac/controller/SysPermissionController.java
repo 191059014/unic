@@ -2,7 +2,7 @@ package com.hb.unic.rbac.controller;
 
 import com.hb.unic.base.annotation.InOutLog;
 import com.hb.unic.base.common.Result;
-import com.hb.unic.base.common.ResultCode;
+import com.hb.unic.base.common.ErrorCode;
 import com.hb.unic.common.standard.Page;
 import com.hb.unic.common.validator.Assert;
 import com.hb.unic.common.validator.Check;
@@ -61,7 +61,7 @@ public class SysPermissionController {
     @PostMapping("/queryPages")
     public Result<Page<SysPermissionDO>> queryPages(@RequestBody PermissionQueryRequest request,
         @RequestParam("pageNum") Integer pageNum, @RequestParam("pageSize") Integer pageSize) {
-        Assert.ifTrueThrows(Check.incorrectPageParameter(pageNum, pageSize), ResultCode.PAGE_PARAM_ERROR);
+        Assert.ifTrueThrows(Check.incorrectPageParameter(pageNum, pageSize), ErrorCode.PAGE_PARAM_ERROR);
         SysPermissionDO query = new SysPermissionDO();
         query.setPermissionName(request.getPermissionName());
         query.setResourceType(request.getResourceType());
@@ -87,9 +87,9 @@ public class SysPermissionController {
     @PostMapping("/save")
     @InOutLog("新增权限")
     public Result save(@RequestBody SysPermissionDO sysPermission) {
-        Assert.hasText(sysPermission.getPermissionName(), ResultCode.PARAM_ILLEGAL);
-        Assert.hasText(sysPermission.getPermissionValue(), ResultCode.PARAM_ILLEGAL);
-        Assert.hasText(sysPermission.getResourceType(), ResultCode.PARAM_ILLEGAL);
+        Assert.hasText(sysPermission.getPermissionName(), ErrorCode.PARAM_ILLEGAL);
+        Assert.hasText(sysPermission.getPermissionValue(), ErrorCode.PARAM_ILLEGAL);
+        Assert.hasText(sysPermission.getResourceType(), ErrorCode.PARAM_ILLEGAL);
         return Result.success(sysPermissionService.insert(sysPermission));
     }
 
@@ -104,7 +104,7 @@ public class SysPermissionController {
     @InOutLog("通过主键修改权限")
     @PostMapping("/updateById")
     public Result updateById(@RequestBody SysPermissionDO sysPermission) {
-        Assert.notNull(sysPermission.getId(), ResultCode.PARAM_ILLEGAL);
+        Assert.notNull(sysPermission.getId(), ErrorCode.PARAM_ILLEGAL);
         return Result.success(sysPermissionService.updateById(sysPermission));
     }
 
@@ -119,7 +119,7 @@ public class SysPermissionController {
     @InOutLog("通过主键删除权限")
     @GetMapping("/deleteById")
     public Result deleteById(@RequestParam("id") Long id) {
-        Assert.notNull(id, ResultCode.PARAM_ILLEGAL);
+        Assert.notNull(id, ErrorCode.PARAM_ILLEGAL);
         SysPermissionDO sysPermission = new SysPermissionDO();
         sysPermission.setId(id);
         return Result.success(sysPermissionService.deleteById(sysPermission));
@@ -136,7 +136,7 @@ public class SysPermissionController {
     @InOutLog("通过资源类型获取当前商户下的资源")
     @GetMapping("/getResourcesByResourceType")
     public Result<List<SysPermissionDO>> getResourcesByResourceType(@RequestParam("resourceType") String resourceType) {
-        Assert.hasText(resourceType, ResultCode.PARAM_ILLEGAL);
+        Assert.hasText(resourceType, ErrorCode.PARAM_ILLEGAL);
         SysPermissionDO query = new SysPermissionDO();
         query.setResourceType(resourceType);
         return Result.success(sysPermissionService.selectList(query));

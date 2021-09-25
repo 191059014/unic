@@ -2,7 +2,7 @@ package com.hb.unic.rbac.controller;
 
 import com.hb.unic.base.annotation.InOutLog;
 import com.hb.unic.base.common.Result;
-import com.hb.unic.base.common.ResultCode;
+import com.hb.unic.base.common.ErrorCode;
 import com.hb.unic.common.standard.Page;
 import com.hb.unic.common.validator.Assert;
 import com.hb.unic.common.validator.Check;
@@ -54,7 +54,7 @@ public class SysMerchantController {
     @InOutLog("分页查询商户列表")
     public Result<Page<SysMerchantDO>> queryPages(@RequestBody SysMerchantDO sysMerchant,
         @RequestParam("pageNum") Integer pageNum, @RequestParam("pageSize") Integer pageSize) {
-        Assert.ifTrueThrows(Check.incorrectPageParameter(pageNum, pageSize), ResultCode.PAGE_PARAM_ERROR);
+        Assert.ifTrueThrows(Check.incorrectPageParameter(pageNum, pageSize), ErrorCode.PAGE_PARAM_ERROR);
         return Result.success(sysMerchantService.selectPages(sysMerchant, pageNum, pageSize));
     }
 
@@ -69,7 +69,7 @@ public class SysMerchantController {
     @PostMapping("/save")
     @InOutLog("新增商户")
     public Result save(@RequestBody SysMerchantDO sysMerchant) {
-        Assert.hasText(sysMerchant.getMerchantName(), ResultCode.PARAM_ILLEGAL);
+        Assert.hasText(sysMerchant.getMerchantName(), ErrorCode.PARAM_ILLEGAL);
         return Result.success(sysMerchantService.insert(sysMerchant));
     }
 
@@ -84,7 +84,7 @@ public class SysMerchantController {
     @PostMapping("/updateById")
     @InOutLog("修改商户")
     public Result updateById(@RequestBody SysMerchantDO sysMerchant) {
-        Assert.notNull(sysMerchant.getId(), ResultCode.PARAM_ILLEGAL);
+        Assert.notNull(sysMerchant.getId(), ErrorCode.PARAM_ILLEGAL);
         return Result.success(sysMerchantService.updateById(sysMerchant));
     }
 
@@ -99,7 +99,7 @@ public class SysMerchantController {
     @GetMapping("/deleteById")
     @InOutLog("删除商户")
     public Result deleteById(@RequestParam("id") Long id) {
-        Assert.notNull(id, ResultCode.PARAM_ILLEGAL);
+        Assert.notNull(id, ErrorCode.PARAM_ILLEGAL);
         SysMerchantDO sysMerchant = new SysMerchantDO();
         sysMerchant.setId(id);
         return Result.success(sysMerchantService.deleteById(sysMerchant));
