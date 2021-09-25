@@ -25,25 +25,25 @@ public class BasePropertyAspect {
     /**
      * 所有的方法
      */
-    @Pointcut("execution(public * com.hb.platform..*.*Mapper.*(..))")
+    @Pointcut("execution(public * com.hb..*.*Mapper.*(..))")
     public void allPointcut() {}
 
     /**
      * 所有插入的方法
      */
-    @Pointcut("execution(public * com.hb.platform..*.*Mapper.insert*(..))")
+    @Pointcut("execution(public * com.hb..*.*Mapper.insert*(..))")
     public void allInsertPointcut() {}
 
     /**
      * 所有更新的方法
      */
-    @Pointcut("execution(public * com.hb.platform..*.*Mapper.update*(..))")
+    @Pointcut("execution(public * com.hb..*.*Mapper.update*(..))")
     public void allUpdatePointcut() {}
 
     /**
      * 所有删除的方法
      */
-    @Pointcut("execution(public * com.hb.platform..*.*Mapper.delete*(..))")
+    @Pointcut("execution(public * com.hb..*.*Mapper.delete*(..))")
     public void allDeletePointcut() {}
 
     /**
