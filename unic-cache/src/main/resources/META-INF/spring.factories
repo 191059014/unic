@@ -1,0 +1,2 @@
+org.springframework.boot.autoconfigure.EnableAutoConfiguration=\
+com.hb.unic.cache.config.EnableRedisAutoConfiguration

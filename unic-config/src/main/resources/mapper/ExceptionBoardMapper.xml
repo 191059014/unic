@@ -1,0 +1,236 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.hb.unic.config.dao.mapper.IExceptionBoardMapper">
+
+    <!--字段映射-->
+    <resultMap id="exceptionBoardMap" type="com.hb.unic.config.dao.dobj.ExceptionBoardDO">
+        <result column="system_name" property="systemName"/>
+        <result column="biz_type" property="bizType"/>
+        <result column="process_state" property="processState"/>
+        <result column="content" property="content"/>
+        <result column="remark" property="remark"/>
+        <result column="trace_id" property="traceId"/>
+        <result column="id" property="id"/>
+        <result column="create_by" property="createBy"/>
+        <result column="create_time" property="createTime"/>
+        <result column="update_by" property="updateBy"/>
+        <result column="update_time" property="updateTime"/>
+        <result column="is_valid" property="isValid"/>
+    </resultMap>
+
+    <!--查询单个-->
+    <select id="selectById" resultMap="exceptionBoardMap">
+        select * from exception_board where is_valid = 0 and id = #{id}
+    </select>
+
+    <!--查询集合-->
+    <select id="selectList" resultMap="exceptionBoardMap">
+        select * from exception_board
+        <include refid="whereCondition"/>
+        order by update_time desc
+    </select>
+
+    <!--查询总条数-->
+    <select id="selectCount" resultType="java.lang.Long">
+        select count(1) from exception_board
+        <include refid="whereCondition"/>
+    </select>
+
+    <!--分页条件查询-->
+    <select id="selectPages" resultMap="exceptionBoardMap">
+        select * from exception_board
+        <include refid="whereCondition"/>
+        order by update_time desc
+        limit #{pc.startIndex}, #{pc.pageSize}
+    </select>
+
+    <!--通过id集合查询-->
+    <select id="selectByIdSet" resultMap="exceptionBoardMap">
+        select * from exception_board
+        where is_valid = 1 and id in
+        <foreach collection="idSet" item="id" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+        <include refid="whereCondition"/>
+        order by update_time desc
+    </select>
+
+    <!--通过主键修改-->
+    <update id="updateById">
+        update exception_board
+        <include refid="updateFields"/>
+        where id = #{qc.id}
+    </update>
+
+    <!--通过主键物理删除-->
+    <update id="deleteById">
+        update exception_board set is_valid = 0 where id = #{qc.id}
+    </update>
+
+    <!--选择性的新增-->
+    <insert id="insert" useGeneratedKeys="true" keyProperty="id" keyColumn="id">
+        insert into exception_board
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="qc.systemName != null and qc.systemName != ''">
+                system_name,
+            </if>
+            <if test="qc.bizType != null and qc.bizType != ''">
+                biz_type,
+            </if>
+            <if test="qc.processState != null and qc.processState != ''">
+                process_state,
+            </if>
+            <if test="qc.content != null and qc.content != ''">
+                content,
+            </if>
+            <if test="qc.remark != null and qc.remark != ''">
+                remark,
+            </if>
+            <if test="qc.traceId != null and qc.traceId != ''">
+                trace_id,
+            </if>
+            <if test="qc.id != null">
+                id,
+            </if>
+            <if test="qc.createBy != null and qc.createBy != ''">
+                create_by,
+            </if>
+            <if test="qc.createTime != null">
+                create_time,
+            </if>
+            <if test="qc.updateBy != null and qc.updateBy != ''">
+                update_by,
+            </if>
+            <if test="qc.updateTime != null">
+                update_time,
+            </if>
+            <if test="qc.isValid != null">
+                is_valid,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="qc.systemName != null and qc.systemName != ''">
+                #{qc.systemName},
+            </if>
+            <if test="qc.bizType != null and qc.bizType != ''">
+                #{qc.bizType},
+            </if>
+            <if test="qc.processState != null and qc.processState != ''">
+                #{qc.processState},
+            </if>
+            <if test="qc.content != null and qc.content != ''">
+                #{qc.content},
+            </if>
+            <if test="qc.remark != null and qc.remark != ''">
+                #{qc.remark},
+            </if>
+            <if test="qc.traceId != null and qc.traceId != ''">
+                #{qc.traceId},
+            </if>
+            <if test="qc.id != null">
+                #{qc.id},
+            </if>
+            <if test="qc.createBy != null and qc.createBy != ''">
+                #{qc.createBy},
+            </if>
+            <if test="qc.createTime != null">
+                #{qc.createTime},
+            </if>
+            <if test="qc.updateBy != null and qc.updateBy != ''">
+                #{qc.updateBy},
+            </if>
+            <if test="qc.updateTime != null">
+                #{qc.updateTime},
+            </if>
+            <if test="qc.isValid != null">
+                #{qc.isValid},
+            </if>
+        </trim>
+    </insert>
+
+    <!--条件查询-->
+    <sql id="whereCondition">
+        <where>
+            is_valid = 1
+            <if test="qc.systemName != null and qc.systemName != ''">
+                and system_name = #{qc.systemName}
+            </if>
+            <if test="qc.bizType != null and qc.bizType != ''">
+                and biz_type = #{qc.bizType}
+            </if>
+            <if test="qc.processState != null and qc.processState != ''">
+                and process_state = #{qc.processState}
+            </if>
+            <if test="qc.content != null and qc.content != ''">
+                and content = #{qc.content}
+            </if>
+            <if test="qc.remark != null and qc.remark != ''">
+                and remark = #{qc.remark}
+            </if>
+            <if test="qc.traceId != null and qc.traceId != ''">
+                and trace_id = #{qc.traceId}
+            </if>
+            <if test="qc.id != null">
+                and id = #{qc.id}
+            </if>
+            <if test="qc.createBy != null and qc.createBy != ''">
+                and create_by = #{qc.createBy}
+            </if>
+            <if test="qc.createTime != null">
+                and create_time = #{qc.createTime}
+            </if>
+            <if test="qc.updateBy != null and qc.updateBy != ''">
+                and update_by = #{qc.updateBy}
+            </if>
+            <if test="qc.updateTime != null">
+                and update_time = #{qc.updateTime}
+            </if>
+            <if test="qc.isValid != null">
+                and is_valid = #{qc.isValid}
+            </if>
+        </where>
+    </sql>
+
+    <!--更新字段sql-->
+    <sql id="updateFields">
+        <set>
+            <if test="qc.systemName != null and qc.systemName != ''">
+                system_name = #{qc.systemName},
+            </if>
+            <if test="qc.bizType != null and qc.bizType != ''">
+                biz_type = #{qc.bizType},
+            </if>
+            <if test="qc.processState != null and qc.processState != ''">
+                process_state = #{qc.processState},
+            </if>
+            <if test="qc.content != null and qc.content != ''">
+                content = #{qc.content},
+            </if>
+            <if test="qc.remark != null and qc.remark != ''">
+                remark = #{qc.remark},
+            </if>
+            <if test="qc.traceId != null and qc.traceId != ''">
+                trace_id = #{qc.traceId},
+            </if>
+            <if test="qc.id != null">
+                id = #{qc.id},
+            </if>
+            <if test="qc.createBy != null and qc.createBy != ''">
+                create_by = #{qc.createBy},
+            </if>
+            <if test="qc.createTime != null">
+                create_time = #{qc.createTime},
+            </if>
+            <if test="qc.updateBy != null and qc.updateBy != ''">
+                update_by = #{qc.updateBy},
+            </if>
+            <if test="qc.updateTime != null">
+                update_time = #{qc.updateTime},
+            </if>
+            <if test="qc.isValid != null">
+                is_valid = #{qc.isValid},
+            </if>
+        </set>
+    </sql>
+
+</mapper>

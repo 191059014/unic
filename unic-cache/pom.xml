@@ -11,36 +11,19 @@
 
     <artifactId>unic-cache</artifactId>
     <name>unic-cache</name>
-    <url>http://www.example.com</url>
 
     <dependencies>
 
+        <!-- unic-base -->
         <dependency>
             <groupId>com.hb.unic</groupId>
-            <artifactId>unic-logger</artifactId>
-        </dependency>
-
-        <dependency>
-            <groupId>com.hb.unic</groupId>
-            <artifactId>unic-util</artifactId>
+            <artifactId>unic-base</artifactId>
         </dependency>
 
         <!--redis缓存支持-->
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-data-redis</artifactId>
-        </dependency>
-
-        <!-- spring-beans -->
-        <dependency>
-            <groupId>org.springframework</groupId>
-            <artifactId>spring-beans</artifactId>
-        </dependency>
-
-        <!-- spring-context -->
-        <dependency>
-            <groupId>org.springframework</groupId>
-            <artifactId>spring-context</artifactId>
         </dependency>
 
     </dependencies>

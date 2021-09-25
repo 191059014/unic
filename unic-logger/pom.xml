@@ -12,22 +12,10 @@
     <artifactId>unic-logger</artifactId>
     <name>unic-logger</name>
     <version>0.0.1-SNAPSHOT</version>
-    <url>http://www.example.com</url>
     <packaging>jar</packaging>
 
     <dependencies>
 
-        <!-- slf4j -->
-        <dependency>
-            <groupId>org.slf4j</groupId>
-            <artifactId>slf4j-api</artifactId>
-        </dependency>
-
-        <!-- web -->
-        <dependency>
-            <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter-web</artifactId>
-        </dependency>
 
     </dependencies>
 

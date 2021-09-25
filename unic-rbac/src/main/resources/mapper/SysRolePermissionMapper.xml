@@ -1,0 +1,199 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.hb.unic.rbac.dao.mapper.ISysRolePermissionMapper">
+
+    <!--字段映射-->
+    <resultMap id="sysRolePermissionMap" type="com.hb.unic.rbac.dao.dobj.SysRolePermissionDO">
+        <result column="role_id" property="roleId"/>
+        <result column="permission_id" property="permissionId"/>
+        <result column="id" property="id"/>
+        <result column="create_by" property="createBy"/>
+        <result column="create_time" property="createTime"/>
+        <result column="update_by" property="updateBy"/>
+        <result column="update_time" property="updateTime"/>
+        <result column="is_valid" property="isValid"/>
+    </resultMap>
+
+    <update id="deleteByRoleId">
+        update sys_role_permission
+        set is_valid = 0
+        where role_id = #{roleId}
+    </update>
+
+    <!--查询单个-->
+    <select id="selectById" resultMap="sysRolePermissionMap">
+        select *
+        from sys_role_permission
+        where id = #{id}
+    </select>
+
+    <!--查询集合-->
+    <select id="selectList" resultMap="sysRolePermissionMap">
+        select * from sys_role_permission
+        <include refid="whereCondition"/>
+        order by update_time desc
+    </select>
+
+    <!--查询总条数-->
+    <select id="selectCount" resultType="java.lang.Long">
+        select count(*) from sys_role_permission
+        <include refid="whereCondition"/>
+    </select>
+
+    <!--分页条件查询-->
+    <select id="selectPages" resultMap="sysRolePermissionMap">
+        select * from sys_role_permission
+        <include refid="whereCondition"/>
+        order by update_time desc
+        limit #{pc.startIndex}, #{pc.pageSize}
+    </select>
+
+    <!--通过id集合查询-->
+    <select id="selectByRoleIdSet" resultMap="sysRolePermissionMap">
+        select * from sys_role_permission
+        where is_valid = 1 and role_id in
+        <foreach collection="roleIdSet" item="roleId" open="(" separator="," close=")">
+            #{roleId}
+        </foreach>
+    </select>
+
+    <!--通过主键修改-->
+    <update id="updateById">
+        update sys_role_permission
+        <include refid="updateFields"/>
+        where id = #{qc.id}
+    </update>
+
+    <!--通过主键物理删除-->
+    <update id="deleteById">
+        update sys_role_permission
+        set is_valid = 0
+        where id = #{id}
+    </update>
+
+    <!--选择性的新增-->
+    <insert id="insert" useGeneratedKeys="true" keyProperty="id" keyColumn="id">
+        insert into sys_role_permission
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="qc.roleId != null">
+                role_id,
+            </if>
+            <if test="qc.permissionId != null">
+                permission_id,
+            </if>
+            <if test="qc.id != null">
+                id,
+            </if>
+            <if test="qc.createBy != null and qc.createBy != ''">
+                create_by,
+            </if>
+            <if test="qc.createTime != null">
+                create_time,
+            </if>
+            <if test="qc.updateBy != null and qc.updateBy != ''">
+                update_by,
+            </if>
+            <if test="qc.updateTime != null">
+                update_time,
+            </if>
+            <if test="qc.isValid != null">
+                is_valid,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="qc.roleId != null">
+                #{qc.roleId},
+            </if>
+            <if test="qc.permissionId != null">
+                #{qc.permissionId},
+            </if>
+            <if test="qc.id != null">
+                #{qc.id},
+            </if>
+            <if test="qc.createBy != null and qc.createBy != ''">
+                #{qc.createBy},
+            </if>
+            <if test="qc.createTime != null">
+                #{qc.createTime},
+            </if>
+            <if test="qc.updateBy != null and qc.updateBy != ''">
+                #{qc.updateBy},
+            </if>
+            <if test="qc.updateTime != null">
+                #{qc.updateTime},
+            </if>
+            <if test="qc.isValid != null">
+                #{qc.isValid},
+            </if>
+        </trim>
+    </insert>
+
+    <insert id="insertBatch">
+        insert into sys_role_permission(role_id,permission_id) values
+        <foreach collection="list" item="item" separator=",">
+            (#{item.roleId},#{item.permissionId})
+        </foreach>
+    </insert>
+
+    <!--条件查询-->
+    <sql id="whereCondition">
+        <where>
+            is_valid = 1
+            <if test="qc.roleId != null">
+                and role_id = #{qc.roleId}
+            </if>
+            <if test="qc.permissionId != null">
+                and permission_id = #{qc.permissionId}
+            </if>
+            <if test="qc.id != null">
+                and id = #{qc.id}
+            </if>
+            <if test="qc.createBy != null and qc.createBy != ''">
+                and create_by = #{qc.createBy}
+            </if>
+            <if test="qc.createTime != null">
+                and create_time = #{qc.createTime}
+            </if>
+            <if test="qc.updateBy != null and qc.updateBy != ''">
+                and update_by = #{qc.updateBy}
+            </if>
+            <if test="qc.updateTime != null">
+                and update_time = #{qc.updateTime}
+            </if>
+            <if test="qc.isValid != null">
+                and is_valid = #{qc.isValid}
+            </if>
+        </where>
+    </sql>
+
+    <!--更新字段sql-->
+    <sql id="updateFields">
+        <set>
+            <if test="qc.roleId != null">
+                role_id = #{qc.roleId},
+            </if>
+            <if test="qc.permissionId != null">
+                permission_id = #{qc.permissionId},
+            </if>
+            <if test="qc.id != null">
+                id = #{qc.id},
+            </if>
+            <if test="qc.createBy != null and qc.createBy != ''">
+                create_by = #{qc.createBy},
+            </if>
+            <if test="qc.createTime != null">
+                create_time = #{qc.createTime},
+            </if>
+            <if test="qc.updateBy != null and qc.updateBy != ''">
+                update_by = #{qc.updateBy},
+            </if>
+            <if test="qc.updateTime != null">
+                update_time = #{qc.updateTime},
+            </if>
+            <if test="qc.isValid != null">
+                is_valid = #{qc.isValid},
+            </if>
+        </set>
+    </sql>
+
+</mapper>

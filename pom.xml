@@ -9,10 +9,12 @@
     <packaging>pom</packaging>
     <version>0.0.1-SNAPSHOT</version>
     <modules>
-        <module>unic-util</module>
+        <module>unic-common</module>
         <module>unic-base</module>
         <module>unic-logger</module>
         <module>unic-cache</module>
+        <module>unic-rbac</module>
+        <module>unic-config</module>
     </modules>
 
     <name>unic</name>
@@ -24,43 +26,87 @@
         <maven.compiler.source>1.8</maven.compiler.source>
         <maven.compiler.target>1.8</maven.compiler.target>
 
-        <unic-util.version>0.0.1-SNAPSHOT</unic-util.version>
-        <unic-logger.version>0.0.1-SNAPSHOT</unic-logger.version>
+        <spring-boot.version>2.1.2.RELEASE</spring-boot.version>
+        <mybatis-spring-boot-starter-version>1.3.2</mybatis-spring-boot-starter-version>
+
+        <fastjson.version>1.2.69</fastjson.version>
+        <lombok.version>1.16.14</lombok.version>
+        <slf4j-api.version>1.7.25</slf4j-api.version>
+        <junit.version>4.11</junit.version>
 
         <groovy.version>2.4.7</groovy.version>
         <okhttp.version>3.12.0</okhttp.version>
-        <spring-boot.version>2.1.2.RELEASE</spring-boot.version>
-        <spring.version>5.1.4.RELEASE</spring.version>
         <commons-httpclient.version>3.1</commons-httpclient.version>
         <commons-lang3.version>3.9</commons-lang3.version>
         <commons-collections4.version>4.3</commons-collections4.version>
         <commons-beanutils.version>1.9.3</commons-beanutils.version>
         <commons-io.version>2.5</commons-io.version>
-        <slf4j-api.version>1.7.25</slf4j-api.version>
-        <junit.version>4.11</junit.version>
-        <jackson.version>2.9.8</jackson.version>
-        <guava.version>26.0-jre</guava.version>
-        <hutool.version>5.5.1</hutool.version>
-        <fastjson.version>1.2.69</fastjson.version>
-        <javax.servlet.version>4.0.1</javax.servlet.version>
+
+        <unic.version>0.0.1-SNAPSHOT</unic.version>
     </properties>
 
     <dependencyManagement>
         <dependencies>
-            <dependency>
-                <groupId>com.hb.unic</groupId>
-                <artifactId>unic-util</artifactId>
-                <version>${unic-util.version}</version>
-            </dependency>
-            <dependency>
-                <groupId>com.hb.unic</groupId>
-                <artifactId>unic-logger</artifactId>
-                <version>${unic-logger.version}</version>
-            </dependency>
+            <!-- unic-base -->
             <dependency>
                 <groupId>com.hb.unic</groupId>
                 <artifactId>unic-base</artifactId>
-                <version>${unic-logger.version}</version>
+                <version>${unic.version}</version>
+            </dependency>
+            <!-- unic-cache -->
+            <dependency>
+                <groupId>com.hb.unic</groupId>
+                <artifactId>unic-cache</artifactId>
+                <version>${unic.version}</version>
+            </dependency>
+            <!-- unic-common -->
+            <dependency>
+                <groupId>com.hb.unic</groupId>
+                <artifactId>unic-common</artifactId>
+                <version>${unic.version}</version>
+            </dependency>
+            <!-- unic-config -->
+            <dependency>
+                <groupId>com.hb.unic</groupId>
+                <artifactId>unic-config</artifactId>
+                <version>${unic.version}</version>
+            </dependency>
+            <!-- unic-logger -->
+            <dependency>
+                <groupId>com.hb.unic</groupId>
+                <artifactId>unic-logger</artifactId>
+                <version>${unic.version}</version>
+            </dependency>
+            <!-- unic-rbac -->
+            <dependency>
+                <groupId>com.hb.unic</groupId>
+                <artifactId>unic-rbac</artifactId>
+                <version>${unic.version}</version>
+            </dependency>
+
+            <!-- aop -->
+            <dependency>
+                <groupId>org.springframework.boot</groupId>
+                <artifactId>spring-boot-starter-aop</artifactId>
+                <version>${spring-boot.version}</version>
+            </dependency>
+            <!--redis缓存支持-->
+            <dependency>
+                <groupId>org.springframework.boot</groupId>
+                <artifactId>spring-boot-starter-data-redis</artifactId>
+                <version>${spring-boot.version}</version>
+            </dependency>
+            <!--mybatis -->
+            <dependency>
+                <groupId>org.mybatis.spring.boot</groupId>
+                <artifactId>mybatis-spring-boot-starter</artifactId>
+                <version>${mybatis-spring-boot-starter-version}</version>
+            </dependency>
+            <!-- security -->
+            <dependency>
+                <groupId>org.springframework.boot</groupId>
+                <artifactId>spring-boot-starter-security</artifactId>
+                <version>${spring-boot.version}</version>
             </dependency>
             <!-- groovy支持-->
             <dependency>
@@ -73,30 +119,6 @@
                 <groupId>com.squareup.okhttp3</groupId>
                 <artifactId>okhttp</artifactId>
                 <version>${okhttp.version}</version>
-            </dependency>
-            <!--redis缓存支持-->
-            <dependency>
-                <groupId>org.springframework.boot</groupId>
-                <artifactId>spring-boot-starter-data-redis</artifactId>
-                <version>${spring-boot.version}</version>
-            </dependency>
-            <!-- spring beans -->
-            <dependency>
-                <groupId>org.springframework</groupId>
-                <artifactId>spring-beans</artifactId>
-                <version>${spring.version}</version>
-            </dependency>
-            <!-- servlet -->
-            <dependency>
-                <groupId>javax.servlet</groupId>
-                <artifactId>javax.servlet-api</artifactId>
-                <version>${javax.servlet.version}</version>
-            </dependency>
-            <!-- spring context -->
-            <dependency>
-                <groupId>org.springframework</groupId>
-                <artifactId>spring-context</artifactId>
-                <version>${spring.version}</version>
             </dependency>
             <!-- commons-lang3 -->
             <dependency>
@@ -122,62 +144,41 @@
                 <artifactId>commons-io</artifactId>
                 <version>${commons-io.version}</version>
             </dependency>
-            <!-- slf4j -->
-            <dependency>
-                <groupId>org.slf4j</groupId>
-                <artifactId>slf4j-api</artifactId>
-                <version>${slf4j-api.version}</version>
-            </dependency>
-            <!-- junit -->
-            <dependency>
-                <groupId>junit</groupId>
-                <artifactId>junit</artifactId>
-                <version>${junit.version}</version>
-                <scope>test</scope>
-            </dependency>
-            <!-- web -->
-            <dependency>
-                <groupId>org.springframework.boot</groupId>
-                <artifactId>spring-boot-starter-web</artifactId>
-                <version>${spring-boot.version}</version>
-            </dependency>
-            <!-- aop -->
-            <dependency>
-                <groupId>org.springframework.boot</groupId>
-                <artifactId>spring-boot-starter-aop</artifactId>
-                <version>${spring-boot.version}</version>
-            </dependency>
-            <!-- jackson -->
-            <dependency>
-                <groupId>com.fasterxml.jackson.core</groupId>
-                <artifactId>jackson-databind</artifactId>
-                <version>${jackson.version}</version>
-            </dependency>
-            <!-- guava -->
-            <dependency>
-                <groupId>com.google.guava</groupId>
-                <artifactId>guava</artifactId>
-                <version>${guava.version}</version>
-            </dependency>
-            <!-- hutool -->
-            <dependency>
-                <groupId>cn.hutool</groupId>
-                <artifactId>hutool-all</artifactId>
-                <version>${hutool.version}</version>
-            </dependency>
-            <!-- fastjson -->
-            <dependency>
-                <groupId>com.alibaba</groupId>
-                <artifactId>fastjson</artifactId>
-                <version>${fastjson.version}</version>
-            </dependency>
         </dependencies>
     </dependencyManagement>
 
     <dependencies>
+        <!-- web -->
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-web</artifactId>
+            <version>${spring-boot.version}</version>
+        </dependency>
+        <!-- fastjson -->
+        <dependency>
+            <groupId>com.alibaba</groupId>
+            <artifactId>fastjson</artifactId>
+            <version>${fastjson.version}</version>
+        </dependency>
+        <!-- lombok -->
+        <dependency>
+            <groupId>org.projectlombok</groupId>
+            <artifactId>lombok</artifactId>
+            <version>${lombok.version}</version>
+            <optional>true</optional>
+        </dependency>
+        <!-- slf4j -->
+        <dependency>
+            <groupId>org.slf4j</groupId>
+            <artifactId>slf4j-api</artifactId>
+            <version>${slf4j-api.version}</version>
+        </dependency>
+        <!-- junit -->
         <dependency>
             <groupId>junit</groupId>
             <artifactId>junit</artifactId>
+            <version>${junit.version}</version>
+            <scope>test</scope>
         </dependency>
     </dependencies>
 
