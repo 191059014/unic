@@ -106,7 +106,7 @@ public class AES {
      * @return byte[]
      */
     private static byte[] doFinal(byte[] bytes, SecretKey secretKey, int mode) throws Exception {
-        Cipher cipher = Cipher.getInstance(AES.FILLSTYLE);
+        Cipher cipher = Cipher.getInstance(FILLSTYLE);
         cipher.init(mode, secretKey);
         return cipher.doFinal(bytes);
     }
@@ -119,7 +119,7 @@ public class AES {
      * @return SecretKey
      */
     private static SecretKey getSecretKey(String secretKey) throws Exception {
-        KeyGenerator keyGenerator = KeyGenerator.getInstance(AES.ALGORITHM);
+        KeyGenerator keyGenerator = KeyGenerator.getInstance(ALGORITHM);
         SecureRandom secureRandom = SecureRandom.getInstance("SHA1PRNG");
         secureRandom.setSeed(secretKey.getBytes());
         keyGenerator.init(128, secureRandom);
