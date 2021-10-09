@@ -1,8 +1,8 @@
 package com.hb.unic.rbac.controller;
 
 import com.hb.unic.base.annotation.InOutLog;
-import com.hb.unic.base.common.Result;
 import com.hb.unic.base.common.ErrorCode;
+import com.hb.unic.base.common.Result;
 import com.hb.unic.base.model.impl.AbstractBaseDO;
 import com.hb.unic.common.standard.Page;
 import com.hb.unic.common.validator.Assert;
@@ -31,6 +31,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.multipart.MultipartFile;
 
 import javax.annotation.Resource;
 import java.util.ArrayList;
@@ -277,6 +278,19 @@ public class SysUserController {
         }
         RbacContext.clear();
         return Result.success(updateRows);
+    }
+
+    /**
+     * 上传
+     *
+     * @param file
+     *            文件
+     * @return 结果
+     */
+    @PostMapping("/importUsers")
+    public Result importUsers(@RequestParam("file") MultipartFile file) {
+
+        return Result.success();
     }
 
 }

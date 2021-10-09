@@ -52,6 +52,17 @@
             <artifactId>commons-io</artifactId>
         </dependency>
 
+        <!--  poi 文件上传与下载-->
+        <dependency>
+            <groupId>org.apache.poi</groupId>
+            <artifactId>poi</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.apache.poi</groupId>
+            <artifactId>poi-ooxml</artifactId>
+        </dependency>
+
+
     </dependencies>
 
 </project>
