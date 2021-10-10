@@ -5,6 +5,7 @@ import com.hb.unic.base.common.ErrorCode;
 import com.hb.unic.base.common.Result;
 import com.hb.unic.base.model.impl.AbstractBaseDO;
 import com.hb.unic.common.standard.Page;
+import com.hb.unic.common.util.ExcelUtils;
 import com.hb.unic.common.validator.Assert;
 import com.hb.unic.common.validator.Check;
 import com.hb.unic.rbac.RbacContext;
@@ -37,6 +38,7 @@ import javax.annotation.Resource;
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
+import java.util.Map;
 import java.util.Set;
 import java.util.function.Predicate;
 import java.util.stream.Collectors;
@@ -289,7 +291,7 @@ public class SysUserController {
      */
     @PostMapping("/importUsers")
     public Result importUsers(@RequestParam("file") MultipartFile file) {
-
+        List<Map<String, String>> list = ExcelUtils.parse(file);
         return Result.success();
     }
 
