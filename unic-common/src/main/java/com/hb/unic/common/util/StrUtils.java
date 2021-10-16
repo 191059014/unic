@@ -1,10 +1,6 @@
 package com.hb.unic.common.util;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
-import java.io.UnsupportedEncodingException;
-import java.math.BigDecimal;
+import org.springframework.util.StringUtils;
 
 /**
  * ========== 字符串工具类 ==========
@@ -16,9 +12,9 @@ import java.math.BigDecimal;
 public class StrUtils {
 
     /**
-     * the constant LOGGER
+     * 空字符串
      */
-    private static final Logger LOGGER = LoggerFactory.getLogger(StrUtils.class);
+    private static final String EMPTY = "";
 
     /**
      * 是否是空的字符串
@@ -27,77 +23,114 @@ public class StrUtils {
      *            字符串
      * @return true为空
      */
-    public static boolean isBlank(String str) {
+    public static boolean isEmpty(String str) {
         return str == null || str.trim().length() == 0 || "null".equals(str) || "undefined".equals(str);
     }
 
     /**
-     * 在左边填充0
-     *
-     * @param source
-     *            原字符串
-     * @param targetLength
-     *            目标长度
-     * @return 字符串
+     * 判断是否有一个是空的
+     * 
+     * @param arr
+     *            数组
+     * @return 结果
      */
-    public static String fillZeroAtLeft(Object source, int targetLength) {
-        return fillZero(source, targetLength, true);
+    public static boolean isAnyEmpty(String... arr) {
+        if (arr == null || arr.length == 0) {
+            return true;
+        }
+        for (String str : arr) {
+            if (StringUtils.isEmpty(str)) {
+                return true;
+            }
+        }
+        return false;
     }
 
     /**
-     * 在右边填充0
-     *
-     * @param source
-     *            原字符串
-     * @param targetLength
-     *            目标长度
-     * @return 字符串
+     * 判断全部为空
+     * 
+     * @param arr
+     *            数组
+     * @return 结果
      */
-    public static String fillZeroAtRight(Object source, int targetLength) {
-        return fillZero(source, targetLength, false);
+    public static boolean isAllEmpty(String... arr) {
+        if (arr == null || arr.length == 0) {
+            return true;
+        }
+        for (String str : arr) {
+            if (!StringUtils.isEmpty(str)) {
+                return false;
+            }
+        }
+        return true;
     }
 
     /**
-     * 填充0在开头或结尾
+     * 字符串是否包含文本
      *
-     * @param source
+     * @param str
+     *            原字符串
+     * @return true
+     */
+    public static boolean hasText(String str) {
+        return str != null && str.trim().length() > 0;
+    }
+
+    /**
+     * 去首尾空格
+     *
+     * @param str
+     *            原字符串
+     * @return true
+     */
+    public static String trim(String str) {
+        if (StringUtils.isEmpty(str)) {
+            return EMPTY;
+        }
+        return str.trim();
+    }
+
+    /**
+     * 在开头或结尾填充0
+     *
+     * @param str
      *            原字符串
      * @param targetLength
      *            目标长度
-     * @param fillZeroAtLeft
+     * @param left
      *            是否补0在起始位置
      * @return 字符串
      */
-    public static String fillZero(Object source, int targetLength, boolean fillZeroAtLeft) {
-        if (source == null) {
-            return null;
+    public static String fillZero(String str, int targetLength, boolean left) {
+        if (StringUtils.isEmpty(str)) {
+            return EMPTY;
         }
-        String s = source.toString();
-        if (s.length() > targetLength) {
-            return s.substring(0, targetLength);
+        int length = str.length();
+        if (length >= targetLength) {
+            return str;
         }
         StringBuilder zeroSb = new StringBuilder();
-        for (int i = 0; i < targetLength - s.length(); i++) {
+        for (int i = 0; i < targetLength - length; i++) {
             zeroSb.append("0");
         }
-        if (fillZeroAtLeft) {
-            zeroSb.append(source);
+        if (left) {
+            zeroSb.append(str);
         } else {
-            zeroSb.insert(0, source);
+            zeroSb.insert(0, str);
         }
         return zeroSb.toString();
     }
 
     /**
-     * ########## 转换null为空字符串 ##########
+     * 转换Object为字符串
      *
      * @param obj
      *            对象
      * @return 字符串
      */
-    public static String convertNull(Object obj) {
+    public static String toString(Object obj) {
         if (obj == null) {
-            return "";
+            return EMPTY;
         }
         return String.valueOf(obj);
     }
@@ -105,35 +138,61 @@ public class StrUtils {
     /**
      * 首字母大写
      *
-     * @param value
+     * @param str
      *            字符串
      * @return 转换后的值
      */
-    public static String upperFirst(String value) {
-        if (org.apache.commons.lang3.StringUtils.isNotBlank(value)) {
-            value = value.trim();
-            String first = value.substring(0, 1);
-            String last = value.substring(1);
-            return first.toUpperCase() + last;
+    public static String upperFirst(String str) {
+        if (StringUtils.isEmpty(str)) {
+            return EMPTY;
         }
-        return value;
+        str = str.trim();
+        String first = str.substring(0, 1);
+        String last = str.substring(1);
+        return first.toUpperCase() + last;
     }
 
     /**
      * 首字母小写
      *
-     * @param value
+     * @param str
      *            字符串
      * @return 转换后的值
      */
-    public static String lowerFirst(String value) {
-        if (org.apache.commons.lang3.StringUtils.isNotBlank(value)) {
-            value = value.trim();
-            String first = value.substring(0, 1);
-            String last = value.substring(1);
-            return first.toLowerCase() + last;
+    public static String lowerFirst(String str) {
+        if (StringUtils.isEmpty(str)) {
+            return EMPTY;
         }
-        return value;
+        str = str.trim();
+        String first = str.substring(0, 1);
+        String last = str.substring(1);
+        return first.toLowerCase() + last;
+    }
+
+    /**
+     * 获取文本中两个字符串中间的文本，只返回首个结果
+     * 
+     * @param str
+     *            文本
+     * @param startMark
+     *            开始标记
+     * @param endMark
+     *            结束标记
+     * @return 结果
+     */
+    public static String between(String str, String startMark, String endMark) {
+        if (isAllEmpty(str, startMark, endMark)) {
+            return EMPTY;
+        }
+        int startIndex = str.indexOf(startMark);
+        if (startIndex < 0) {
+            return EMPTY;
+        }
+        int endIndex = str.indexOf(endMark);
+        if (endIndex < 0 || endIndex < startIndex) {
+            return EMPTY;
+        }
+        return str.substring(startIndex + startMark.length(), endIndex);
     }
 
     /**
@@ -146,6 +205,9 @@ public class StrUtils {
      * @return 字符串
      */
     public static String before(String src, String dest) {
+        if (StringUtils.isEmpty(src)) {
+            return EMPTY;
+        }
         int pos = src.indexOf(dest);
         if (pos == -1) {
             return src;
@@ -164,6 +226,9 @@ public class StrUtils {
      * @return 字符串
      */
     public static String after(String src, String dest) {
+        if (StringUtils.isEmpty(src)) {
+            return EMPTY;
+        }
         int pos = src.indexOf(dest);
         if (pos == -1) {
             return src;
@@ -182,6 +247,9 @@ public class StrUtils {
      * @return 字符串
      */
     public static String lastBefore(String src, String dest) {
+        if (StringUtils.isEmpty(src)) {
+            return EMPTY;
+        }
         int pos = src.lastIndexOf(dest);
         if (pos == -1) {
             return src;
@@ -200,6 +268,9 @@ public class StrUtils {
      * @return 字符串
      */
     public static String lastAfter(String src, String dest) {
+        if (StringUtils.isEmpty(src)) {
+            return EMPTY;
+        }
         int pos = src.lastIndexOf(dest);
         if (pos == -1) {
             return src;
@@ -209,125 +280,19 @@ public class StrUtils {
     }
 
     /**
-     * 将下划线风格替换为驼峰风格
-     *
-     * @param underlineStr
-     *            要转换的列名
-     * @return 驼峰字段
-     */
-    public static String underline2Hump(String underlineStr) {
-        StringBuilder sb = new StringBuilder();
-        boolean nextUpperCase = false;
-        for (int i = 0; i < underlineStr.length(); i++) {
-            char c = underlineStr.charAt(i);
-            if (c == '_') {
-                nextUpperCase = true;
-            } else {
-                if (nextUpperCase) {
-                    sb.append(Character.toUpperCase(c));
-                    nextUpperCase = false;
-                } else {
-                    sb.append(c);
-                }
-            }
-        }
-        return sb.toString();
-    }
-
-    /**
-     * 将驼峰风格替换为下划线风格
-     *
-     * @param humpStr
-     *            要转换的列名
-     * @return 下划线风格字段
-     */
-    public static String hump2Underline(String humpStr) {
-        StringBuilder sb = new StringBuilder(humpStr);
-        int temp = 0;
-        for (int i = 0; i < humpStr.length(); i++) {
-            if (Character.isUpperCase(humpStr.charAt(i))) {
-                sb.insert(i + temp, "_");
-                temp += 1;
-            }
-        }
-        return sb.toString().toLowerCase();
-    }
-
-    /**
-     * 将byte数组转换为字符串
-     *
-     * @param filedByte
-     *            数组
-     * @param charset
-     *            编码
-     * @return 字符串
-     */
-    public static String toString(byte[] filedByte, String charset) {
-        String filed = null;
-        try {
-            filed = new String(filedByte, charset);
-        } catch (UnsupportedEncodingException e) {
-            LOGGER.error("byte arr to string error=", e);
-        }
-        return filed;
-    }
-
-    /**
-     * 将数值转换为金额的中文显示方式
-     *
-     * @param n
-     *            金额数值
-     * @return 金额的中文显示方式
-     */
-    public static String digitUppercase(double n) {
-        String[] fraction = {"角", "分"};
-        String[] digit = {"零", "壹", "贰", "叁", "肆", "伍", "陆", "柒", "捌", "玖"};
-        String[][] unit = {{"元", "万", "亿"}, {"", "拾", "佰", "仟"}};
-        String head = n < 0.0D ? "负" : "";
-        n = Math.abs(n);
-        String s = "";
-        for (int i = 0; i < fraction.length; i++) {
-            s = s + new StringBuilder().append(digit[((int)(Math.floor(n * 10.0D * Math.pow(10.0D, i)) % 10.0D))])
-                .append(fraction[i]).toString().replaceAll("(零.)+", "");
-        }
-        if (s.length() < 1) {
-            s = "整";
-        }
-        int integerPart = (int)Math.floor(n);
-        for (int i = 0; (i < unit[0].length) && (integerPart > 0); i++) {
-            String p = "";
-            for (int j = 0; (j < unit[1].length) && (n > 0.0D); j++) {
-                p = digit[(integerPart % 10)] + unit[1][j] + p;
-                integerPart /= 10;
-            }
-            s = p.replaceAll("(零.)*零$", "").replaceAll("^$", "零") + unit[0][i] + s;
-        }
-        return head
-            + s.replaceAll("(零.)*零元", "元").replaceFirst("(零.)+", "").replaceAll("(零.)+", "零").replaceAll("^整$", "零元整");
-    }
-
-    /**
      * StringBuilder连接字符串
      *
      * @return 字符串
      */
     public static String joint(Object... objArr) {
+        if (objArr == null || objArr.length == 0) {
+            return EMPTY;
+        }
         StringBuilder sb = new StringBuilder();
         for (int i = 0; i < objArr.length; i++) {
             sb.append(objArr[i]);
         }
         return sb.toString();
-    }
-
-    /**
-     * 字符串是否包含文本
-     *
-     * @param str
-     *            原字符串
-     * @return true
-     */
-    public static boolean hasText(String str) {
-        return str != null && str.trim().length() > 0;
     }
 
     /**
@@ -339,9 +304,9 @@ public class StrUtils {
      * @return asc码
      */
     public static String getAscii(Object obj) {
-        String str = obj == null ? "" : obj.toString();
+        String str = obj == null ? EMPTY : obj.toString();
         if (!hasText(str)) {
-            return "0";
+            return EMPTY;
         }
         StringBuilder indexSb = new StringBuilder();
         for (int i = 0; i < str.length(); ++i) {
@@ -351,63 +316,6 @@ public class StrUtils {
             }
         }
         return indexSb.toString();
-    }
-
-    /**
-     * 先对指定对象取ASCII码后取模运算
-     * 
-     * @param obj
-     *            被除数
-     * @param numObj
-     *            除数
-     * @return 余数
-     */
-    public static long getModValue(Object obj, Object numObj) {
-        String str = getAscii(obj);
-        BigDecimal bc = new BigDecimal(str);
-        BigDecimal[] results = bc.divideAndRemainder(new BigDecimal(numObj.toString()));
-        return results[1].longValue();
-    }
-
-    /**
-     * 十进制转二进制，并指定字符串长度，左边补0
-     *
-     * @param number
-     *            十进制数
-     * @param targetLength
-     *            二进制字符串最终长度
-     * @return 指定长度的二进制字符串
-     */
-    public static String decimal2Binary(int number, int targetLength) {
-        String binaryString = Integer.toBinaryString(number);
-        return fillZero(binaryString, targetLength, true);
-    }
-
-    /**
-     * 十进制转二进制，并指定字符串长度，左边补0
-     *
-     * @param number
-     *            十进制数
-     * @return 指定长度的二进制字符串
-     */
-    public static String decimal2Binary(int number) {
-        return Integer.toBinaryString(number);
-    }
-
-    /**
-     * 二进制转十进制
-     *
-     * @param binaryString
-     *            二进制字符串
-     * @return 十进制数
-     */
-    public static int binary2Decimal(String binaryString) {
-        return Integer.parseInt(binaryString, 2);
-    }
-
-    public static void main(String[] args) {
-        System.out.println(binary2Decimal("1011111101"));
-        System.out.println(decimal2Binary(0, 10));
     }
 
 }

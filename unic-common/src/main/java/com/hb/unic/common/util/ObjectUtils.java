@@ -1,8 +1,6 @@
 package com.hb.unic.common.util;
 
 import org.apache.commons.lang3.StringUtils;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 import java.math.BigDecimal;
 
@@ -12,11 +10,6 @@ import java.math.BigDecimal;
  * @version v0.1, 2020/7/31 16:04, create by huangbiao.
  */
 public class ObjectUtils {
-
-    /**
-     * 日志
-     */
-    private static final Logger LOGGER = LoggerFactory.getLogger(ObjectUtils.class);
 
     /**
      * 将多个Object元素转换为Object数组
@@ -85,25 +78,6 @@ public class ObjectUtils {
     }
 
     /**
-     * 通过完整类名实例化对象
-     *
-     * @param className
-     *            完整类名
-     * @return 对象
-     */
-    public static Object newInstance(String className) {
-        if (StringUtils.isBlank(className)) {
-            return null;
-        }
-        try {
-            Class clz = Class.forName(className);
-            return clz.newInstance();
-        } catch (Exception e) {
-            throw new RuntimeException(e);
-        }
-    }
-
-    /**
      * 是否全为null
      *
      * @param objArr
@@ -111,7 +85,7 @@ public class ObjectUtils {
      * @return true-全为null
      */
     public static boolean isAllNull(Object... objArr) {
-        if (objArr == null) {
+        if (objArr == null || objArr.length == 0) {
             return true;
         }
         for (Object obj : objArr) {
@@ -152,7 +126,7 @@ public class ObjectUtils {
      * @return true-全不为null
      */
     public static boolean isAllNotNull(Object... objArr) {
-        if (objArr == null) {
+        if (objArr == null || objArr.length == 0) {
             return false;
         }
         for (Object obj : objArr) {
@@ -161,6 +135,25 @@ public class ObjectUtils {
             }
         }
         return true;
+    }
+
+    /**
+     * 通过完整类名实例化对象
+     *
+     * @param className
+     *            完整类名
+     * @return 对象
+     */
+    public static Object newInstance(String className) {
+        if (StringUtils.isBlank(className)) {
+            return null;
+        }
+        try {
+            Class clz = Class.forName(className);
+            return clz.newInstance();
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
     }
 
 }
