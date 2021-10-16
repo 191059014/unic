@@ -29,10 +29,10 @@ public class JsonUtilsTest {
         }
         List<Map<String, String>> list = JsoupUtils.convertTable2List(elements.get(0));
         System.out.println(list);
-        System.out.println(JsoupUtils.selectFirstText(elements.get(0), "table@class"));
-        System.out.println(JsoupUtils.selectFirstText(elements.get(0), "td", Arrays.asList("September")));
-        System.out.println(JsoupUtils.selectText(elements.get(0), "td", Arrays.asList("February")));
-        System.out.println(JsoupUtils.select(elements.get(0), "td", Arrays.asList("February")));
+        System.out.println(JsoupUtils.getFirstContent(elements.get(0), "table@class"));
+        System.out.println(JsoupUtils.getFirstContentMatchingTexts(elements.get(0), "td", Arrays.asList("September")));
+        System.out.println(JsoupUtils.getContentsMatchingTexts(elements.get(0), "td", Arrays.asList("February")));
+        System.out.println(JsoupUtils.getElementsMatchingTexts(elements.get(0), "td", Arrays.asList("February")));
     }
 
     /**

@@ -4,11 +4,13 @@ import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
+import org.springframework.util.CollectionUtils;
 
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
 
 /**
  * jsoup工具类
@@ -51,7 +53,7 @@ public class JsoupUtils {
      *            选择器
      * @return 结果
      */
-    public static String selectFirstText(Element element, String cssQuery) {
+    public static String getFirstContent(Element element, String cssQuery) {
         if (element == null || cssQuery == null) {
             return EMPTY_TEXT;
         }
@@ -84,7 +86,7 @@ public class JsoupUtils {
      *            子文本列表
      * @return 结果
      */
-    public static String selectFirstText(Element element, String cssQuery, List<String> textParts) {
+    public static String getFirstContentMatchingTexts(Element element, String cssQuery, List<String> textParts) {
         if (element == null || cssQuery == null || textParts == null) {
             return EMPTY_TEXT;
         }
@@ -99,32 +101,6 @@ public class JsoupUtils {
     }
 
     /**
-     * 查找包含某段文本的元素列表
-     *
-     * @param element
-     *            元素
-     * @param cssQuery
-     *            选择器
-     * @param textParts
-     *            子文本列表
-     * @return 结果
-     */
-    public static List<Element> select(Element element, String cssQuery, List<String> textParts) {
-        List<Element> list = new ArrayList<>();
-        if (element == null || cssQuery == null || textParts == null) {
-            return list;
-        }
-        Elements elements = element.select(cssQuery);
-        for (Element e : elements) {
-            boolean allMatch = textParts.stream().allMatch(e.text()::contains);
-            if (allMatch) {
-                list.add(e);
-            }
-        }
-        return list;
-    }
-
-    /**
      * 查找包含某段文本的元素的内容
      *
      * @param element
@@ -135,16 +111,32 @@ public class JsoupUtils {
      *            子文本列表
      * @return 结果
      */
-    public static List<String> selectText(Element element, String cssQuery, List<String> textParts) {
-        List<String> list = new ArrayList<>();
-        if (element == null || cssQuery == null || textParts == null) {
+    public static List<String> getContentsMatchingTexts(Element element, String cssQuery, List<String> textParts) {
+        List<Element> elementList = getElementsMatchingTexts(element, cssQuery, textParts);
+        return elementList.stream().map(Element::text).collect(Collectors.toList());
+    }
+
+    /**
+     * 查找包含某段文本的元素列表
+     *
+     * @param element
+     *            元素
+     * @param cssQuery
+     *            选择器
+     * @param textParts
+     *            子文本列表
+     * @return 结果
+     */
+    public static List<Element> getElementsMatchingTexts(Element element, String cssQuery, List<String> textParts) {
+        List<Element> list = new ArrayList<>();
+        if (element == null || cssQuery == null || CollectionUtils.isEmpty(textParts)) {
             return list;
         }
         Elements elements = element.select(cssQuery);
         for (Element e : elements) {
             boolean allMatch = textParts.stream().allMatch(e.text()::contains);
             if (allMatch) {
-                list.add(e.text());
+                list.add(e);
             }
         }
         return list;
