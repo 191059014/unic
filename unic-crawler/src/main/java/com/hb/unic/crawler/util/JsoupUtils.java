@@ -1,5 +1,6 @@
 package com.hb.unic.crawler.util;
 
+import org.jsoup.Connection;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
@@ -38,7 +39,11 @@ public class JsoupUtils {
      */
     public static Document get(String url) {
         try {
-            return Jsoup.connect(url).timeout(10 * 1000).get();
+            Connection connect = Jsoup.connect(url);
+            connect.userAgent(
+                "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/94.0.4606.81 Safari/537.36");
+            connect.timeout(10 * 1000);
+            return connect.get();
         } catch (Exception e) {
             throw new RuntimeException(e);
         }
