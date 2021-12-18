@@ -12,6 +12,12 @@ public class TypeWapper<T> {
      */
     private T obj;
 
+    /**
+     * 构造方法
+     * 
+     * @param obj
+     *            需要包装的对象
+     */
     public TypeWapper(T obj) {
         this.obj = obj;
     }

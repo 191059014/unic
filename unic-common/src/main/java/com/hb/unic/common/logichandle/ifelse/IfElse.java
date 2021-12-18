@@ -1,13 +1,14 @@
-package com.hb.unic.common.ifelse;
+package com.hb.unic.common.logichandle.ifelse;
 
 import com.hb.unic.common.function.VoidFunction;
+import com.hb.unic.common.logichandle.ILogicHandler;
 
 /**
  * 处理if else
  *
  * @version v0.1, 2021/12/18 20:16, create by huangbiao.
  */
-public class IfElse {
+public class IfElse implements ILogicHandler {
 
     /**
      * 条件
@@ -64,7 +65,8 @@ public class IfElse {
     /**
      * 执行最终的逻辑方法
      */
-    public void execute() {
+    @Override
+    public boolean execute() {
         if (condition) {
             this.ifFunction.execute();
         } else {
@@ -72,6 +74,7 @@ public class IfElse {
                 elseFunction.execute();
             }
         }
+        return this.condition;
     }
 
 }
