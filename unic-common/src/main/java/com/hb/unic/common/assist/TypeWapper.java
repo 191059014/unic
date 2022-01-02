@@ -1,4 +1,4 @@
-package com.hb.unic.common.help;
+package com.hb.unic.common.assist;
 
 /**
  * 类型包装
